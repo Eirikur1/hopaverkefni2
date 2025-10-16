@@ -107,20 +107,7 @@
               aria-label="Filter by category"
             >
               <option value="">All Categories</option>
-              <option value="Tónlist">Tónlist (Music)</option>
-              <option value="Myndlist">Myndlist (Art)</option>
-              <option value="Sýning">Sýning (Exhibition)</option>
-              <option value="Dans">Dans (Dance)</option>
-              <option value="Bókmenntir">Bókmenntir (Literature)</option>
-              <option value="Saga">Saga (History)</option>
-              <option value="Fræðsla">Fræðsla (Education)</option>
-              <option value="Smiðja">Smiðja (Workshop)</option>
-              <option value="Náttúra">Náttúra (Nature)</option>
-              <option value="Hönnun">Hönnun (Design)</option>
-              <option value="Sýningarspjall">
-                Sýningarspjall (Exhibition Talk)
-              </option>
-              <option value="Annað">Annað (Other)</option>
+              <!-- Options will be populated dynamically from API data -->
             </select>
           </div>
 
@@ -137,11 +124,7 @@
               aria-label="Filter by location"
             >
               <option value="">All Locations</option>
-              <option value="101">101 Reykjavík</option>
-              <option value="102">102 Reykjavík</option>
-              <option value="105">105 Reykjavík</option>
-              <option value="107">107 Reykjavík</option>
-              <option value="225">225 Garðabær</option>
+              <!-- Options will be populated dynamically from API data -->
             </select>
           </div>
 
@@ -193,11 +176,6 @@
             </button>
           </div>
         </div>
-
-        <!-- Active Filters Display -->
-        <div id="active-filters" class="mt-4 flex flex-wrap gap-2 hidden">
-          <span class="text-sm text-gray-600">Active filters:</span>
-        </div>
       </div>
     </div>
 
@@ -212,6 +190,11 @@
         <button id="load-more-btn" class="load-more-btn">
           Load More Events
         </button>
+      </div>
+
+      <!-- Results Count -->
+      <div class="mt-6 text-center">
+        <p id="results-count" class="text-gray-600 text-sm font-medium"></p>
       </div>
     </section>
 
@@ -323,7 +306,7 @@
         let allEvents = [];
         let filteredEvents = [];
         let displayedEvents = 0;
-        const eventsPerLoad = 12;
+        const eventsPerLoad = 12; // 4 rows × 3 columns = 12 events per load
         let searchTimeout = null;
         let dateOrderAscending = false;
         let recentSearches = JSON.parse(
@@ -339,22 +322,9 @@
           dateOrder: "desc",
         };
 
-        /**
-         * Get consistent image for an event based on its ID
-         */
-        function getEventImage(event) {
-          const eventId =
-            event.id || event.title || event.title_en || "default";
-          const hash = eventId
-            .toString()
-            .split("")
-            .reduce((a, b) => {
-              a = (a << 5) - a + b.charCodeAt(0);
-              return a & a;
-            }, 0);
-          const imageIndex = Math.abs(hash) % posterImages.length;
-          return posterImages[imageIndex];
-        }
+        // Store available filter options
+        let availableCategories = new Set();
+        let availableLocations = new Set();
 
         /**
          * Create HTML for an event card matching the main page style
@@ -365,7 +335,6 @@
             event.title ||
             event.title_en ||
             "Untitled";
-
           const date = event.start
             ? new Date(event.start).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -373,29 +342,11 @@
                 day: "numeric",
               })
             : "";
-
-          // Extract location information - prioritize postal code and city
-          let location = "";
-          if (event.postal && event.city) {
-            location = `${event.postal} ${event.city}`;
-          } else if (
-            event.language &&
-            event.language.en &&
-            event.language.en.place
-          ) {
-            location = event.language.en.place;
-          } else if (event.formatted_address) {
-            // Extract postal code and city from formatted address
-            const addressParts = event.formatted_address.split(", ");
-            if (addressParts.length >= 2) {
-              const postalAndCity = addressParts[addressParts.length - 1];
-              location = postalAndCity;
-            } else {
-              location = event.formatted_address;
-            }
-          } else if (event.city) {
-            location = event.city;
-          }
+          const location =
+            (event.language && event.language.en && event.language.en.place) ||
+            event.formatted_address ||
+            event.city ||
+            "";
 
           // Use actual event image if available, otherwise use random poster
           let image;
@@ -409,77 +360,39 @@
             // Fallback to thumbnail
             image = `https://api.venuu.is${event.event_thumbnail}`;
           } else {
-            // Use consistent poster image based on event ID
-            const posterImage = getEventImage(event);
-            image = `./Images/posters/${posterImage}`;
+            // Randomly select a poster image as fallback
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image = `./Images/posters/${randomPoster}`;
           }
 
-          // Card markup matching main page structure
+          // Card markup
           return `
-            <div class="event-item" data-event='${JSON.stringify(event).replace(
-              /'/g,
-              "&#39;"
-            )}'>
-              <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
-              <div class="event-content flex flex-col p-4 gap-1.5">
-                <div class="event-title">${title}</div>
-                <div class="event-date-row">
-                  <div class="date-section">
-                    <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                      <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                      <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                      <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                    <div class="event-date">${date}</div>
-                  </div>
-                  <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+        <div class="event-item" data-event='${JSON.stringify(event).replace(
+          /'/g,
+          "&#39;"
+        )}'>
+          <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
+          <div class="event-content flex flex-col p-4 gap-1.5">
+            <div class="event-title">${title}</div>
+                            <div class="event-date-row">
+              <div class="date-section">
+                <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                <div class="event-date">${date}</div>
+                                </div>
+              <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+            <div class="event-location">${location}</div>
+                    </div>
                 </div>
-                <div class="event-location">${location}</div>
-              </div>
-            </div>
-          `;
-        }
-
-        /**
-         * Update active filters display
-         */
-        function updateActiveFiltersDisplay() {
-          const activeFiltersContainer =
-            document.getElementById("active-filters");
-          const activeFilters = [];
-
-          if (currentFilters.search) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Search: "${currentFilters.search}"</span>`
-            );
-          }
-          if (currentFilters.category) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Category: ${currentFilters.category}</span>`
-            );
-          }
-          if (currentFilters.location) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Location: ${currentFilters.location}</span>`
-            );
-          }
-          if (currentFilters.sort) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Sort: ${currentFilters.sort}</span>`
-            );
-          }
-
-          if (activeFilters.length > 0) {
-            activeFiltersContainer.innerHTML =
-              '<span class="text-sm text-gray-600">Active filters:</span>' +
-              activeFilters.join("");
-            activeFiltersContainer.classList.remove("hidden");
-          } else {
-            activeFiltersContainer.classList.add("hidden");
-          }
+        `;
         }
 
         /**
@@ -490,7 +403,6 @@
           searchTimeout = setTimeout(() => {
             currentFilters.search = searchTerm;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           }, 300);
         }
 
@@ -498,13 +410,15 @@
          * Apply all filters and sorting
          */
         function applyAllFilters() {
-          console.log("Applying filters:", currentFilters);
-          console.log("Total events:", allEvents.length);
+          console.log("=== Applying filters ===");
+          console.log("Current filters:", currentFilters);
+          console.log("Total events before filtering:", allEvents.length);
           let filtered = [...allEvents];
 
           // Search filter
-          if (currentFilters.search) {
-            const term = currentFilters.search.toLowerCase();
+          if (currentFilters.search && currentFilters.search.trim() !== "") {
+            const beforeCount = filtered.length;
+            const term = currentFilters.search.toLowerCase().trim();
             filtered = filtered.filter((event) => {
               const title =
                 (event.language &&
@@ -534,16 +448,24 @@
                 tags.includes(term)
               );
             });
+            console.log(
+              `Search filter "${term}": ${beforeCount} -> ${filtered.length} events`
+            );
           }
 
           // Category filter
-          if (currentFilters.category) {
+          if (
+            currentFilters.category &&
+            currentFilters.category.trim() !== ""
+          ) {
             const beforeCount = filtered.length;
             filtered = filtered.filter((event) => {
               const eventCategories = event.categories || [];
-              return eventCategories.some(
-                (category) => category.name === currentFilters.category
+              const hasCategory = eventCategories.some(
+                (category) =>
+                  category && category.name === currentFilters.category
               );
+              return hasCategory;
             });
             console.log(
               `Category filter "${currentFilters.category}": ${beforeCount} -> ${filtered.length} events`
@@ -551,19 +473,23 @@
           }
 
           // Location filter
-          if (currentFilters.location) {
+          if (
+            currentFilters.location &&
+            currentFilters.location.trim() !== ""
+          ) {
             const beforeCount = filtered.length;
             filtered = filtered.filter((event) => {
               const postalCode = event.postal || "";
-              return postalCode === currentFilters.location;
+              const matches = postalCode === currentFilters.location;
+              return matches;
             });
             console.log(
               `Location filter "${currentFilters.location}": ${beforeCount} -> ${filtered.length} events`
             );
           }
 
-          // Sort filter
-          if (currentFilters.sort) {
+          // Apply sorting
+          if (currentFilters.sort && currentFilters.sort !== "") {
             filtered.sort((a, b) => {
               switch (currentFilters.sort) {
                 case "date-asc":
@@ -571,34 +497,128 @@
                 case "date-desc":
                   return new Date(b.start || 0) - new Date(a.start || 0);
                 case "title-asc":
-                  const titleA = (a.title || a.title_en || "").toLowerCase();
-                  const titleB = (b.title || b.title_en || "").toLowerCase();
+                  const titleA = (
+                    a.language?.en?.title ||
+                    a.title ||
+                    a.title_en ||
+                    ""
+                  ).toLowerCase();
+                  const titleB = (
+                    b.language?.en?.title ||
+                    b.title ||
+                    b.title_en ||
+                    ""
+                  ).toLowerCase();
                   return titleA.localeCompare(titleB);
                 case "title-desc":
-                  const titleA2 = (a.title || a.title_en || "").toLowerCase();
-                  const titleB2 = (b.title || b.title_en || "").toLowerCase();
+                  const titleA2 = (
+                    a.language?.en?.title ||
+                    a.title ||
+                    a.title_en ||
+                    ""
+                  ).toLowerCase();
+                  const titleB2 = (
+                    b.language?.en?.title ||
+                    b.title ||
+                    b.title_en ||
+                    ""
+                  ).toLowerCase();
                   return titleB2.localeCompare(titleA2);
                 default:
                   return 0;
               }
             });
-          }
-
-          // Apply date order toggle
-          if (currentFilters.dateOrder === "asc") {
-            filtered.sort(
-              (a, b) => new Date(a.start || 0) - new Date(b.start || 0)
-            );
+            console.log(`Applied sort: ${currentFilters.sort}`);
           } else {
-            filtered.sort(
-              (a, b) => new Date(b.start || 0) - new Date(a.start || 0)
+            // Apply default date order toggle when no specific sort is selected
+            if (currentFilters.dateOrder === "asc") {
+              filtered.sort(
+                (a, b) => new Date(a.start || 0) - new Date(b.start || 0)
+              );
+            } else {
+              filtered.sort(
+                (a, b) => new Date(b.start || 0) - new Date(a.start || 0)
+              );
+            }
+            console.log(
+              `Applied default date order: ${currentFilters.dateOrder}`
             );
           }
 
           filteredEvents = filtered;
-          displayedEvents = filteredEvents.length; // Show all filtered events
-          console.log(`Final result: ${filteredEvents.length} events`);
+          displayedEvents = Math.min(eventsPerLoad, filteredEvents.length); // Reset to first batch when filters change
+          console.log(`=== Final result: ${filteredEvents.length} events ===`);
           displayEvents();
+        }
+
+        /**
+         * Populate filter dropdowns with actual data
+         */
+        function populateFilterOptions() {
+          console.log("Populating filter options...");
+
+          // Extract unique categories and locations from events
+          allEvents.forEach((event) => {
+            // Extract categories
+            if (event.categories && Array.isArray(event.categories)) {
+              event.categories.forEach((cat) => {
+                if (cat.name) {
+                  availableCategories.add(cat.name);
+                }
+              });
+            }
+
+            // Extract locations (postal codes)
+            if (event.postal) {
+              const locationLabel = event.city
+                ? `${event.postal} ${event.city}`
+                : event.postal;
+              availableLocations.add(
+                JSON.stringify({ postal: event.postal, label: locationLabel })
+              );
+            }
+          });
+
+          // Populate category filter
+          const categoryFilter = document.getElementById("category-filter");
+          if (categoryFilter) {
+            // Keep the "All Categories" option
+            categoryFilter.innerHTML =
+              '<option value="">All Categories</option>';
+
+            // Add actual categories from data
+            const sortedCategories = Array.from(availableCategories).sort();
+            sortedCategories.forEach((category) => {
+              const option = document.createElement("option");
+              option.value = category;
+              option.textContent = category;
+              categoryFilter.appendChild(option);
+            });
+            console.log(
+              `Added ${sortedCategories.length} categories to filter`
+            );
+          }
+
+          // Populate location filter
+          const locationFilter = document.getElementById("location-filter");
+          if (locationFilter) {
+            // Keep the "All Locations" option
+            locationFilter.innerHTML =
+              '<option value="">All Locations</option>';
+
+            // Add actual locations from data
+            const locations = Array.from(availableLocations)
+              .map((loc) => JSON.parse(loc))
+              .sort((a, b) => a.postal.localeCompare(b.postal));
+
+            locations.forEach((location) => {
+              const option = document.createElement("option");
+              option.value = location.postal;
+              option.textContent = location.label;
+              locationFilter.appendChild(option);
+            });
+            console.log(`Added ${locations.length} locations to filter`);
+          }
         }
 
         /**
@@ -628,9 +648,12 @@
               allEvents = [];
             }
 
-            // Initialize with all events
+            // Populate filter dropdowns with actual data
+            populateFilterOptions();
+
+            // Initialize with limited events (first load)
             filteredEvents = [...allEvents];
-            displayedEvents = allEvents.length; // Show all events initially
+            displayedEvents = Math.min(eventsPerLoad, allEvents.length); // Show only first batch
             displayEvents();
           } catch (error) {
             console.error("Error loading events:", error);
@@ -657,18 +680,24 @@
           eventsGrid.style.opacity = "0.7";
 
           requestAnimationFrame(() => {
-            eventsGrid.innerHTML = eventsToShow
-              .map((event) => createEventCard(event))
-              .join("");
+            if (eventsToShow.length === 0) {
+              eventsGrid.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                  <p class="text-gray-500 text-lg">No events found matching your filters.</p>
+                  <p class="text-gray-400 text-sm mt-2">Try adjusting your filters to see more results.</p>
+                </div>
+              `;
+            } else {
+              eventsGrid.innerHTML = eventsToShow
+                .map((event) => createEventCard(event))
+                .join("");
+            }
 
             eventsGrid.style.opacity = "1";
           });
 
-          // Show/hide load more button (hide it since we show all events initially)
-          const loadMoreBtn = document.getElementById("load-more-btn");
-          if (loadMoreBtn) {
-            loadMoreBtn.style.display = "none"; // Hide load more since we show all events
-          }
+          // Show/hide load more button based on remaining events
+          updateLoadMoreButton();
 
           // Update results count
           updateResultsCount();
@@ -697,7 +726,19 @@
         function updateResultsCount() {
           const resultsCount = document.getElementById("results-count");
           if (resultsCount) {
-            resultsCount.textContent = `Showing ${displayedEvents} of ${filteredEvents.length} events`;
+            if (filteredEvents.length === 0) {
+              resultsCount.textContent = "No events found";
+            } else if (displayedEvents >= filteredEvents.length) {
+              // Showing all available events
+              if (filteredEvents.length === allEvents.length) {
+                resultsCount.textContent = `Showing all ${filteredEvents.length} events`;
+              } else {
+                resultsCount.textContent = `Showing all ${filteredEvents.length} of ${allEvents.length} events`;
+              }
+            } else {
+              // Showing partial results
+              resultsCount.textContent = `Showing ${displayedEvents} of ${filteredEvents.length} events`;
+            }
           }
         }
 
@@ -705,10 +746,14 @@
          * Load more events
          */
         function loadMoreEvents() {
+          console.log(
+            `Loading more events. Current: ${displayedEvents}, Total: ${filteredEvents.length}`
+          );
           displayedEvents = Math.min(
             displayedEvents + eventsPerLoad,
             filteredEvents.length
           );
+          console.log(`Now displaying: ${displayedEvents} events`);
           displayEvents();
         }
 
@@ -727,7 +772,6 @@
           }
 
           applyAllFilters();
-          updateActiveFiltersDisplay();
         }
 
         /**
@@ -755,10 +799,12 @@
             ".load-more-container"
           );
 
+          if (!loadMoreContainer) return;
+
           if (displayedEvents >= filteredEvents.length) {
             loadMoreContainer.style.display = "none";
           } else {
-            loadMoreContainer.style.display = "block";
+            loadMoreContainer.style.display = "flex";
           }
         }
 
@@ -832,7 +878,7 @@
 
           // Update filtered events and reset display
           filteredEvents = results;
-          displayedEvents = 0;
+          displayedEvents = Math.min(eventsPerLoad, filteredEvents.length);
           displayEvents();
         }
 
@@ -855,6 +901,9 @@
          * Clear all filters
          */
         function clearAllFilters() {
+          console.log("Clearing all filters...");
+
+          // Reset filter state
           currentFilters = {
             search: "",
             category: "",
@@ -863,21 +912,32 @@
             dateOrder: "desc",
           };
 
-          document.getElementById("category-filter").value = "";
-          document.getElementById("location-filter").value = "";
-          document.getElementById("sort-filter").value = "";
-          document.getElementById("search-input").value = "";
+          // Reset form elements
+          const categoryFilter = document.getElementById("category-filter");
+          const locationFilter = document.getElementById("location-filter");
+          const sortFilter = document.getElementById("sort-filter");
+          const searchInput = document.getElementById("search-input");
 
+          if (categoryFilter) categoryFilter.value = "";
+          if (locationFilter) locationFilter.value = "";
+          if (sortFilter) sortFilter.value = "";
+          if (searchInput) searchInput.value = "";
+
+          // Reset date order
           dateOrderAscending = false;
           const dateOrderText = document.getElementById("date-order-text");
           if (dateOrderText) {
             dateOrderText.textContent = "Latest First";
           }
 
+          // Reset filtered events
           filteredEvents = [...allEvents];
-          displayedEvents = allEvents.length; // Show all events
+          displayedEvents = Math.min(eventsPerLoad, allEvents.length); // Reset to first batch
+
+          // Update display
           displayEvents();
-          updateActiveFiltersDisplay();
+
+          console.log("Filters cleared, showing first batch of events");
         }
 
         /**
@@ -916,7 +976,6 @@
           document.getElementById("search-input").value = searchTerm;
           currentFilters.search = searchTerm;
           applyAllFilters();
-          updateActiveFiltersDisplay();
           hideSearchSuggestions();
         }
 
@@ -968,7 +1027,6 @@
             console.log("Category filter changed to:", e.target.value);
             currentFilters.category = e.target.value;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           });
 
         document
@@ -977,7 +1035,6 @@
             console.log("Location filter changed to:", e.target.value);
             currentFilters.location = e.target.value;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           });
 
         document
@@ -985,7 +1042,6 @@
           .addEventListener("change", (e) => {
             currentFilters.sort = e.target.value;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           });
 
         document

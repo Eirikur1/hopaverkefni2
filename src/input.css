@@ -756,7 +756,14 @@
   }
 
   .footer-content {
-    @apply max-w-7xl mx-auto px-4 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-8;
+    @apply max-w-7xl mx-auto px-4 md:px-10 grid grid-cols-1 md:grid-cols-2;
+    gap: 2rem; /* Mobile gap */
+  }
+
+  @media (min-width: 768px) {
+    .footer-content {
+      gap: 263px; /* Desktop gap between footer sections */
+    }
   }
 
   .footer-section h3 {
@@ -767,6 +774,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    margin-bottom: 12px;
   }
 
   .footer-section p {
@@ -777,6 +785,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+  }
+
+  .footer-section p + p {
+    margin-top: 8px;
   }
 
   .footer-section a {
