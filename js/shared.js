@@ -221,7 +221,7 @@ class VenuuApp {
             if (target.closest(".event-heart")) {
                 e.preventDefault();
                 const eventItem = target.closest(".event-item");
-                const eventId = eventItem?.dataset.eventId;
+                const eventId = eventItem === null || eventItem === void 0 ? void 0 : eventItem.dataset.eventId;
                 if (eventId) {
                     this.toggleFavorite(eventId);
                 }

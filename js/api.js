@@ -10,10 +10,7 @@ export class ApiService {
      */
     async request(endpoint, options = {}) {
         const url = `${this.baseUrl}${endpoint}`;
-        const config = {
-            headers: { ...this.defaultHeaders, ...options.headers },
-            ...options,
-        };
+        const config = Object.assign({ headers: Object.assign(Object.assign({}, this.defaultHeaders), options.headers) }, options);
         try {
             const response = await fetch(url, config);
             if (!response.ok) {
@@ -269,7 +266,7 @@ export class UserPreferencesApi {
         };
         try {
             const stored = localStorage.getItem(this.storageKey);
-            return stored ? { ...defaultPrefs, ...JSON.parse(stored) } : defaultPrefs;
+            return stored ? Object.assign(Object.assign({}, defaultPrefs), JSON.parse(stored)) : defaultPrefs;
         }
         catch (error) {
             console.error("Error loading preferences:", error);
@@ -282,7 +279,7 @@ export class UserPreferencesApi {
     savePreferences(preferences) {
         try {
             const currentPrefs = this.getPreferences();
-            const updatedPrefs = { ...currentPrefs, ...preferences };
+            const updatedPrefs = Object.assign(Object.assign({}, currentPrefs), preferences);
             localStorage.setItem(this.storageKey, JSON.stringify(updatedPrefs));
         }
         catch (error) {

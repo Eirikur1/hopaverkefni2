@@ -39,8 +39,8 @@
         <div class="nav-links hidden md:flex">
           <a href="events.html" class="nav-link">Events</a>
           <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="create-events.html" class="nav-link">Create Events</a>
-          <a href="login.html" class="nav-link">Login</a>
+          <a href="create-events.html" class="nav-link">Create Event</a>
+          <a href="login.html" id="nav-login" class="nav-link">Login</a>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -1207,5 +1207,20 @@
         </div>
       </div>
     </div>
+
+    
+  <!-- Link to navigation login logic script  -->
+  <script type="module" src="./js/nav.js"></script>
+  <script>
+    // Retrieve the user's email from localStorage
+    const user = localStorage.getItem("userEmail");
+    // If no user is logged in, redirect to the login page
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      // If user is logged in, display their email in the element with ID "user-name"
+      document.getElementById("user-name").textContent = user;
+    }
+  </script>
   </body>
 </html>

@@ -4,8 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    
+    <!-- External Libraries -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/login.css" />
 </head>
-<body>
-    <h1>Login</h1>
+
+<body class="bg-background text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="flex justify-between items-center w-full">
+        <a
+          href="index.html"
+          class="flex items-center"
+          aria-label="Venuu - Go to homepage"
+        >
+          <div id="lottie-logo" class="nav-logo"></div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-links hidden md:flex">
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="create-events.html" class="nav-link">Create Event</a>
+          <a href="login.html" id="nav-login" class="nav-link">Login</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="mobile-menu-btn md:hidden"
+          aria-label="Toggle mobile menu"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+<!-- Login form -->
+ <main class="login-container">
+    <h2>Log In</h2>
+    <form id="login-form">
+      <label for="email">Email</label>
+      <input id="email" type="text" placeholder="Email" />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Password" />
+
+      <button type="submit" class="login-btn">Log In</button>
+      <p id="error-msg" class="error-msg"></p>
+    </form>
+  </main>
+
+<!-- Link to login logic script  -->
+<script type="module" src="./js/login.js"></script>
+
+<!-- Footer  -->
 </body>
+
 </html>
