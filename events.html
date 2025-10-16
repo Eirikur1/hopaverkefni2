@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venuu - Discover Amazing Events</title>
+
+    <!-- External Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/in-view@0.6.1/dist/in-view.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="css/output.css" />
+  </head>
+
+  <body class="bg-background text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="flex justify-between items-center w-full">
+        <a
+          href="index.html"
+          class="flex items-center"
+          aria-label="Venuu - Go to homepage"
+        >
+          <div id="lottie-logo" class="nav-logo"></div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-links hidden md:flex">
+          <a href="events.html" class="nav-link active">Events</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="create-events.html" class="nav-link">Create Events</a>
+          <a href="login.html" class="nav-link">Login</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="mobile-menu-btn md:hidden"
+          aria-label="Toggle mobile menu"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Search and Filter Section -->
+    <div class="search-section">
+      <div class="search-filter-container">
+        <!-- Search Bar with Autocomplete -->
+        <div class="relative mb-6">
+          <div class="relative">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search for events..."
+              class="w-full px-4 py-3 pl-12 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              autocomplete="off"
+              aria-label="Search for events"
+            />
+            <img
+              src="./Images/Images_and_lottie/svg/Search_icon.svg"
+              alt="Search"
+              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+            />
+          </div>
+          <!-- Autocomplete Dropdown -->
+          <div
+            id="search-suggestions"
+            class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden"
+          >
+            <div class="py-2">
+              <div class="px-4 py-2 text-sm text-gray-500">Recent searches</div>
+              <div id="suggestions-list" class="max-h-48 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap gap-4 items-center justify-center">
+          <!-- Category Filter -->
+          <div class="flex flex-col">
+            <label
+              for="category-filter"
+              class="text-sm font-medium text-gray-700 mb-1"
+              >Category</label
+            >
+            <select
+              id="category-filter"
+              class="filter-button"
+              aria-label="Filter by category"
+            >
+              <option value="">All Categories</option>
+              <option value="Tónlist">Tónlist (Music)</option>
+              <option value="Myndlist">Myndlist (Art)</option>
+              <option value="Sýning">Sýning (Exhibition)</option>
+              <option value="Dans">Dans (Dance)</option>
+              <option value="Bókmenntir">Bókmenntir (Literature)</option>
+              <option value="Saga">Saga (History)</option>
+              <option value="Fræðsla">Fræðsla (Education)</option>
+              <option value="Smiðja">Smiðja (Workshop)</option>
+              <option value="Náttúra">Náttúra (Nature)</option>
+              <option value="Hönnun">Hönnun (Design)</option>
+              <option value="Sýningarspjall">
+                Sýningarspjall (Exhibition Talk)
+              </option>
+              <option value="Annað">Annað (Other)</option>
+            </select>
+          </div>
+
+          <!-- Location Filter -->
+          <div class="flex flex-col">
+            <label
+              for="location-filter"
+              class="text-sm font-medium text-gray-700 mb-1"
+              >Location</label
+            >
+            <select
+              id="location-filter"
+              class="filter-button"
+              aria-label="Filter by location"
+            >
+              <option value="">All Locations</option>
+              <option value="101">101 Reykjavík</option>
+              <option value="102">102 Reykjavík</option>
+              <option value="105">105 Reykjavík</option>
+              <option value="107">107 Reykjavík</option>
+              <option value="225">225 Garðabær</option>
+            </select>
+          </div>
+
+          <!-- Sort Filter -->
+          <div class="flex flex-col">
+            <label
+              for="sort-filter"
+              class="text-sm font-medium text-gray-700 mb-1"
+              >Sort by</label
+            >
+            <select
+              id="sort-filter"
+              class="filter-button"
+              aria-label="Sort events"
+            >
+              <option value="">Default</option>
+              <option value="date-asc">Date (Earliest)</option>
+              <option value="date-desc">Date (Latest)</option>
+              <option value="title-asc">Title (A-Z)</option>
+              <option value="title-desc">Title (Z-A)</option>
+            </select>
+          </div>
+
+          <!-- Date Order Toggle -->
+          <div class="flex flex-col">
+            <label class="text-sm font-medium text-gray-700 mb-1"
+              >Date Order</label
+            >
+            <button
+              id="date-order-toggle"
+              class="filter-button"
+              aria-label="Toggle date order"
+            >
+              <span id="date-order-text">Latest First</span>
+            </button>
+          </div>
+
+          <!-- Clear Filters -->
+          <div class="flex flex-col">
+            <label class="text-sm font-medium text-gray-700 mb-1"
+              >Actions</label
+            >
+            <button
+              id="clear-filters"
+              class="filter-button"
+              aria-label="Clear all filters"
+            >
+              Clear All
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Filters Display -->
+        <div id="active-filters" class="mt-4 flex flex-wrap gap-2 hidden">
+          <span class="text-sm text-gray-600">Active filters:</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events Section -->
+    <section id="events-section" class="events-container">
+      <div class="events-grid" id="events-grid">
+        <!-- Event cards will be loaded here -->
+      </div>
+
+      <!-- Load More Button -->
+      <div class="load-more-container mt-8">
+        <button id="load-more-btn" class="load-more-btn">
+          Load More Events
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <address class="mb-2 not-italic">
+            <p>Reykjavik, Iceland</p>
+            <p>
+              <a href="mailto:info@venuu.is">info@venuu.is</a>
+            </p>
+            <p>
+              <a href="tel:+3541234567">+354 123 4567</a>
+            </p>
+            <div class="social-media-icons">
+              <a href="#" aria-label="Facebook">
+                <svg
+                  width="10"
+                  height="20"
+                  viewBox="0 0 10 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 6.5V4.5C6.5 3.7 7.2 3 8 3H9.5V0H6.5C4.6 0 3 1.6 3 3.5V6.5H0V10H3V20H6.5V10H9.5L10 6.5H6.5Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.5 0C4.3 0 0 4.3 0 9.5S4.3 19 9.5 19 19 14.7 19 9.5 14.7 0 9.5 0ZM9.5 16.2C6.1 16.2 3.3 13.4 3.3 9.5S6.1 2.8 9.5 2.8 15.7 5.6 15.7 9.5 12.9 16.2 9.5 16.2Z"
+                    fill="#333333"
+                  />
+                  <circle cx="9.5" cy="9.5" r="2.8" fill="#333333" />
+                  <circle cx="14.6" cy="4.4" r="0.7" fill="#333333" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Twitter">
+                <svg
+                  width="23"
+                  height="19"
+                  viewBox="0 0 23 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M23 2.3C22.1 2.7 21.2 2.9 20.2 3C21.2 2.4 22 1.5 22.4 0.4C21.5 1 20.4 1.3 19.3 1.5C18.5 0.6 17.3 0 16 0C13.4 0 11.3 2.1 11.3 4.7C11.3 5.1 11.3 5.4 11.4 5.8C7.5 5.6 4 3.7 1.6 0.9C1.2 1.5 1 2.3 1 3.1C1 4.6 1.8 5.9 3 6.6C2.3 6.6 1.6 6.4 1 6.1V6.2C1 8.4 2.6 10.2 4.7 10.6C4.3 10.7 3.9 10.8 3.4 10.8C3.1 10.8 2.8 10.7 2.5 10.7C3.1 12.4 4.7 13.6 6.6 13.6C5.1 14.7 3.2 15.3 1.2 15.3C0.8 15.3 0.4 15.3 0 15.2C2 16.4 4.4 17.1 6.9 17.1C16 17.1 20.8 10.9 20.8 5.2C20.8 5 20.8 4.8 20.8 4.6C21.8 4 22.7 3.2 23.4 2.3L23 2.3Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+            </div>
+          </address>
+        </div>
+        <div class="footer-section">
+          <h3>About</h3>
+          <p>
+            Venuu connects people through Iceland's vibrant cultural events.
+          </p>
+          <p>2025 Venuu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Shared JavaScript -->
+    <script src="js/shared.js"></script>
+
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Events page DOMContentLoaded called");
+
+        /**
+         * Array of available poster images
+         */
+        const posterImages = [
+          "068e9d4bef717cd1000843dc38c603ec.jpg",
+          "1d595e6dc1b6a3d963b932eb94de79d1.jpg",
+          "233986128f46951bf66a727cca1b3a18.jpg",
+          "24de6470d3365d85550c2c65ce8ddfca.jpg",
+          "3bd777f8c2760cbf585251808e738698.jpg",
+          "3f117cff666f231104f270edda727dab.jpg",
+          "53fe06b8e5fe6593f0f2a5de835609d2.jpg",
+          "542dfd6b879d676a823e611028e40984.jpg",
+          "783d478fde50b0f1d23ed5db8e9e2dee.jpg",
+          "90f82bfbdb111074fdfe5c1a6d813f5e.jpg",
+          "9303687a932a721b3a360633ade52260.jpg",
+          "96ec819f4ad7e5237c653c05baf5cd8c.jpg",
+          "b365df6222f9cce1e0ec0bf2ee881fb9.jpg",
+          "b3a1e66d241d956c3de527627d3c0a8a.jpg",
+          "d7ecf3fce251c523f3bb43ee6620e902.jpg",
+          "istockphoto-1478375497-612x612.jpg",
+          "istockphoto-494896581-612x612.jpg",
+          "pexels-jibarofoto-2774556.jpg",
+          "Poster.jpg",
+        ];
+
+        // Global variables for event management
+        let allEvents = [];
+        let filteredEvents = [];
+        let displayedEvents = 0;
+        const eventsPerLoad = 12;
+        let searchTimeout = null;
+        let dateOrderAscending = false;
+        let recentSearches = JSON.parse(
+          localStorage.getItem("recentSearches") || "[]"
+        );
+
+        // Filter state management
+        let currentFilters = {
+          search: "",
+          category: "",
+          location: "",
+          sort: "",
+          dateOrder: "desc",
+        };
+
+        /**
+         * Get consistent image for an event based on its ID
+         */
+        function getEventImage(event) {
+          const eventId =
+            event.id || event.title || event.title_en || "default";
+          const hash = eventId
+            .toString()
+            .split("")
+            .reduce((a, b) => {
+              a = (a << 5) - a + b.charCodeAt(0);
+              return a & a;
+            }, 0);
+          const imageIndex = Math.abs(hash) % posterImages.length;
+          return posterImages[imageIndex];
+        }
+
+        /**
+         * Create HTML for an event card matching the main page style
+         */
+        function createEventCard(event) {
+          const title =
+            (event.language && event.language.en && event.language.en.title) ||
+            event.title ||
+            event.title_en ||
+            "Untitled";
+
+          const date = event.start
+            ? new Date(event.start).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+
+          // Extract location information - prioritize postal code and city
+          let location = "";
+          if (event.postal && event.city) {
+            location = `${event.postal} ${event.city}`;
+          } else if (
+            event.language &&
+            event.language.en &&
+            event.language.en.place
+          ) {
+            location = event.language.en.place;
+          } else if (event.formatted_address) {
+            // Extract postal code and city from formatted address
+            const addressParts = event.formatted_address.split(", ");
+            if (addressParts.length >= 2) {
+              const postalAndCity = addressParts[addressParts.length - 1];
+              location = postalAndCity;
+            } else {
+              location = event.formatted_address;
+            }
+          } else if (event.city) {
+            location = event.city;
+          }
+
+          // Use actual event image if available, otherwise use random poster
+          let image;
+          if (event.event_image && event.event_image.startsWith("/media/")) {
+            // Use the actual event image from the API
+            image = `https://api.venuu.is${event.event_image}`;
+          } else if (
+            event.event_thumbnail &&
+            event.event_thumbnail.startsWith("/media/")
+          ) {
+            // Fallback to thumbnail
+            image = `https://api.venuu.is${event.event_thumbnail}`;
+          } else {
+            // Use consistent poster image based on event ID
+            const posterImage = getEventImage(event);
+            image = `./Images/posters/${posterImage}`;
+          }
+
+          // Card markup matching main page structure
+          return `
+            <div class="event-item" data-event='${JSON.stringify(event).replace(
+              /'/g,
+              "&#39;"
+            )}'>
+              <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
+              <div class="event-content flex flex-col p-4 gap-1.5">
+                <div class="event-title">${title}</div>
+                <div class="event-date-row">
+                  <div class="date-section">
+                    <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                      <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                      <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <div class="event-date">${date}</div>
+                  </div>
+                  <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="event-location">${location}</div>
+              </div>
+            </div>
+          `;
+        }
+
+        /**
+         * Update active filters display
+         */
+        function updateActiveFiltersDisplay() {
+          const activeFiltersContainer =
+            document.getElementById("active-filters");
+          const activeFilters = [];
+
+          if (currentFilters.search) {
+            activeFilters.push(
+              `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Search: "${currentFilters.search}"</span>`
+            );
+          }
+          if (currentFilters.category) {
+            activeFilters.push(
+              `<span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Category: ${currentFilters.category}</span>`
+            );
+          }
+          if (currentFilters.location) {
+            activeFilters.push(
+              `<span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Location: ${currentFilters.location}</span>`
+            );
+          }
+          if (currentFilters.sort) {
+            activeFilters.push(
+              `<span class="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Sort: ${currentFilters.sort}</span>`
+            );
+          }
+
+          if (activeFilters.length > 0) {
+            activeFiltersContainer.innerHTML =
+              '<span class="text-sm text-gray-600">Active filters:</span>' +
+              activeFilters.join("");
+            activeFiltersContainer.classList.remove("hidden");
+          } else {
+            activeFiltersContainer.classList.add("hidden");
+          }
+        }
+
+        /**
+         * Debounced search function
+         */
+        function debouncedSearch(searchTerm) {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            currentFilters.search = searchTerm;
+            applyAllFilters();
+            updateActiveFiltersDisplay();
+          }, 300);
+        }
+
+        /**
+         * Apply all filters and sorting
+         */
+        function applyAllFilters() {
+          console.log("Applying filters:", currentFilters);
+          console.log("Total events:", allEvents.length);
+          let filtered = [...allEvents];
+
+          // Search filter
+          if (currentFilters.search) {
+            const term = currentFilters.search.toLowerCase();
+            filtered = filtered.filter((event) => {
+              const title =
+                (event.language &&
+                  event.language.en &&
+                  event.language.en.title) ||
+                event.title ||
+                event.title_en ||
+                "";
+              let location = "";
+              if (event.postal && event.city) {
+                location = `${event.postal} ${event.city}`;
+              } else if (event.city) {
+                location = event.city;
+              } else if (event.formatted_address) {
+                const addressParts = event.formatted_address.split(", ");
+                if (addressParts.length >= 2) {
+                  location = addressParts[addressParts.length - 1];
+                } else {
+                  location = event.formatted_address;
+                }
+              }
+              const tags = (event.tags || []).join(" ").toLowerCase();
+
+              return (
+                title.toLowerCase().includes(term) ||
+                location.toLowerCase().includes(term) ||
+                tags.includes(term)
+              );
+            });
+          }
+
+          // Category filter
+          if (currentFilters.category) {
+            const beforeCount = filtered.length;
+            filtered = filtered.filter((event) => {
+              const eventCategories = event.categories || [];
+              return eventCategories.some(
+                (category) => category.name === currentFilters.category
+              );
+            });
+            console.log(
+              `Category filter "${currentFilters.category}": ${beforeCount} -> ${filtered.length} events`
+            );
+          }
+
+          // Location filter
+          if (currentFilters.location) {
+            const beforeCount = filtered.length;
+            filtered = filtered.filter((event) => {
+              const postalCode = event.postal || "";
+              return postalCode === currentFilters.location;
+            });
+            console.log(
+              `Location filter "${currentFilters.location}": ${beforeCount} -> ${filtered.length} events`
+            );
+          }
+
+          // Sort filter
+          if (currentFilters.sort) {
+            filtered.sort((a, b) => {
+              switch (currentFilters.sort) {
+                case "date-asc":
+                  return new Date(a.start || 0) - new Date(b.start || 0);
+                case "date-desc":
+                  return new Date(b.start || 0) - new Date(a.start || 0);
+                case "title-asc":
+                  const titleA = (a.title || a.title_en || "").toLowerCase();
+                  const titleB = (b.title || b.title_en || "").toLowerCase();
+                  return titleA.localeCompare(titleB);
+                case "title-desc":
+                  const titleA2 = (a.title || a.title_en || "").toLowerCase();
+                  const titleB2 = (b.title || b.title_en || "").toLowerCase();
+                  return titleB2.localeCompare(titleA2);
+                default:
+                  return 0;
+              }
+            });
+          }
+
+          // Apply date order toggle
+          if (currentFilters.dateOrder === "asc") {
+            filtered.sort(
+              (a, b) => new Date(a.start || 0) - new Date(b.start || 0)
+            );
+          } else {
+            filtered.sort(
+              (a, b) => new Date(b.start || 0) - new Date(a.start || 0)
+            );
+          }
+
+          filteredEvents = filtered;
+          displayedEvents = filteredEvents.length; // Show all filtered events
+          console.log(`Final result: ${filteredEvents.length} events`);
+          displayEvents();
+        }
+
+        /**
+         * Load events from API
+         */
+        async function loadEvents() {
+          try {
+            console.log("Loading events from API...");
+            const response = await fetch("./api-data.json");
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("API response received:", data);
+
+            if (data && Array.isArray(data)) {
+              allEvents = data;
+              console.log(`Loaded ${allEvents.length} events from API`);
+              // Debug: Check first few events
+              if (allEvents.length > 0) {
+                console.log("First event sample:", allEvents[0]);
+                console.log("First event categories:", allEvents[0].categories);
+                console.log("First event postal:", allEvents[0].postal);
+              }
+            } else {
+              console.error("Invalid API data structure:", data);
+              allEvents = [];
+            }
+
+            // Initialize with all events
+            filteredEvents = [...allEvents];
+            displayedEvents = allEvents.length; // Show all events initially
+            displayEvents();
+          } catch (error) {
+            console.error("Error loading events:", error);
+            allEvents = [];
+            filteredEvents = [];
+            displayedEvents = 0;
+            displayEvents();
+          }
+        }
+
+        /**
+         * Display events in the grid with smooth animations
+         */
+        function displayEvents() {
+          const eventsGrid = document.getElementById("events-grid");
+          if (!eventsGrid) {
+            console.error("Events grid not found");
+            return;
+          }
+
+          const eventsToShow = filteredEvents.slice(0, displayedEvents);
+
+          // Add smooth transition
+          eventsGrid.style.opacity = "0.7";
+
+          requestAnimationFrame(() => {
+            eventsGrid.innerHTML = eventsToShow
+              .map((event) => createEventCard(event))
+              .join("");
+
+            eventsGrid.style.opacity = "1";
+          });
+
+          // Show/hide load more button (hide it since we show all events initially)
+          const loadMoreBtn = document.getElementById("load-more-btn");
+          if (loadMoreBtn) {
+            loadMoreBtn.style.display = "none"; // Hide load more since we show all events
+          }
+
+          // Update results count
+          updateResultsCount();
+
+          // Add click event listeners to new event cards
+          addEventCardListeners();
+        }
+
+        /**
+         * Add click event listeners to event cards
+         */
+        function addEventCardListeners() {
+          const eventCards = document.querySelectorAll(".event-item");
+          eventCards.forEach((card) => {
+            card.addEventListener("click", () => {
+              const eventData = JSON.parse(card.getAttribute("data-event"));
+              console.log("Event clicked:", eventData);
+              // You can add navigation to event details page here
+            });
+          });
+        }
+
+        /**
+         * Update results count display
+         */
+        function updateResultsCount() {
+          const resultsCount = document.getElementById("results-count");
+          if (resultsCount) {
+            resultsCount.textContent = `Showing ${displayedEvents} of ${filteredEvents.length} events`;
+          }
+        }
+
+        /**
+         * Load more events
+         */
+        function loadMoreEvents() {
+          displayedEvents = Math.min(
+            displayedEvents + eventsPerLoad,
+            filteredEvents.length
+          );
+          displayEvents();
+        }
+
+        /**
+         * Toggle date order
+         */
+        function toggleDateOrder() {
+          dateOrderAscending = !dateOrderAscending;
+          currentFilters.dateOrder = dateOrderAscending ? "asc" : "desc";
+
+          const dateOrderText = document.getElementById("date-order-text");
+          if (dateOrderText) {
+            dateOrderText.textContent = dateOrderAscending
+              ? "Earliest First"
+              : "Latest First";
+          }
+
+          applyAllFilters();
+          updateActiveFiltersDisplay();
+        }
+
+        /**
+         * Show load more button loading state
+         */
+        function showLoadMoreLoading() {
+          const loadMoreBtn = document.getElementById("load-more-btn");
+          loadMoreBtn.classList.add("loading");
+        }
+
+        /**
+         * Hide load more button loading state
+         */
+        function hideLoadMoreLoading() {
+          const loadMoreBtn = document.getElementById("load-more-btn");
+          loadMoreBtn.classList.remove("loading");
+        }
+
+        /**
+         * Update load more button visibility
+         */
+        function updateLoadMoreButton() {
+          const loadMoreBtn = document.getElementById("load-more-btn");
+          const loadMoreContainer = document.querySelector(
+            ".load-more-container"
+          );
+
+          if (displayedEvents >= filteredEvents.length) {
+            loadMoreContainer.style.display = "none";
+          } else {
+            loadMoreContainer.style.display = "block";
+          }
+        }
+
+        /**
+         * Search and filter events
+         */
+        function filterEvents(searchTerm) {
+          // Store search term globally
+          currentFilters.search = searchTerm.trim();
+
+          // Start with all events
+          let results = [...allEvents];
+
+          // Apply search filter
+          if (currentFilters.search) {
+            const term = currentFilters.search.toLowerCase();
+            results = results.filter((event) => {
+              const title = (event.title || event.title_en || "").toLowerCase();
+              const location =
+                event.postal && event.city
+                  ? `${event.postal} ${event.city}`.toLowerCase()
+                  : (event.city || "").toLowerCase();
+              const tags = (event.tags || []).join(" ").toLowerCase();
+
+              return (
+                title.includes(term) ||
+                location.includes(term) ||
+                tags.includes(term)
+              );
+            });
+          }
+
+          // Apply category filter
+          if (currentFilters.category) {
+            results = results.filter((event) => {
+              const categories = event.categories || [];
+              return categories.some(
+                (cat) => cat.name === currentFilters.category
+              );
+            });
+          }
+
+          // Apply location filter
+          if (currentFilters.location) {
+            results = results.filter((event) => {
+              return event.postal === currentFilters.location;
+            });
+          }
+
+          // Apply sorting
+          if (currentFilters.sort) {
+            results.sort((a, b) => {
+              switch (currentFilters.sort) {
+                case "date-asc":
+                  return new Date(a.start) - new Date(b.start);
+                case "date-desc":
+                  return new Date(b.start) - new Date(a.start);
+                case "title-asc":
+                  const titleA = (a.title || a.title_en || "").toLowerCase();
+                  const titleB = (b.title || b.title_en || "").toLowerCase();
+                  return titleA.localeCompare(titleB);
+                case "title-desc":
+                  const titleA2 = (a.title || a.title_en || "").toLowerCase();
+                  const titleB2 = (b.title || b.title_en || "").toLowerCase();
+                  return titleB2.localeCompare(titleA2);
+                default:
+                  return 0;
+              }
+            });
+          }
+
+          // Update filtered events and reset display
+          filteredEvents = results;
+          displayedEvents = 0;
+          displayEvents();
+        }
+
+        /**
+         * Add click event listeners to event cards
+         */
+        function addEventCardListeners() {
+          const eventCards = document.querySelectorAll(".event-item");
+          eventCards.forEach((card) => {
+            card.addEventListener("click", (e) => {
+              e.preventDefault();
+              const eventData = JSON.parse(card.getAttribute("data-event"));
+              // You can add modal functionality here if needed
+              console.log("Event clicked:", eventData);
+            });
+          });
+        }
+
+        /**
+         * Clear all filters
+         */
+        function clearAllFilters() {
+          currentFilters = {
+            search: "",
+            category: "",
+            location: "",
+            sort: "",
+            dateOrder: "desc",
+          };
+
+          document.getElementById("category-filter").value = "";
+          document.getElementById("location-filter").value = "";
+          document.getElementById("sort-filter").value = "";
+          document.getElementById("search-input").value = "";
+
+          dateOrderAscending = false;
+          const dateOrderText = document.getElementById("date-order-text");
+          if (dateOrderText) {
+            dateOrderText.textContent = "Latest First";
+          }
+
+          filteredEvents = [...allEvents];
+          displayedEvents = allEvents.length; // Show all events
+          displayEvents();
+          updateActiveFiltersDisplay();
+        }
+
+        /**
+         * Show search suggestions
+         */
+        function showSearchSuggestions() {
+          const suggestionsContainer =
+            document.getElementById("search-suggestions");
+          const suggestionsList = document.getElementById("suggestions-list");
+
+          if (recentSearches.length > 0) {
+            suggestionsList.innerHTML = recentSearches
+              .slice(0, 5)
+              .map(
+                (search) =>
+                  `<div class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm" onclick="selectSuggestion('${search}')">${search}</div>`
+              )
+              .join("");
+            suggestionsContainer.classList.remove("hidden");
+          }
+        }
+
+        /**
+         * Hide search suggestions
+         */
+        function hideSearchSuggestions() {
+          const suggestionsContainer =
+            document.getElementById("search-suggestions");
+          suggestionsContainer.classList.add("hidden");
+        }
+
+        /**
+         * Select search suggestion
+         */
+        function selectSuggestion(searchTerm) {
+          document.getElementById("search-input").value = searchTerm;
+          currentFilters.search = searchTerm;
+          applyAllFilters();
+          updateActiveFiltersDisplay();
+          hideSearchSuggestions();
+        }
+
+        /**
+         * Add to recent searches
+         */
+        function addToRecentSearches(searchTerm) {
+          if (searchTerm && !recentSearches.includes(searchTerm)) {
+            recentSearches.unshift(searchTerm);
+            recentSearches = recentSearches.slice(0, 10); // Keep only 10 recent searches
+            localStorage.setItem(
+              "recentSearches",
+              JSON.stringify(recentSearches)
+            );
+          }
+        }
+
+        // Event listeners with accessibility support
+        document
+          .getElementById("search-input")
+          .addEventListener("input", (e) => {
+            const searchTerm = e.target.value;
+            debouncedSearch(searchTerm);
+
+            if (searchTerm) {
+              showSearchSuggestions();
+            } else {
+              hideSearchSuggestions();
+            }
+          });
+
+        document.getElementById("search-input").addEventListener("blur", () => {
+          setTimeout(hideSearchSuggestions, 200); // Delay to allow click on suggestions
+        });
+
+        document
+          .getElementById("search-input")
+          .addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              const searchTerm = e.target.value;
+              addToRecentSearches(searchTerm);
+              hideSearchSuggestions();
+            }
+          });
+
+        document
+          .getElementById("category-filter")
+          .addEventListener("change", (e) => {
+            console.log("Category filter changed to:", e.target.value);
+            currentFilters.category = e.target.value;
+            applyAllFilters();
+            updateActiveFiltersDisplay();
+          });
+
+        document
+          .getElementById("location-filter")
+          .addEventListener("change", (e) => {
+            console.log("Location filter changed to:", e.target.value);
+            currentFilters.location = e.target.value;
+            applyAllFilters();
+            updateActiveFiltersDisplay();
+          });
+
+        document
+          .getElementById("sort-filter")
+          .addEventListener("change", (e) => {
+            currentFilters.sort = e.target.value;
+            applyAllFilters();
+            updateActiveFiltersDisplay();
+          });
+
+        document
+          .getElementById("date-order-toggle")
+          .addEventListener("click", toggleDateOrder);
+
+        document
+          .getElementById("clear-filters")
+          .addEventListener("click", clearAllFilters);
+
+        document
+          .getElementById("load-more-btn")
+          .addEventListener("click", loadMoreEvents);
+
+        // Keyboard navigation support
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            hideSearchSuggestions();
+          }
+        });
+
+        // Load events when page loads
+        loadEvents();
+      });
+    </script>
+  </body>
+</html>

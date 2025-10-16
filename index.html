@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venuu - Discover Amazing Events</title>
+
+    <!-- External Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/in-view@0.6.1/dist/in-view.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="css/output.css" />
+  </head>
+
+  <body class="bg-background text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="flex justify-between items-center w-full">
+        <a
+          href="index.html"
+          class="flex items-center"
+          aria-label="Venuu - Go to homepage"
+        >
+          <div id="lottie-logo" class="nav-logo"></div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-links hidden md:flex">
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="create-events.html" class="nav-link">Create Events</a>
+          <a href="login.html" class="nav-link">Login</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="mobile-menu-btn md:hidden"
+          aria-label="Toggle mobile menu"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Navigation Section -->
+    <div class="nav-section">
+      <div class="nav-section-text">DISCOVER EVENTS</div>
+      <div class="nav-search-bar">
+        <input
+          type="text"
+          placeholder="Search for events..."
+          class="w-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm pl-4"
+        />
+        <img
+          src="./Images/Images_and_lottie/svg/Search_icon.svg"
+          alt="Search"
+          class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
+        />
+      </div>
+    </div>
+
+    <section id="events-section" class="flex flex-col gap-8">
+      <!-- Recommended Row -->
+      <div
+        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
+      >
+        <div class="flex items-center justify-between w-full mb-2">
+          <h2 class="category-title">Recommended</h2>
+          <div class="flex gap-2">
+            <button
+              class="carousel-nav-btn"
+              data-target="recommended-row"
+              data-direction="prev"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              class="carousel-nav-btn"
+              data-target="recommended-row"
+              data-direction="next"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          id="recommended-row"
+          class="flex flex-row flex-wrap gap-6 w-full"
+        ></div>
+      </div>
+      <!-- Popular Row -->
+      <div
+        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
+      >
+        <div class="flex items-center justify-between w-full mb-2">
+          <h2 class="category-title">Popular</h2>
+          <div class="flex gap-2">
+            <button
+              class="carousel-nav-btn"
+              data-target="popular-row"
+              data-direction="prev"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              class="carousel-nav-btn"
+              data-target="popular-row"
+              data-direction="next"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          id="popular-row"
+          class="flex flex-row flex-wrap gap-6 w-full"
+        ></div>
+      </div>
+      <!-- Music Row -->
+      <div
+        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
+      >
+        <div class="flex items-center justify-between w-full mb-2">
+          <h2 class="category-title">Music</h2>
+          <div class="flex gap-2">
+            <button
+              class="carousel-nav-btn"
+              data-target="music-row"
+              data-direction="prev"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              class="carousel-nav-btn"
+              data-target="music-row"
+              data-direction="next"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="music-row" class="flex flex-row flex-wrap gap-6 w-full"></div>
+      </div>
+      <!-- Family Row -->
+      <div
+        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
+      >
+        <div class="flex items-center justify-between w-full mb-2">
+          <h2 class="category-title">Family</h2>
+          <div class="flex gap-2">
+            <button
+              class="carousel-nav-btn"
+              data-target="family-row"
+              data-direction="prev"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              class="carousel-nav-btn"
+              data-target="family-row"
+              data-direction="next"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="family-row" class="flex flex-row flex-wrap gap-6 w-full"></div>
+      </div>
+    </section>
+
+    <!-- Shared JavaScript -->
+    <script src="js/shared.js"></script>
+
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Inline script DOMContentLoaded called");
+
+        /**
+         * Array of available poster images
+         */
+        const posterImages = [
+          "068e9d4bef717cd1000843dc38c603ec.jpg",
+          "1d595e6dc1b6a3d963b932eb94de79d1.jpg",
+          "233986128f46951bf66a727cca1b3a18.jpg",
+          "24de6470d3365d85550c2c65ce8ddfca.jpg",
+          "3bd777f8c2760cbf585251808e738698.jpg",
+          "3f117cff666f231104f270edda727dab.jpg",
+          "53fe06b8e5fe6593f0f2a5de835609d2.jpg",
+          "542dfd6b879d676a823e611028e40984.jpg",
+          "783d478fde50b0f1d23ed5db8e9e2dee.jpg",
+          "90f82bfbdb111074fdfe5c1a6d813f5e.jpg",
+          "9303687a932a721b3a360633ade52260.jpg",
+          "96ec819f4ad7e5237c653c05baf5cd8c.jpg",
+          "b365df6222f9cce1e0ec0bf2ee881fb9.jpg",
+          "b3a1e66d241d956c3de527627d3c0a8a.jpg",
+          "d7ecf3fce251c523f3bb43ee6620e902.jpg",
+          "istockphoto-1478375497-612x612.jpg",
+          "istockphoto-494896581-612x612.jpg",
+          "pexels-jibarofoto-2774556.jpg",
+          "Poster.jpg",
+        ];
+
+        /**
+         * Utility function to create an event card element
+         */
+        function createEventCard(event) {
+          const title =
+            (event.language && event.language.en && event.language.en.title) ||
+            event.title ||
+            event.title_en ||
+            "Untitled";
+          const date = event.start
+            ? new Date(event.start).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+          const location =
+            (event.language && event.language.en && event.language.en.place) ||
+            event.formatted_address ||
+            event.city ||
+            "";
+
+          // Use actual event image if available, otherwise use random poster
+          let image;
+          if (event.event_image && event.event_image.startsWith("/media/")) {
+            // Use the actual event image from the API
+            image = `https://api.venuu.is${event.event_image}`;
+          } else if (
+            event.event_thumbnail &&
+            event.event_thumbnail.startsWith("/media/")
+          ) {
+            // Fallback to thumbnail
+            image = `https://api.venuu.is${event.event_thumbnail}`;
+          } else {
+            // Randomly select a poster image as fallback
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image = `./Images/posters/${randomPoster}`;
+          }
+
+          // Card markup
+          return `
+        <div class="event-item" data-event='${JSON.stringify(event).replace(
+          /'/g,
+          "&#39;"
+        )}'>
+          <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
+          <div class="event-content flex flex-col p-4 gap-1.5">
+            <div class="event-title">${title}</div>
+                            <div class="event-date-row">
+              <div class="date-section">
+                <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                <div class="event-date">${date}</div>
+                                </div>
+              <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+            <div class="event-location">${location}</div>
+                    </div>
+                </div>
+        `;
+        }
+
+        /**
+         * Classifies event by row name; returns row(s) it should appear in.
+         */
+        function classifyEvent(event) {
+          const categories = [];
+          const tags = (event.tags || []).join(";").toLowerCase();
+          const eventCategories = event.categories || [];
+
+          // "Recommended": accept everything suitable (active & accepted events)
+          if (event.accepted && event.active) categories.push("recommended");
+
+          // Check actual categories from API data
+          const categoryNames = eventCategories
+            .map((cat) => cat.name?.toLowerCase() || "")
+            .join(" ");
+          const categoryNamesEn = eventCategories
+            .map((cat) => cat.name_en?.toLowerCase() || "")
+            .join(" ");
+
+          // "Music": Check for music-related categories and tags
+          if (
+            categoryNames.includes("tónlist") ||
+            categoryNamesEn.includes("music") ||
+            tags.includes("tónlist") ||
+            tags.includes("music") ||
+            tags.includes("músík") ||
+            tags.includes("tónleikar") ||
+            tags.includes("concert") ||
+            tags.includes("concert")
+          ) {
+            categories.push("music");
+          }
+
+          // "Family": Check for family-related categories and tags
+          if (
+            categoryNames.includes("fjölskyldu") ||
+            categoryNamesEn.includes("family") ||
+            tags.includes("fjölskyldu") ||
+            tags.includes("fjölskylduskemmtun") ||
+            tags.includes("barn") ||
+            tags.includes("børn") ||
+            tags.includes("family") ||
+            tags.includes("children") ||
+            tags.includes("kids")
+          ) {
+            categories.push("family");
+          }
+
+          // "Popular": Events that might be popular based on tags or categories
+          if (
+            tags.includes("popular") ||
+            tags.includes("vinæl") ||
+            tags.includes("populært") ||
+            tags.includes("trending") ||
+            tags.includes("hot") ||
+            categoryNames.includes("vinsælt") ||
+            categoryNamesEn.includes("popular")
+          ) {
+            categories.push("popular");
+          }
+
+          return categories;
+        }
+
+        /**
+         * Loads events from the API and fills the rows
+         */
+        async function fillEventRows() {
+          console.log("fillEventRows function called");
+          try {
+            console.log("Attempting to fetch api-data.json");
+            const response = await fetch("./api-data.json");
+            console.log("Response received:", response.status);
+            const events = await response.json();
+            console.log(`Loaded ${events.length} events from API`);
+
+            // Sort and pick for each row
+            const recommended = [];
+            const popular = [];
+            const music = [];
+            const family = [];
+            // Count logic for each row to avoid overfilling
+            let recCount = 0,
+              popCount = 0,
+              musicCount = 0,
+              familyCount = 0;
+
+            for (const ev of events) {
+              // Avoid duplicating event in the same row more than once
+              const cats = classifyEvent(ev);
+              if (cats.length > 0) {
+                console.log(
+                  `Event: ${ev.title || ev.title_en} - Categories: ${cats.join(
+                    ", "
+                  )}`
+                );
+              }
+
+              // Recommended (always fill with active accepted events)
+              if (recCount < 8 && cats.includes("recommended")) {
+                recommended.push(ev);
+                recCount++;
+              }
+              // Popular
+              if (popCount < 8 && cats.includes("popular")) {
+                popular.push(ev);
+                popCount++;
+              }
+              // Music
+              if (musicCount < 8 && cats.includes("music")) {
+                music.push(ev);
+                musicCount++;
+              }
+              // Family
+              if (familyCount < 8 && cats.includes("family")) {
+                family.push(ev);
+                familyCount++;
+              }
+              // Early bail if all full
+              if (
+                recCount >= 8 &&
+                popCount >= 8 &&
+                musicCount >= 8 &&
+                familyCount >= 8
+              )
+                break;
+            }
+            // If popular/music/family rows not full, fallback: fill with others as needed
+            if (popular.length < 8) {
+              for (const ev of events) {
+                if (
+                  !popular.includes(ev) &&
+                  !recommended.includes(ev) &&
+                  popular.length < 8
+                ) {
+                  popular.push(ev);
+                }
+              }
+            }
+            if (music.length < 8) {
+              for (const ev of events) {
+                if (
+                  !music.includes(ev) &&
+                  !recommended.includes(ev) &&
+                  !popular.includes(ev) &&
+                  ((ev.tags || []).join(";").toLowerCase().includes("music") ||
+                    (ev.categories || []).some(
+                      (cat) =>
+                        cat.name?.toLowerCase().includes("tónlist") ||
+                        cat.name_en?.toLowerCase().includes("music")
+                    ))
+                ) {
+                  music.push(ev);
+                }
+                if (music.length >= 8) break;
+              }
+            }
+            if (family.length < 8) {
+              for (const ev of events) {
+                if (
+                  !family.includes(ev) &&
+                  !recommended.includes(ev) &&
+                  !popular.includes(ev) &&
+                  !music.includes(ev) &&
+                  ((ev.tags || [])
+                    .join(";")
+                    .toLowerCase()
+                    .includes("fjölskyldu") ||
+                    (ev.categories || []).some(
+                      (cat) =>
+                        cat.name?.toLowerCase().includes("fjölskyldu") ||
+                        cat.name_en?.toLowerCase().includes("family")
+                    ))
+                ) {
+                  family.push(ev);
+                }
+                if (family.length >= 8) break;
+              }
+            }
+
+            // Log final counts
+            console.log(
+              `Final counts - Recommended: ${recommended.length}, Popular: ${popular.length}, Music: ${music.length}, Family: ${family.length}`
+            );
+
+            // Render cards into rows
+            document.getElementById("recommended-row").innerHTML = recommended
+              .map(createEventCard)
+              .join("");
+            document.getElementById("popular-row").innerHTML = popular
+              .map(createEventCard)
+              .join("");
+            document.getElementById("music-row").innerHTML = music
+              .map(createEventCard)
+              .join("");
+            document.getElementById("family-row").innerHTML = family
+              .map(createEventCard)
+              .join("");
+
+            // Add click event listeners to all event cards
+            addEventCardListeners();
+          } catch (e) {
+            console.error("Error loading events:", e);
+            document.getElementById("recommended-row").innerHTML =
+              "<div class='text-gray-400'>Failed to load events.</div>";
+            document.getElementById("popular-row").innerHTML =
+              "<div class='text-gray-400'>Failed to load events.</div>";
+            document.getElementById("music-row").innerHTML =
+              "<div class='text-gray-400'>Failed to load events.</div>";
+            document.getElementById("family-row").innerHTML =
+              "<div class='text-gray-400'>Failed to load events.</div>";
+          }
+        }
+        fillEventRows();
+
+        /**
+         * Carousel Navigation and Drag Functionality
+         */
+        function initCarouselNavigation() {
+          const navButtons = document.querySelectorAll(".carousel-nav-btn");
+          const carousels = document.querySelectorAll(
+            "#recommended-row, #popular-row, #music-row, #family-row"
+          );
+
+          // Arrow button functionality
+          navButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+              const targetId = this.getAttribute("data-target");
+              const direction = this.getAttribute("data-direction");
+              const carousel = document.getElementById(targetId);
+
+              if (carousel) {
+                // Responsive scroll amount based on screen size
+                let scrollAmount;
+                if (window.innerWidth <= 480) {
+                  scrollAmount = 240; // w-[14rem] (224px) + gap (16px)
+                } else if (window.innerWidth <= 768) {
+                  scrollAmount = 280; // w-[16rem] (256px) + gap (24px)
+                } else if (window.innerWidth >= 1200) {
+                  scrollAmount = 336; // w-[20rem] (320px) + gap (16px)
+                } else {
+                  scrollAmount = 312; // w-[18.4375rem] (295px) + gap (16px)
+                }
+
+                if (direction === "prev") {
+                  carousel.scrollBy({
+                    left: -scrollAmount,
+                    behavior: "smooth",
+                  });
+                } else if (direction === "next") {
+                  carousel.scrollBy({
+                    left: scrollAmount,
+                    behavior: "smooth",
+                  });
+                }
+              }
+            });
+          });
+
+          // Drag functionality for each carousel
+          carousels.forEach((carousel) => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            carousel.addEventListener("mousedown", (e) => {
+              isDown = true;
+              carousel.style.cursor = "grabbing";
+              startX = e.pageX - carousel.offsetLeft;
+              scrollLeft = carousel.scrollLeft;
+            });
+
+            carousel.addEventListener("mouseleave", () => {
+              isDown = false;
+              carousel.style.cursor = "grab";
+            });
+
+            carousel.addEventListener("mouseup", () => {
+              isDown = false;
+              carousel.style.cursor = "grab";
+            });
+
+            carousel.addEventListener("mousemove", (e) => {
+              if (!isDown) return;
+              e.preventDefault();
+              const x = e.pageX - carousel.offsetLeft;
+              const walk = (x - startX) * 2; // Scroll speed multiplier
+              carousel.scrollLeft = scrollLeft - walk;
+            });
+
+            // Touch support for mobile
+            carousel.addEventListener("touchstart", (e) => {
+              isDown = true;
+              startX = e.touches[0].pageX - carousel.offsetLeft;
+              scrollLeft = carousel.scrollLeft;
+            });
+
+            carousel.addEventListener("touchend", () => {
+              isDown = false;
+            });
+
+            carousel.addEventListener("touchmove", (e) => {
+              if (!isDown) return;
+              e.preventDefault();
+              const x = e.touches[0].pageX - carousel.offsetLeft;
+              const walk = (x - startX) * 2;
+              carousel.scrollLeft = scrollLeft - walk;
+            });
+
+            // Set initial cursor style
+            carousel.style.cursor = "grab";
+          });
+        }
+
+        /**
+         * Event Modal Functionality
+         */
+        function initEventModal() {
+          const modal = document.getElementById("event-modal");
+          const closeBtn = document.getElementById("modal-close");
+          const favoriteBtn = document.getElementById("modal-favorite");
+          const shareBtn = document.getElementById("modal-share");
+          const ticketBtn = document.getElementById("modal-ticket-btn");
+
+          // Close modal when clicking close button
+          closeBtn.addEventListener("click", closeModal);
+
+          // Close modal when clicking outside
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+
+          // Close modal with Escape key
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+              closeModal();
+            }
+          });
+
+          // Favorite button functionality
+          favoriteBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            toggleFavorite();
+          });
+
+          // Share button functionality
+          shareBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            shareEvent();
+          });
+
+          // Ticket button functionality
+          ticketBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            // Add ticket functionality here
+            console.log("Go to ticket page");
+          });
+        }
+
+        function showEventModal(event) {
+          const modal = document.getElementById("event-modal");
+          const title = document.getElementById("modal-title");
+          const image = document.getElementById("modal-image");
+          const location = document.getElementById("modal-location");
+          const date = document.getElementById("modal-date");
+          const price = document.getElementById("modal-price");
+          const description = document.getElementById("modal-description-text");
+
+          // Populate modal with event data
+          title.textContent = event.title || event.title_en || "Untitled";
+
+          // Set image
+          if (event.event_image && event.event_image.startsWith("/media/")) {
+            image.src = `https://api.venuu.is${event.event_image}`;
+          } else if (
+            event.event_thumbnail &&
+            event.event_thumbnail.startsWith("/media/")
+          ) {
+            image.src = `https://api.venuu.is${event.event_thumbnail}`;
+          } else {
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image.src = `./Images/posters/${randomPoster}`;
+          }
+
+          // Set location
+          location.textContent =
+            event.formatted_address ||
+            (event.language && event.language.en && event.language.en.place) ||
+            event.city ||
+            "Location not specified";
+
+          // Set date
+          if (event.start) {
+            const startDate = new Date(event.start);
+            const endDate = event.end ? new Date(event.end) : null;
+
+            if (
+              endDate &&
+              startDate.toDateString() !== endDate.toDateString()
+            ) {
+              date.textContent = `${startDate.toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })} - ${endDate.toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}`;
+            } else {
+              date.textContent = startDate.toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              });
+            }
+          } else {
+            date.textContent = "Date not specified";
+          }
+
+          // Set price (placeholder for now)
+          price.textContent = "Price: Contact for details";
+
+          // Set description
+          const eventDescription =
+            (event.language && event.language.en && event.language.en.text) ||
+            event.detailed_description_en ||
+            event.detailed_description ||
+            "No description available for this event.";
+
+          description.textContent = eventDescription;
+
+          // Show modal
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden"; // Prevent background scrolling
+        }
+
+        function closeModal() {
+          const modal = document.getElementById("event-modal");
+          modal.classList.add("hidden");
+          document.body.style.overflow = ""; // Restore scrolling
+        }
+
+        function toggleFavorite() {
+          const favoriteBtn = document.getElementById("modal-favorite");
+          const isFavorited = favoriteBtn.classList.contains("favorited");
+
+          if (isFavorited) {
+            favoriteBtn.classList.remove("favorited");
+            favoriteBtn.style.color = "#6b7280";
+          } else {
+            favoriteBtn.classList.add("favorited");
+            favoriteBtn.style.color = "#ef4444";
+          }
+        }
+
+        function shareEvent() {
+          if (navigator.share) {
+            navigator.share({
+              title: document.getElementById("modal-title").textContent,
+              text: document.getElementById("modal-description-text")
+                .textContent,
+              url: window.location.href,
+            });
+          } else {
+            // Fallback: copy to clipboard
+            const eventUrl = window.location.href;
+            navigator.clipboard.writeText(eventUrl).then(() => {
+              alert("Event link copied to clipboard!");
+            });
+          }
+        }
+
+        function addEventCardListeners() {
+          const eventCards = document.querySelectorAll(".event-item");
+          eventCards.forEach((card) => {
+            card.addEventListener("click", (e) => {
+              e.preventDefault();
+              const eventData = JSON.parse(card.getAttribute("data-event"));
+              showEventModal(eventData);
+            });
+          });
+        }
+
+        // Initialize carousel navigation
+        initCarouselNavigation();
+
+        // Initialize modal functionality
+        initEventModal();
+      }); // End of DOMContentLoaded event listener
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <address class="mb-2 not-italic">
+            <p>Reykjavik, Iceland</p>
+            <p>
+              <a href="mailto:info@venuu.is">info@venuu.is</a>
+            </p>
+            <p>
+              <a href="tel:+3541234567">+354 123 4567</a>
+            </p>
+            <div class="social-media-icons">
+              <a href="#" aria-label="Facebook">
+                <svg
+                  width="10"
+                  height="20"
+                  viewBox="0 0 10 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.34469 11.1875L9.86325 7.74895H6.62096V5.51756C6.62096 4.57684 7.07388 3.65986 8.526 3.65986H10V0.732305C10 0.732305 8.66239 0.5 7.38349 0.5C4.71337 0.5 2.96806 2.14691 2.96806 5.12828V7.74895H0V11.1875H2.96806V19.5H6.62096V11.1875H9.34469Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.5 0C4.3 0 0 4.3 0 9.5S4.3 19 9.5 19 19 14.7 19 9.5 14.7 0 9.5 0ZM9.5 16.2C6.1 16.2 3.3 13.4 3.3 9.5S6.1 2.8 9.5 2.8 15.7 5.6 15.7 9.5 12.9 16.2 9.5 16.2Z"
+                    fill="#333333"
+                  />
+                  <circle cx="9.5" cy="9.5" r="2.8" fill="#333333" />
+                  <circle cx="14.6" cy="4.4" r="0.7" fill="#333333" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Twitter">
+                <svg
+                  width="23"
+                  height="20"
+                  viewBox="0 0 23 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20.6358 5.23514C20.6504 5.44294 20.6504 5.65079 20.6504 5.85859C20.6504 12.1968 15.9074 19.5 7.2386 19.5C4.5679 19.5 2.08694 18.7132 0 17.3477C0.379457 17.3922 0.744269 17.407 1.13832 17.407C3.34198 17.407 5.37057 16.65 6.9905 15.3586C4.91816 15.3141 3.18147 13.9336 2.58311 12.0336C2.87501 12.0781 3.16687 12.1078 3.47337 12.1078C3.89658 12.1078 4.31984 12.0484 4.71385 11.9445C2.55395 11.4992 0.933974 9.56952 0.933974 7.23905V7.1797C1.56149 7.53595 2.29125 7.75861 3.06467 7.78826C1.795 6.9273 0.963174 5.45779 0.963174 3.79528C0.963174 2.90467 1.19663 2.08826 1.60529 1.37576C3.92574 4.28513 7.41371 6.1851 11.3248 6.39295C11.2519 6.0367 11.2081 5.66564 11.2081 5.29454C11.2081 2.65232 13.3096 0.5 15.9219 0.5C17.2792 0.5 18.5051 1.0789 19.3661 2.01406C20.4314 1.80626 21.453 1.40546 22.3579 0.856253C22.0076 1.96956 21.2633 2.90472 20.2855 3.49842C21.2342 3.39457 22.1536 3.12732 23 2.75627C22.358 3.70623 21.5553 4.55229 20.6358 5.23514Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+            </div>
+          </address>
+        </div>
+        <div class="footer-section">
+          <h3>About</h3>
+          <p>
+            Venuu connects people through Iceland's vibrant cultural events.
+          </p>
+          <p>2025 Venuu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Event Modal -->
+    <div id="event-modal" class="modal-overlay hidden">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h2 id="modal-title" class="modal-title">Event Title</h2>
+          <div class="modal-actions">
+            <button
+              id="modal-close"
+              class="modal-close-btn"
+              aria-label="Close modal"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 6L6 18M6 6L18 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              id="modal-favorite"
+              class="modal-favorite-btn"
+              aria-label="Add to favorites"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              id="modal-share"
+              class="modal-share-btn"
+              aria-label="Share event"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-content">
+          <div class="modal-image-section">
+            <img
+              id="modal-image"
+              src=""
+              alt="Event image"
+              class="modal-image"
+            />
+          </div>
+
+          <div class="modal-details">
+            <div class="modal-info">
+              <div class="modal-info-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <circle
+                    cx="12"
+                    cy="10"
+                    r="3"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+                <span id="modal-location">Location</span>
+              </div>
+              <div class="modal-info-item">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    x="3"
+                    y="4"
+                    width="18"
+                    height="18"
+                    rx="2"
+                    ry="2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="16"
+                    y1="2"
+                    x2="16"
+                    y2="6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="8"
+                    y1="2"
+                    x2="8"
+                    y2="6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <line
+                    x1="3"
+                    y1="10"
+                    x2="21"
+                    y2="10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+                <span id="modal-date">Date</span>
+              </div>
+              <div class="modal-info-item">
+                <span id="modal-price">Price: Free</span>
+              </div>
+            </div>
+
+            <button id="modal-ticket-btn" class="modal-ticket-btn">
+              Go To TIX
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-description">
+          <p id="modal-description-text">
+            Event description will appear here...
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
