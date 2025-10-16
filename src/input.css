@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Logo animations (replaces Lottie) */
+/* Animation is now handled by vanilla JavaScript for better control */
+
+.logo-letter {
+  /* Initial state set by JS */
+  will-change: opacity;
+  /* Preserve SVG transforms for letter positioning */
+  transform-origin: center center;
+}
+
+.nav-logo:hover {
+  filter: drop-shadow(0 0 4px rgba(52, 16, 255, 0.4));
+  transition: filter 0.3s ease;
+}
+
+.nav-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
 /* Custom CSS for components that need specific styling */
 @layer components {
   .nav {
@@ -13,13 +35,17 @@
   }
 
   .nav-section-text {
-    @apply flex h-[9.5625rem] py-[0.5rem] px-[3.875rem] justify-center items-center gap-[0.625rem] self-stretch text-center;
+    @apply flex flex-col h-[9.5625rem] py-[0.5rem] px-[3.875rem] justify-center items-center gap-[0.625rem] self-stretch text-center;
     color: #ff3409;
     font-family: "Rubik Mono One";
     font-size: 4.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+  }
+
+  .nav-section-text span {
+    display: block;
   }
 
   .nav-search-bar {
@@ -39,11 +65,27 @@
     }
 
     .nav-section-text {
-      @apply w-full text-2xl;
+      @apply w-full text-2xl flex-col;
+      padding-left: 62px;
+      padding-right: 62px;
+      line-height: 1.2;
+    }
+
+    .nav-section-text span {
+      display: block;
     }
 
     .nav-search-bar {
-      @apply w-full max-w-sm;
+      @apply w-full;
+      max-width: 18rem;
+      height: 2.25rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .nav-search-bar input {
+      font-size: 0.875rem;
+      padding-left: 1.75rem !important;
     }
 
     .category-title {
@@ -52,6 +94,61 @@
 
     .carousel-nav-btn {
       @apply w-8 h-8;
+    }
+
+    .carousel-section {
+      padding-left: 40px !important;
+      padding-right: 40px !important;
+    }
+
+    .event-item {
+      max-width: 18rem;
+      height: auto;
+      min-height: 21rem;
+    }
+
+    .event-item img {
+      height: 12.5rem;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .event-item .event-content {
+      padding: 1.125rem;
+    }
+
+    .event-item .event-title {
+      font-size: 1rem;
+      line-height: 1.4;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .event-item .event-date {
+      font-size: 0.875rem;
+    }
+
+    .event-item .event-location {
+      font-size: 1rem;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .event-item .calendar-icon,
+    .event-item .heart-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
     }
   }
 
@@ -66,6 +163,12 @@
 
     .nav-section-text {
       @apply text-xl;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .nav-section-text span {
+      display: block;
     }
 
     .category-title {
@@ -74,6 +177,141 @@
 
     .carousel-nav-btn {
       @apply w-6 h-6;
+    }
+
+    .carousel-section {
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+    }
+  }
+
+  /* Specific styles for iPhone SE and similar small screens (375px) */
+  @media (max-width: 390px) {
+    .nav {
+      padding: 0.75rem 0.75rem;
+    }
+
+    .nav-section {
+      @apply px-1 py-4;
+      height: auto;
+    }
+
+    .nav-section-text {
+      font-size: 1.5rem !important;
+      padding-left: 20px;
+      padding-right: 20px;
+      line-height: 1.3;
+    }
+
+    .nav-section-text span {
+      display: block;
+    }
+
+    .nav-search-bar {
+      @apply px-3;
+      max-width: 14rem;
+      height: 2rem;
+      min-height: 2rem;
+    }
+
+    .nav-search-bar input {
+      font-size: 0.75rem;
+      padding-left: 1.5rem !important;
+    }
+
+    .carousel-section {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    .category-title {
+      font-size: 1rem;
+    }
+
+    .carousel-nav-btn {
+      @apply w-5 h-5;
+    }
+
+    .event-item {
+      min-width: 280px;
+      max-width: 320px;
+      height: auto;
+      min-height: 20rem;
+    }
+
+    .event-item img {
+      height: 11.5rem;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .event-item .event-content {
+      padding: 1rem;
+    }
+
+    .event-item .event-title {
+      font-size: 0.9375rem;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+    }
+
+    .event-item .event-date {
+      font-size: 0.8125rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event-item .event-location {
+      font-size: 0.9375rem;
+      height: auto;
+      min-height: 2rem;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .event-item .calendar-icon,
+    .event-item .heart-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .event-item .date-section {
+      flex-shrink: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .footer {
+      padding: 1.5rem 1rem;
+    }
+
+    .footer-content {
+      gap: 2rem;
+    }
+
+    .load-more-btn {
+      font-size: 0.875rem;
+      padding: 0.625rem 1.25rem;
+    }
+
+    #results-count {
+      font-size: 0.75rem;
     }
   }
 
@@ -141,6 +379,26 @@
 
   .mobile-menu-btn:hover {
     @apply text-[#340aff] opacity-80;
+  }
+
+  /* Mobile menu when open */
+  .nav-links.flex.flex-col {
+    @apply gap-2;
+  }
+
+  /* Mobile menu links styling */
+  @media (max-width: 767px) {
+    .nav-links.flex.flex-col .nav-link {
+      @apply w-full text-center py-3 px-4 rounded-lg;
+    }
+
+    .nav-links.flex.flex-col .nav-link:hover {
+      @apply bg-gray-50;
+    }
+
+    .nav-links.flex.flex-col .nav-link.active {
+      @apply bg-blue-50;
+    }
   }
 
   .search-bar {
@@ -331,43 +589,55 @@
 
   .filter-buttons-container {
     display: flex;
-    width: 52rem;
-    height: 2.5rem;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
+    width: 100%;
+    max-width: 64rem;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin: 0 auto;
   }
 
   .filter-button {
     display: flex;
-    width: 12rem;
+    min-width: 10rem;
     height: 2.5rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 0.25rem;
     flex-shrink: 0;
     border-radius: 1.5625rem;
     border: 1px solid #340aff;
     background: #fff;
-    color: #333;
+    color: #340aff;
     text-align: center;
     font-family: Inter;
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: normal;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
   }
 
   .filter-button:hover {
-    background: #f8f9fa;
+    background: #f0f0ff;
+    border-color: #340aff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(52, 10, 255, 0.1);
+  }
+
+  .filter-button:active {
+    transform: translateY(0);
+    box-shadow: none;
   }
 
   .filter-button:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(52, 10, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(52, 10, 255, 0.2);
   }
 
   .filter-button select {
@@ -391,23 +661,25 @@
 
   /* Specific styling for select elements */
   select.filter-button {
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23340aff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
     background-position: right 0.75rem center;
     background-repeat: no-repeat;
     background-size: 1rem 1rem;
-    padding-right: 2.5rem;
+    padding-right: 2.25rem;
     padding-left: 1rem;
     text-align: left;
-    display: block;
-    flex-direction: row !important;
+    display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    overflow: visible;
+    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    min-width: 10rem;
+    max-width: 14rem;
+    box-sizing: border-box;
   }
 
   /* Ensure select text is visible */
@@ -417,17 +689,14 @@
     padding: 0.5rem;
   }
 
-  /* Override any conflicting styles for select elements */
-  select.filter-button {
-    min-width: 12rem;
-    max-width: 12rem;
-    box-sizing: border-box;
-  }
-
   /* Make sure the select text is properly displayed */
   select.filter-button:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(52, 10, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(52, 10, 255, 0.2);
+  }
+
+  select.filter-button:hover {
+    background: #f0f0ff;
   }
 
   /* Search suggestions styling */
@@ -558,6 +827,52 @@
     .filter-button {
       width: 100%;
       max-width: 20rem;
+    }
+
+    .search-section {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .search-filter-container {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .search-section {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .filter-button {
+      width: 100%;
+      max-width: 100%;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+    }
+
+    select.filter-button {
+      min-width: 100%;
+      max-width: 100%;
+      font-size: 0.875rem;
+    }
+
+    .events-container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .events-grid {
+      gap: 1rem;
+    }
+
+    .category-title {
+      font-size: 0.9rem;
     }
   }
 

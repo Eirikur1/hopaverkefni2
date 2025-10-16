@@ -6,12 +6,6 @@
     <title>Venuu - Discover Amazing Events</title>
 
     <!-- External Libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
-    <script src="https://unpkg.com/in-view@0.6.1/dist/in-view.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
@@ -62,7 +56,10 @@
 
     <!-- Navigation Section -->
     <div class="nav-section">
-      <div class="nav-section-text">DISCOVER EVENTS</div>
+      <div class="nav-section-text">
+        <span class="discover-word">DISCOVER</span>
+        <span class="events-word">EVENTS</span>
+      </div>
       <div class="nav-search-bar">
         <input
           type="text"
@@ -80,7 +77,7 @@
     <section id="events-section" class="flex flex-col gap-8">
       <!-- Recommended Row -->
       <div
-        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        class="carousel-section flex flex-col items-start gap-2.5 self-stretch border-t"
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
@@ -137,7 +134,7 @@
       </div>
       <!-- Popular Row -->
       <div
-        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        class="carousel-section flex flex-col items-start gap-2.5 self-stretch border-t"
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
@@ -194,7 +191,7 @@
       </div>
       <!-- Music Row -->
       <div
-        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        class="carousel-section flex flex-col items-start gap-2.5 self-stretch border-t"
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
@@ -248,7 +245,7 @@
       </div>
       <!-- Family Row -->
       <div
-        class="flex flex-col items-start gap-2.5 self-stretch border-t"
+        class="carousel-section flex flex-col items-start gap-2.5 self-stretch border-t"
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
@@ -302,13 +299,40 @@
       </div>
     </section>
 
-    <!-- Shared JavaScript -->
-    <script src="js/shared.js"></script>
+    <!-- Lottie Web Library -->
+    <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
+
+    <!-- Shared JavaScript (TypeScript compiled) -->
+    <script type="module" src="js/shared.js"></script>
 
     <script>
       // Wait for DOM to be fully loaded
       document.addEventListener("DOMContentLoaded", function () {
         console.log("Inline script DOMContentLoaded called");
+
+        /**
+         * Initialize VENUU logo animation using Lottie Web
+         */
+        function initializeLogoAnimation() {
+          try {
+            const logoContainer = document.getElementById("lottie-logo");
+            if (logoContainer && window.lottie) {
+              const animation = window.lottie.loadAnimation({
+                container: logoContainer,
+                renderer: "svg",
+                loop: false,
+                autoplay: true,
+                path: "./Images/Images_and_lottie/Logo.json",
+              });
+              console.log("✅ Logo animation initialized with Lottie Web");
+            }
+          } catch (error) {
+            console.error("Error loading logo animation:", error);
+          }
+        }
+
+        // Initialize logo
+        initializeLogoAnimation();
 
         /**
          * Array of available poster images
@@ -890,6 +914,49 @@
             });
           });
         }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener("click", () => {
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks) {
+              navLinks.classList.toggle("hidden");
+              navLinks.classList.toggle("flex");
+              navLinks.classList.toggle("flex-col");
+              navLinks.classList.toggle("absolute");
+              navLinks.classList.toggle("top-full");
+              navLinks.classList.toggle("left-0");
+              navLinks.classList.toggle("right-0");
+              navLinks.classList.toggle("bg-white");
+              navLinks.classList.toggle("shadow-lg");
+              navLinks.classList.toggle("p-4");
+              navLinks.classList.toggle("z-50");
+            }
+          });
+        }
+
+        // Close mobile menu on Escape key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks && !navLinks.classList.contains("hidden")) {
+              navLinks.classList.add("hidden");
+              navLinks.classList.remove(
+                "flex",
+                "flex-col",
+                "absolute",
+                "top-full",
+                "left-0",
+                "right-0",
+                "bg-white",
+                "shadow-lg",
+                "p-4",
+                "z-50"
+              );
+            }
+          }
+        });
 
         // Initialize carousel navigation
         initCarouselNavigation();
