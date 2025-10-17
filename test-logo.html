@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+    <h1>Logo Test Page</h1>
+    <div id="test-logo" style="width: 200px; height: 200px; border: 1px solid #ccc;"></div>
+    <div id="status"></div>
+    
+    <script>
+        const statusDiv = document.getElementById('status');
+        const logoContainer = document.getElementById('test-logo');
+        
+        function updateStatus(message) {
+            statusDiv.innerHTML += '<p>' + message + '</p>';
+            console.log(message);
+        }
+        
+        updateStatus('Testing logo paths...');
+        
+        const possiblePaths = [
+            "./Images/Images_and_lottie/Logo.json",
+            "Images/Images_and_lottie/Logo.json",
+            "/Images/Images_and_lottie/Logo.json",
+            "./images/Images_and_lottie/Logo.json",
+            "images/Images_and_lottie/Logo.json",
+            "https://raw.githubusercontent.com/Eirikur1/hopaverkefni2/main/Images/Images_and_lottie/Logo.json"
+        ];
+        
+        let currentPathIndex = 0;
+        
+        function testPath() {
+            if (currentPathIndex >= possiblePaths.length) {
+                updateStatus('All paths failed. Showing fallback logo.');
+                showFallback();
+                return;
+            }
+            
+            const currentPath = possiblePaths[currentPathIndex];
+            updateStatus(`Testing: ${currentPath}`);
+            
+            fetch(currentPath, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        updateStatus(`✓ File found at: ${currentPath}`);
+                        loadLottie(currentPath);
+                    } else {
+                        updateStatus(`✗ File not found at: ${currentPath} (${response.status})`);
+                        currentPathIndex++;
+                        testPath();
+                    }
+                })
+                .catch(error => {
+                    updateStatus(`✗ Error checking: ${currentPath} - ${error.message}`);
+                    currentPathIndex++;
+                    testPath();
+                });
+        }
+        
+        function loadLottie(path) {
+            try {
+                const animation = lottie.loadAnimation({
+                    container: logoContainer,
+                    renderer: "svg",
+                    loop: true,
+                    autoplay: true,
+                    path: path,
+                });
+                
+                animation.addEventListener("data_ready", function () {
+                    updateStatus(`✓ Lottie animation loaded successfully from: ${path}`);
+                });
+                
+                animation.addEventListener("data_failed", function () {
+                    updateStatus(`✗ Lottie animation failed to load from: ${path}`);
+                    currentPathIndex++;
+                    testPath();
+                });
+                
+            } catch (error) {
+                updateStatus(`✗ Error creating Lottie animation: ${error.message}`);
+                currentPathIndex++;
+                testPath();
+            }
+        }
+        
+        function showFallback() {
+            logoContainer.innerHTML = `
+                <svg width="100%" height="100%" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#340aff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff3409;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <text x="100" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" 
+                          text-anchor="middle" fill="url(#logoGradient)">VENUU</text>
+                </svg>
+            `;
+        }
+        
+        // Start testing when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.lottie) {
+                updateStatus('Lottie library loaded successfully');
+                testPath();
+            } else {
+                updateStatus('Lottie library failed to load');
+                showFallback();
+            }
+        });
+    </script>
+</body>
+</html>

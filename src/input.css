@@ -162,6 +162,16 @@ body {
     margin-right: 0;
   }
 
+  /* Split-fade specific styles for nav-section-text */
+  .nav-section-text .sf-word {
+    display: inline-block !important;
+    white-space: nowrap !important;
+  }
+
+  .nav-section-text .sf-char {
+    display: inline-block !important;
+  }
+
   .nav-section-text h1 {
     display: block;
     margin: 0;
@@ -2393,6 +2403,20 @@ body {
   pointer-events: auto !important;
   z-index: 10 !important;
   position: relative !important;
+}
+
+/* SPLIT-FADE EFFECT FIXES FOR NAV-SECTION-TEXT */
+.nav-section-text .sf-word {
+  display: inline-block !important;
+  white-space: nowrap !important;
+}
+
+.nav-section-text .sf-char {
+  display: inline-block !important;
+}
+
+.nav-section-text .sf-space {
+  display: inline-block !important;
 }
 
 .nav-search-bar {

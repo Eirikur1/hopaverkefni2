@@ -252,19 +252,98 @@
         function initializeLogoAnimation() {
           try {
             const logoContainer = document.getElementById("lottie-logo");
-            if (logoContainer && window.lottie) {
+            if (!logoContainer) {
+              console.error("Logo container not found");
+              return;
+            }
+
+            // Check if Lottie library is loaded
+            if (!window.lottie) {
+              console.error("Lottie library not loaded");
+              showFallbackLogo(logoContainer);
+              return;
+            }
+
+            // Try multiple possible paths for the Logo.json file
+            const possiblePaths = [
+              "./Images/Images_and_lottie/Logo.json",
+              "Images/Images_and_lottie/Logo.json",
+              "/Images/Images_and_lottie/Logo.json",
+              "./images/Images_and_lottie/Logo.json",
+              "images/Images_and_lottie/Logo.json"
+            ];
+
+            let animationLoaded = false;
+            let currentPathIndex = 0;
+
+            function tryLoadAnimation() {
+              if (currentPathIndex >= possiblePaths.length) {
+                console.error("All logo paths failed to load");
+                showFallbackLogo(logoContainer);
+                return;
+              }
+
+              const currentPath = possiblePaths[currentPathIndex];
+              console.log(`Trying to load logo from: ${currentPath}`);
+
               const animation = window.lottie.loadAnimation({
                 container: logoContainer,
                 renderer: "svg",
                 loop: true,
                 autoplay: true,
-                path: "./Images/Images_and_lottie/Logo.json",
+                path: currentPath,
               });
-              // Logo animation initialized successfully
+
+              // Add comprehensive error handling
+              animation.addEventListener("data_failed", function () {
+                console.error(`Failed to load Lottie animation from: ${currentPath}`);
+                currentPathIndex++;
+                tryLoadAnimation();
+              });
+
+              animation.addEventListener("data_ready", function () {
+                console.log(`Successfully loaded logo from: ${currentPath}`);
+                animationLoaded = true;
+              });
+
+              // Set a timeout to try next path if no response
+              setTimeout(() => {
+                if (!animationLoaded) {
+                  console.error(`Timeout loading logo from: ${currentPath}`);
+                  currentPathIndex++;
+                  tryLoadAnimation();
+                }
+              }, 3000);
             }
+
+            tryLoadAnimation();
+
           } catch (error) {
             console.error("Error loading logo animation:", error);
+            const logoContainer = document.getElementById("lottie-logo");
+            if (logoContainer) {
+              showFallbackLogo(logoContainer);
+            }
           }
+        }
+
+        /**
+         * Show fallback logo when Lottie animation fails
+         */
+        function showFallbackLogo(container) {
+          container.innerHTML = `
+            <div style="
+              font-family: 'Rubik Mono One', monospace; 
+              font-size: 24px; 
+              font-weight: bold; 
+              color: #340aff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100%;
+              width: 100%;
+            ">VENUU</div>
+          `;
         }
 
         // Initialize logo
