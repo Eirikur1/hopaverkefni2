@@ -20,15 +20,10 @@ class VenuuApp {
   }
 
   async init(): Promise<void> {
-    console.log("VenuuApp init() called");
     try {
-      console.log("Loading events...");
       await this.loadEvents();
-      console.log("Setting up event listeners...");
       this.setupEventListeners();
-      console.log("Initializing components...");
       this.initializeComponents();
-      console.log("Rendering events...");
       this.renderEvents();
       console.log("App initialization complete");
     } catch (error) {

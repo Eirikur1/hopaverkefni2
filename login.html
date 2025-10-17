@@ -1,11 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venuu - Login</title>
+
+    <!-- External Libraries -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="css/output.css" />
+  </head>
+
+  <body class="bg-background text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="flex justify-between items-center w-full">
+        <a
+          href="index.html"
+          class="flex items-center"
+          aria-label="Venuu - Go to homepage"
+        >
+          <div id="lottie-logo" class="nav-logo"></div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-links hidden md:flex">
+          <a data-draw-line href="events.html" class="text-draw nav-link">
+            <p class="text-draw__p">Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="favorites.html" class="text-draw nav-link">
+            <p class="text-draw__p">Favorites</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a
+            data-draw-line
+            data-open-create-modal
+            href="#"
+            class="text-draw nav-link"
+          >
+            <p class="text-draw__p">Create Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="login.html" class="text-draw nav-link active">
+            <p class="text-draw__p">Login</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="mobile-menu-btn md:hidden"
+          aria-label="Toggle mobile menu"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="margin-top: 5.3125rem; padding: 2rem">
+      <div class="max-w-md mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8">Login to Venuu</h1>
+        <form class="space-y-6">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700"
+              >Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">Contact</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <address class="mb-2 not-italic">
+            <p>Reykjavik, Iceland</p>
+            <p>
+              <a href="mailto:info@venuu.is">info@venuu.is</a>
+            </p>
+            <p>
+              <a href="tel:+3541234567">+354 123 4567</a>
+            </p>
+            <div class="social-media-icons">
+              <a href="#" aria-label="Facebook">
+                <svg
+                  width="10"
+                  height="20"
+                  viewBox="0 0 10 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.34469 11.1875L9.86325 7.74895H6.62096V5.51756C6.62096 4.57684 7.07388 3.65986 8.526 3.65986H10V0.732305C10 0.732305 8.66239 0.5 7.38349 0.5C4.71337 0.5 2.96806 2.14691 2.96806 5.12828V7.74895H0V11.1875H2.96806V19.5H6.62096V11.1875H9.34469Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.5 0C4.3 0 0 4.3 0 9.5S4.3 19 9.5 19 19 14.7 19 9.5 14.7 0 9.5 0ZM9.5 16.2C6.1 16.2 3.3 13.4 3.3 9.5S6.1 2.8 9.5 2.8 15.7 5.6 15.7 9.5 12.9 16.2 9.5 16.2Z"
+                    fill="#333333"
+                  />
+                  <circle cx="9.5" cy="9.5" r="2.8" fill="#333333" />
+                  <circle cx="14.6" cy="4.4" r="0.7" fill="#333333" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Twitter">
+                <svg
+                  width="23"
+                  height="20"
+                  viewBox="0 0 23 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20.6358 5.23514C20.6504 5.44294 20.6504 5.65079 20.6504 5.85859C20.6504 12.1968 15.9074 19.5 7.2386 19.5C4.5679 19.5 2.08694 18.7132 0 17.3477C0.379457 17.3922 0.744269 17.407 1.13832 17.407C3.34198 17.407 5.37057 16.65 6.9905 15.3586C4.91816 15.3141 3.18147 13.9336 2.58311 12.0336C2.87501 12.0781 3.16687 12.1078 3.47337 12.1078C3.89658 12.1078 4.31984 12.0484 4.71385 11.9445C2.55395 11.4992 0.933974 9.56952 0.933974 7.23905V7.1797C1.56149 7.53595 2.29125 7.75861 3.06467 7.78826C1.795 6.9273 0.963174 5.45779 0.963174 3.79528C0.963174 2.90467 1.19663 2.08826 1.60529 1.37576C3.92574 4.28513 7.41371 6.1851 11.3248 6.39295C11.2519 6.0367 11.2081 5.66564 11.2081 5.29454C11.2081 2.65232 13.3096 0.5 15.9219 0.5C17.2792 0.5 18.5051 1.0789 19.3661 2.01406C20.4314 1.80626 21.453 1.40546 22.3579 0.856253C22.0076 1.96956 21.2633 2.90472 20.2855 3.49842C21.2342 3.39457 22.1536 3.12732 23 2.75627C22.358 3.70623 21.5553 4.55229 20.6358 5.23514Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+            </div>
+          </address>
+        </div>
+        <div class="footer-section">
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">About</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <p>
+            Venuu connects people through Iceland's vibrant cultural events.
+          </p>
+          <p>2025 Venuu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Lottie Web Library -->
+    <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
+
+    <!-- GSAP Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+
+    <!-- Draw Underline Effect -->
+    <script type="module">
+      import { initDrawRandomUnderline } from "./js/draw-underline.js";
+      window.initDrawRandomUnderline = initDrawRandomUnderline;
+    </script>
+
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        /**
+         * Initialize VENUU logo animation using Lottie Web
+         */
+        function initializeLogoAnimation() {
+          try {
+            const logoContainer = document.getElementById("lottie-logo");
+            if (logoContainer && window.lottie) {
+              const animation = window.lottie.loadAnimation({
+                container: logoContainer,
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                path: "./Images/Images_and_lottie/Logo.json",
+              });
+              // Logo animation initialized successfully
+            }
+          } catch (error) {
+            console.error("Error loading logo animation:", error);
+          }
+        }
+
+        // Initialize logo
+        initializeLogoAnimation();
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener("click", () => {
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks) {
+              navLinks.classList.toggle("hidden");
+              navLinks.classList.toggle("flex");
+              navLinks.classList.toggle("flex-col");
+              navLinks.classList.toggle("absolute");
+              navLinks.classList.toggle("top-full");
+              navLinks.classList.toggle("left-0");
+              navLinks.classList.toggle("right-0");
+              navLinks.classList.toggle("bg-white");
+              navLinks.classList.toggle("shadow-lg");
+              navLinks.classList.toggle("p-4");
+              navLinks.classList.toggle("z-50");
+            }
+          });
+        }
+
+        // Close mobile menu on Escape key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks && !navLinks.classList.contains("hidden")) {
+              navLinks.classList.add("hidden");
+              navLinks.classList.remove(
+                "flex",
+                "flex-col",
+                "absolute",
+                "top-full",
+                "left-0",
+                "right-0",
+                "bg-white",
+                "shadow-lg",
+                "p-4",
+                "z-50"
+              );
+            }
+          }
+        });
+
+        // Initialize draw random underline effect
+        if (typeof initDrawRandomUnderline === "function") {
+          // Add a small delay to ensure DOM is fully ready
+          setTimeout(() => {
+            initDrawRandomUnderline();
+          }, 100);
+        }
+      });
+    </script>
+  </body>
 </html>

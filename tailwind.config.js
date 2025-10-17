@@ -1,6 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./*.html", "./js/**/*.js", "./src/**/*.css"],
+  safelist: [
+    "modal-overlay",
+    "modal-container",
+    "modal-header",
+    "modal-title",
+    "modal-actions",
+    "modal-close-btn",
+    "modal-favorite-btn",
+    "modal-share-btn",
+    "modal-content",
+    "modal-image-section",
+    "modal-image",
+    "modal-details",
+    "modal-info",
+    "modal-info-item",
+    "modal-ticket-btn",
+    "modal-description",
+  ],
   theme: {
     extend: {
       colors: {

@@ -37,10 +37,31 @@
 
         <!-- Desktop Navigation -->
         <div class="nav-links hidden md:flex">
-          <a href="events.html" class="nav-link active">Events</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="create-events.html" class="nav-link">Create Events</a>
-          <a href="login.html" class="nav-link">Login</a>
+          <a
+            data-draw-line
+            href="events.html"
+            class="text-draw nav-link active"
+          >
+            <p class="text-draw__p">Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="favorites.html" class="text-draw nav-link">
+            <p class="text-draw__p">Favorites</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a
+            data-draw-line
+            data-open-create-modal
+            href="#"
+            class="text-draw nav-link"
+          >
+            <p class="text-draw__p">Create Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="login.html" class="text-draw nav-link">
+            <p class="text-draw__p">Login</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -58,26 +79,66 @@
     <div class="search-section">
       <div class="search-filter-container">
         <!-- Search Bar with Autocomplete -->
-        <div class="relative mb-6">
-          <div class="relative">
+        <div style="width: 407px; margin-bottom: 1.5rem; position: relative">
+          <div
+            style="
+              display: flex;
+              width: 100%;
+              height: 30px;
+              padding: 0 32px;
+              flex-direction: row;
+              justify-content: flex-start;
+              align-items: center;
+              flex-shrink: 0;
+              border-radius: 25px;
+              border: 0.5px solid #6b6666;
+              background: #fff;
+              box-sizing: border-box;
+              overflow: hidden;
+            "
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="margin-right: 8px; flex-shrink: 0; display: block"
+            >
+              <path
+                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                stroke="#6B6666"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
             <input
               type="text"
               id="search-input"
               placeholder="Search for events..."
-              class="w-full px-4 py-3 pl-12 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              style="
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                flex: 1;
+                min-width: 0;
+                border: none;
+                outline: none;
+                background: transparent;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                box-shadow: none;
+              "
               autocomplete="off"
               aria-label="Search for events"
-            />
-            <img
-              src="./Images/Images_and_lottie/svg/Search_icon.svg"
-              alt="Search"
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
             />
           </div>
           <!-- Autocomplete Dropdown -->
           <div
             id="search-suggestions"
-            class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden"
+            class="absolute z-10 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden"
+            style="width: 407px"
           >
             <div class="py-2">
               <div class="px-4 py-2 text-sm text-gray-500">Recent searches</div>
@@ -89,12 +150,7 @@
         <!-- Filter Controls -->
         <div class="filter-buttons-container">
           <!-- Category Filter -->
-          <div class="flex flex-col gap-1">
-            <label
-              for="category-filter"
-              class="text-xs font-medium text-gray-600"
-              >Category</label
-            >
+          <div>
             <select
               id="category-filter"
               class="filter-button"
@@ -106,12 +162,7 @@
           </div>
 
           <!-- Location Filter -->
-          <div class="flex flex-col gap-1">
-            <label
-              for="location-filter"
-              class="text-xs font-medium text-gray-600"
-              >Location</label
-            >
+          <div>
             <select
               id="location-filter"
               class="filter-button"
@@ -123,10 +174,7 @@
           </div>
 
           <!-- Sort Filter -->
-          <div class="flex flex-col gap-1">
-            <label for="sort-filter" class="text-xs font-medium text-gray-600"
-              >Sort by</label
-            >
+          <div>
             <select
               id="sort-filter"
               class="filter-button"
@@ -140,49 +188,21 @@
             </select>
           </div>
 
-          <!-- Date Order Toggle -->
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-medium text-gray-600">Date Order</label>
-            <button
-              id="date-order-toggle"
-              class="filter-button bg-white hover:bg-gray-50 cursor-pointer"
-              aria-label="Toggle date order"
-            >
-              <span id="date-order-text">Latest First</span>
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="ml-1"
-              >
-                <path
-                  d="M3 4.5L6 7.5L9 4.5"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-
           <!-- Clear Filters -->
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-medium text-gray-600">Actions</label>
+          <div>
             <button
               id="clear-filters"
               class="filter-button bg-white hover:bg-red-50 hover:border-red-400 hover:text-red-600 cursor-pointer transition-all"
               aria-label="Clear all filters"
             >
+              Clear All
               <svg
                 width="14"
                 height="14"
                 viewBox="0 0 14 14"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                class="mr-1"
+                class="ml-1"
               >
                 <path
                   d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5"
@@ -191,7 +211,6 @@
                   stroke-linecap="round"
                 />
               </svg>
-              Clear All
             </button>
           </div>
         </div>
@@ -207,7 +226,18 @@
       <!-- Load More Button -->
       <div class="load-more-container mt-8">
         <button id="load-more-btn" class="load-more-btn">
-          Load More Events
+          <img
+            src="./Images/Images_and_lottie/svg/LOADMOREICON.svg"
+            alt="Load more"
+            width="32"
+            height="32"
+          />
+          <img
+            src="./Images/Images_and_lottie/svg/LOADMOREICON.svg"
+            alt="Load more"
+            width="32"
+            height="32"
+          />
         </button>
       </div>
 
@@ -221,7 +251,10 @@
     <footer class="footer" id="contact" role="contentinfo">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>Contact</h3>
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">Contact</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <address class="mb-2 not-italic">
             <p>Reykjavik, Iceland</p>
             <p>
@@ -279,7 +312,10 @@
           </address>
         </div>
         <div class="footer-section">
-          <h3>About</h3>
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">About</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <p>
             Venuu connects people through Iceland's vibrant cultural events.
           </p>
@@ -291,14 +327,117 @@
     <!-- Lottie Web Library -->
     <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
 
+    <!-- GSAP Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+
+    <!-- Draw Underline Effect -->
+    <script type="module">
+      import { initDrawRandomUnderline } from "./js/draw-underline.js";
+      window.initDrawRandomUnderline = initDrawRandomUnderline;
+    </script>
+
     <!-- Events page uses inline JavaScript for filtering -->
     <!-- Shared TypeScript is not needed here -->
 
     <script>
+      /**
+       * Initialize Create Event Modal functionality
+       */
+      function initCreateEventModal() {
+        const modal = document.getElementById("create-event-modal");
+        const openButtons = document.querySelectorAll(
+          "a[data-open-create-modal]"
+        );
+        const closeButton = document.getElementById("create-event-modal-close");
+        const form = document.getElementById("create-event-form");
+
+        // Open modal
+        function openModal() {
+          modal.style.display = "flex";
+          document.body.style.overflow = "hidden";
+          // Focus on first input
+          const firstInput = modal.querySelector("input");
+          if (firstInput) {
+            setTimeout(() => firstInput.focus(), 100);
+          }
+        }
+
+        // Close modal
+        function closeModal() {
+          modal.style.display = "none";
+          document.body.style.overflow = "";
+          // Reset form
+          if (form) {
+            form.reset();
+          }
+        }
+
+        // Event listeners for opening modal
+        openButtons.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            // Double check that this is the Create Events button
+            const buttonText = button.textContent.trim();
+            if (buttonText.includes("Create Events")) {
+              e.preventDefault();
+              openModal();
+            }
+          });
+        });
+
+        // Event listener for closing modal
+        if (closeButton) {
+          closeButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeModal();
+          });
+        }
+
+        // Close modal when clicking outside
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.style.display !== "none") {
+            closeModal();
+          }
+        });
+
+        // Handle form submission
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(form);
+            const eventData = {
+              title: formData.get("title"),
+              date: formData.get("date"),
+              time: formData.get("time"),
+              location: formData.get("location"),
+              fee: formData.get("fee"),
+              image: formData.get("image"),
+              description: formData.get("description"),
+            };
+
+            // Log the event data (in a real app, you'd send this to a server)
+            console.log("Event created:", eventData);
+
+            // Show success message (you could replace this with a toast notification)
+            alert("Event created successfully!");
+
+            // Close modal
+            closeModal();
+          });
+        }
+      }
+
       // Wait for DOM to be fully loaded
       document.addEventListener("DOMContentLoaded", function () {
-        console.log("Events page DOMContentLoaded called");
-
         /**
          * Initialize VENUU logo animation using Lottie Web
          */
@@ -309,11 +448,11 @@
               const animation = window.lottie.loadAnimation({
                 container: logoContainer,
                 renderer: "svg",
-                loop: false,
+                loop: true,
                 autoplay: true,
                 path: "./Images/Images_and_lottie/Logo.json",
               });
-              console.log("✅ Logo animation initialized with Lottie Web");
+              // Logo animation initialized successfully
             }
           } catch (error) {
             console.error("Error loading logo animation:", error);
@@ -354,7 +493,6 @@
         let displayedEvents = 0;
         const eventsPerLoad = 12; // 4 rows × 3 columns = 12 events per load
         let searchTimeout = null;
-        let dateOrderAscending = false;
         let recentSearches = JSON.parse(
           localStorage.getItem("recentSearches") || "[]"
         );
@@ -365,7 +503,6 @@
           category: "",
           location: "",
           sort: "",
-          dateOrder: "desc",
         };
 
         // Store available filter options
@@ -585,20 +722,6 @@
               }
             });
             console.log(`Applied sort: ${currentFilters.sort}`);
-          } else {
-            // Apply default date order toggle when no specific sort is selected
-            if (currentFilters.dateOrder === "asc") {
-              filtered.sort(
-                (a, b) => new Date(a.start || 0) - new Date(b.start || 0)
-              );
-            } else {
-              filtered.sort(
-                (a, b) => new Date(b.start || 0) - new Date(a.start || 0)
-              );
-            }
-            console.log(
-              `Applied default date order: ${currentFilters.dateOrder}`
-            );
           }
 
           filteredEvents = filtered;
@@ -689,23 +812,15 @@
          */
         async function loadEvents() {
           try {
-            console.log("Loading events from API...");
             const response = await fetch("./api-data.json");
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("API response received:", data);
 
             if (data && Array.isArray(data)) {
               allEvents = data;
               console.log(`Loaded ${allEvents.length} events from API`);
-              // Debug: Check first few events
-              if (allEvents.length > 0) {
-                console.log("First event sample:", allEvents[0]);
-                console.log("First event categories:", allEvents[0].categories);
-                console.log("First event postal:", allEvents[0].postal);
-              }
             } else {
               console.error("Invalid API data structure:", data);
               allEvents = [];
@@ -818,23 +933,6 @@
           );
           console.log(`Now displaying: ${displayedEvents} events`);
           displayEvents();
-        }
-
-        /**
-         * Toggle date order
-         */
-        function toggleDateOrder() {
-          dateOrderAscending = !dateOrderAscending;
-          currentFilters.dateOrder = dateOrderAscending ? "asc" : "desc";
-
-          const dateOrderText = document.getElementById("date-order-text");
-          if (dateOrderText) {
-            dateOrderText.textContent = dateOrderAscending
-              ? "Earliest First"
-              : "Latest First";
-          }
-
-          applyAllFilters();
         }
 
         /**
@@ -972,7 +1070,6 @@
             category: "",
             location: "",
             sort: "",
-            dateOrder: "desc",
           };
 
           // Reset form elements
@@ -985,13 +1082,6 @@
           if (locationFilter) locationFilter.value = "";
           if (sortFilter) sortFilter.value = "";
           if (searchInput) searchInput.value = "";
-
-          // Reset date order
-          dateOrderAscending = false;
-          const dateOrderText = document.getElementById("date-order-text");
-          if (dateOrderText) {
-            dateOrderText.textContent = "Latest First";
-          }
 
           // Reset filtered events
           filteredEvents = [...allEvents];
@@ -1108,10 +1198,6 @@
           });
 
         document
-          .getElementById("date-order-toggle")
-          .addEventListener("click", toggleDateOrder);
-
-        document
           .getElementById("clear-filters")
           .addEventListener("click", clearAllFilters);
 
@@ -1166,7 +1252,324 @@
 
         // Load events when page loads
         loadEvents();
+
+        // Initialize draw random underline effect
+        if (typeof initDrawRandomUnderline === "function") {
+          // Add a small delay to ensure DOM is fully ready
+          setTimeout(() => {
+            initDrawRandomUnderline();
+          }, 100);
+        }
+
+        // Initialize create event modal functionality
+        initCreateEventModal();
       });
     </script>
+
+    <!-- Create Event Modal -->
+    <div
+      id="create-event-modal"
+      class="create-event-modal-overlay"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="create-event-modal-container" data-panel>
+        <!-- Modal Header -->
+        <div class="create-event-modal-header">
+          <h2 id="create-event-modal-title" class="create-event-modal-title">
+            Create the Event
+          </h2>
+          <button
+            id="create-event-modal-close"
+            class="create-event-modal-close"
+            data-close
+            aria-label="Close"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 6l12 12M18 6L6 18"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="create-event-modal-content">
+          <form id="create-event-form" class="space-y-4">
+            <!-- Title of Event -->
+            <div>
+              <label
+                for="event-title"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Title of Event
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-title"
+                  name="title"
+                  required
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Title"
+                />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Date -->
+            <div>
+              <label
+                for="event-date"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-date"
+                  name="date"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Date"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Time -->
+            <div>
+              <label
+                for="event-time"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Time
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-time"
+                  name="time"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Time"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+              <label
+                for="event-location"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Location
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-location"
+                  name="location"
+                  required
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Location"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 21s-6-5.373-6-10a6 6 0 1112 0c0 4.627-6 10-6 10z"
+                    />
+                    <circle cx="12" cy="11" r="2" />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Registration Fee -->
+            <div>
+              <label
+                for="event-fee"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Registration Fee
+              </label>
+              <input
+                type="number"
+                id="event-fee"
+                name="fee"
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Enter The Registration Fee"
+              />
+            </div>
+
+            <!-- Upload Image -->
+            <div>
+              <label
+                for="event-image"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Upload the Image
+              </label>
+              <div class="relative">
+                <input
+                  type="file"
+                  id="event-image"
+                  name="image"
+                  accept="image/*"
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="No file chosen"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label
+                for="event-description"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Description
+              </label>
+              <textarea
+                id="event-description"
+                name="description"
+                rows="4"
+                required
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                placeholder="Enter the Text"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full inline-flex items-center justify-center rounded-lg border-2 px-4 py-2 text-sm font-semibold focus:ring-2 focus:ring-offset-2"
+                style="border-color: #340aff; color: #340aff"
+                onmouseover="this.style.backgroundColor='#340AFF'; this.style.color='white';"
+                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#340AFF';"
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

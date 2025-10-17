@@ -21,6 +21,87 @@
 
     <!-- Compiled Tailwind CSS -->
     <link rel="stylesheet" href="css/output.css" />
+
+    <!-- Modal Styles -->
+    <style>
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+        padding: 1rem;
+      }
+
+      .modal-container {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #340aff;
+        margin: 0;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .modal-close-btn,
+      .modal-favorite-btn,
+      .modal-share-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .modal-close-btn:hover,
+      .modal-favorite-btn:hover,
+      .modal-share-btn:hover {
+        background-color: #f3f4f6;
+        color: #374151;
+      }
+
+      .modal-favorite-btn.favorited {
+        color: #ef4444;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        overflow-y: auto;
+        max-height: calc(90vh - 120px);
+      }
+    </style>
   </head>
 
   <body class="bg-background text-gray-900 font-sans">
@@ -37,10 +118,27 @@
 
         <!-- Desktop Navigation -->
         <div class="nav-links hidden md:flex">
-          <a href="events.html" class="nav-link">Events</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="create-events.html" class="nav-link">Create Events</a>
-          <a href="login.html" class="nav-link">Login</a>
+          <a data-draw-line href="events.html" class="text-draw nav-link">
+            <p class="text-draw__p">Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="favorites.html" class="text-draw nav-link">
+            <p class="text-draw__p">Favorites</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a
+            data-draw-line
+            data-open-create-modal
+            href="#"
+            class="text-draw nav-link"
+          >
+            <p class="text-draw__p">Create Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="login.html" class="text-draw nav-link">
+            <p class="text-draw__p">Login</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -57,20 +155,35 @@
     <!-- Navigation Section -->
     <div class="nav-section">
       <div class="nav-section-text">
-        <span class="discover-word">DISCOVER</span>
-        <span class="events-word">EVENTS</span>
+        <a data-draw-line href="#" class="text-draw">
+          <h1 class="text-draw__p tit">
+            <span>DISCOVER</span>
+            <span>EVENTS</span>
+          </h1>
+          <div data-draw-line-box class="text-draw__box"></div>
+        </a>
       </div>
-      <div class="nav-search-bar">
-        <input
-          type="text"
-          placeholder="Search for events..."
-          class="w-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm pl-4"
-        />
-        <img
-          src="./Images/Images_and_lottie/svg/Search_icon.svg"
-          alt="Search"
-          class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
-        />
+      <div style="position: relative; width: 25.4375rem; max-width: 100%">
+        <div class="nav-search-bar">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search for events..."
+            class="w-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm pl-10"
+            autocomplete="off"
+          />
+          <img
+            src="./Images/Images_and_lottie/svg/Search_icon.svg"
+            alt="Search"
+            class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 pointer-events-none"
+          />
+        </div>
+        <!-- Search Results Dropdown -->
+        <div
+          id="search-results"
+          class="search-dropdown hidden"
+          style="display: none"
+        ></div>
       </div>
     </div>
 
@@ -81,7 +194,10 @@
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
-          <h2 class="category-title">Recommended</h2>
+          <a data-draw-line href="#" class="text-draw">
+            <h2 class="category-title tit text-draw__p">Recommended</h2>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <div class="flex gap-2">
             <button
               class="carousel-nav-btn"
@@ -138,7 +254,10 @@
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
-          <h2 class="category-title">Popular</h2>
+          <a data-draw-line href="#" class="text-draw">
+            <h2 class="category-title tit text-draw__p">Popular</h2>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <div class="flex gap-2">
             <button
               class="carousel-nav-btn"
@@ -195,7 +314,10 @@
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
-          <h2 class="category-title">Music</h2>
+          <a data-draw-line href="#" class="text-draw">
+            <h2 class="category-title tit text-draw__p">Music</h2>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <div class="flex gap-2">
             <button
               class="carousel-nav-btn"
@@ -249,7 +371,10 @@
         style="padding: 2.25rem 6rem; border-top: 1px solid #c7c4c4"
       >
         <div class="flex items-center justify-between w-full mb-2">
-          <h2 class="category-title">Family</h2>
+          <a data-draw-line href="#" class="text-draw">
+            <h2 class="category-title tit text-draw__p">Family</h2>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <div class="flex gap-2">
             <button
               class="carousel-nav-btn"
@@ -302,8 +427,18 @@
     <!-- Lottie Web Library -->
     <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
 
+    <!-- GSAP Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+
     <!-- Shared JavaScript (TypeScript compiled) -->
     <script type="module" src="js/shared.js"></script>
+    <script type="module">
+      import { initSplitFade } from "./js/split-fade.js";
+      import { initDrawRandomUnderline } from "./js/draw-underline.js";
+      window.initSplitFade = initSplitFade;
+      window.initDrawRandomUnderline = initDrawRandomUnderline;
+    </script>
 
     <script>
       // Wait for DOM to be fully loaded
@@ -320,7 +455,7 @@
               const animation = window.lottie.loadAnimation({
                 container: logoContainer,
                 renderer: "svg",
-                loop: false,
+                loop: true,
                 autoplay: true,
                 path: "./Images/Images_and_lottie/Logo.json",
               });
@@ -335,7 +470,125 @@
         initializeLogoAnimation();
 
         /**
-         * Array of available poster images
+         * Initialize Create Event Modal functionality
+         */
+        function initCreateEventModal() {
+          const modal = document.getElementById("create-event-modal");
+          const openButtons = document.querySelectorAll(
+            "a[data-open-create-modal]"
+          );
+          const closeButton = document.getElementById(
+            "create-event-modal-close"
+          );
+          const form = document.getElementById("create-event-form");
+
+          // Open modal
+          function openModal() {
+            modal.style.display = "flex";
+            document.body.style.overflow = "hidden";
+            // Focus on first input
+            const firstInput = modal.querySelector("input");
+            if (firstInput) {
+              setTimeout(() => firstInput.focus(), 100);
+            }
+          }
+
+          // Close modal
+          function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = "";
+            // Reset form
+            if (form) {
+              form.reset();
+            }
+          }
+
+          // Event listeners for opening modal
+          openButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+              // Double check that this is the Create Events button
+              const buttonText = button.textContent.trim();
+              if (buttonText.includes("Create Events")) {
+                e.preventDefault();
+                openModal();
+              }
+            });
+          });
+
+          // Event listener for closing modal
+          if (closeButton) {
+            closeButton.addEventListener("click", (e) => {
+              e.preventDefault();
+              closeModal();
+            });
+          }
+
+          // Close modal when clicking outside
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+
+          // Close modal with Escape key
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.style.display !== "none") {
+              closeModal();
+            }
+          });
+
+          // Handle form submission
+          if (form) {
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
+
+              // Get form data
+              const formData = new FormData(form);
+              const eventData = {
+                title: formData.get("title"),
+                date: formData.get("date"),
+                time: formData.get("time"),
+                location: formData.get("location"),
+                fee: formData.get("fee"),
+                image: formData.get("image"),
+                description: formData.get("description"),
+              };
+
+              // Log the event data (in a real app, you'd send this to a server)
+              console.log("Event created:", eventData);
+
+              // Show success message (you could replace this with a toast notification)
+              alert("Event created successfully!");
+
+              // Close modal
+              closeModal();
+            });
+          }
+        }
+
+        // Initialize split-fade effect
+        if (typeof initSplitFade === "function") {
+          // Add a small delay to ensure DOM is fully ready
+          setTimeout(() => {
+            initSplitFade(".tit");
+          }, 100);
+        }
+
+        // Initialize draw random underline effect
+        if (typeof initDrawRandomUnderline === "function") {
+          // Add a small delay to ensure DOM is fully ready
+          setTimeout(() => {
+            initDrawRandomUnderline();
+          }, 100);
+        }
+
+        /**
+         * Global events array to store all events for search
+         */
+        let allEvents = [];
+
+        /**
+         * Array of available poster images for fallback
          */
         const posterImages = [
           "068e9d4bef717cd1000843dc38c603ec.jpg",
@@ -496,13 +749,13 @@
          * Loads events from the API and fills the rows
          */
         async function fillEventRows() {
-          console.log("fillEventRows function called");
           try {
-            console.log("Attempting to fetch api-data.json");
             const response = await fetch("./api-data.json");
-            console.log("Response received:", response.status);
             const events = await response.json();
             console.log(`Loaded ${events.length} events from API`);
+
+            // Store all events globally for search functionality
+            allEvents = events;
 
             // Sort and pick for each row
             const recommended = [];
@@ -518,13 +771,6 @@
             for (const ev of events) {
               // Avoid duplicating event in the same row more than once
               const cats = classifyEvent(ev);
-              if (cats.length > 0) {
-                console.log(
-                  `Event: ${ev.title || ev.title_en} - Categories: ${cats.join(
-                    ", "
-                  )}`
-                );
-              }
 
               // Recommended (always fill with active accepted events)
               if (recCount < 8 && cats.includes("recommended")) {
@@ -608,7 +854,7 @@
               }
             }
 
-            // Log final counts
+            // Log final counts for debugging
             console.log(
               `Final counts - Recommended: ${recommended.length}, Popular: ${popular.length}, Music: ${music.length}, Family: ${family.length}`
             );
@@ -629,6 +875,9 @@
 
             // Add click event listeners to all event cards
             addEventCardListeners();
+
+            // Initialize search after events are loaded
+            initSearch();
           } catch (e) {
             console.error("Error loading events:", e);
             document.getElementById("recommended-row").innerHTML =
@@ -746,74 +995,186 @@
          * Event Modal Functionality
          */
         function initEventModal() {
-          const modal = document.getElementById("event-modal");
-          const closeBtn = document.getElementById("modal-close");
-          const favoriteBtn = document.getElementById("modal-favorite");
-          const shareBtn = document.getElementById("modal-share");
-          const ticketBtn = document.getElementById("modal-ticket-btn");
+          // Initialize paid event modal
+          const paidModal = document.getElementById("event-modal");
+          const paidCloseBtn = paidModal.querySelector(
+            ".event-details-close-x"
+          );
+          const paidHeartBtn = paidModal.querySelector(".heart-icon");
+          const paidShareBtn = paidModal.querySelector(".share-icon");
+          const paidTicketBtn = document.getElementById("ev-cta");
 
-          // Close modal when clicking close button
-          closeBtn.addEventListener("click", closeModal);
+          // Initialize free event modal
+          const freeModal = document.getElementById("free-event-modal");
+          const freeCloseBtn = freeModal.querySelector(
+            ".event-details-close-x"
+          );
+          const freeHeartBtn = freeModal.querySelector(".heart-icon");
+          const freeShareBtn = freeModal.querySelector(".share-icon");
+          const signupForm = document.getElementById("free-event-signup");
 
-          // Close modal when clicking outside
-          modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-              closeModal();
-            }
-          });
+          // Setup paid modal event listeners
+          if (paidCloseBtn) {
+            paidCloseBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              closeModal("paid");
+            });
+          }
+          if (paidModal) {
+            paidModal.addEventListener("click", (e) => {
+              // Only close if clicking the overlay itself, not child elements
+              if (e.target === paidModal) {
+                closeModal("paid");
+              }
+            });
+          }
+          if (paidHeartBtn) {
+            paidHeartBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              // Disabled - no functionality
+              console.log("Favorite button clicked (disabled)");
+            });
+          }
+          if (paidShareBtn) {
+            paidShareBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              // Disabled - no functionality
+              console.log("Share button clicked (disabled)");
+            });
+          }
+          if (paidTicketBtn) {
+            paidTicketBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              // Add ticket functionality here
+              console.log("Go to ticket page");
+            });
+          }
+
+          // Setup free modal event listeners
+          if (freeCloseBtn) {
+            freeCloseBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              closeModal("free");
+            });
+          }
+          if (freeModal) {
+            freeModal.addEventListener("click", (e) => {
+              // Only close if clicking the overlay itself, not child elements
+              if (e.target === freeModal) {
+                closeModal("free");
+              }
+            });
+          }
+          if (freeHeartBtn) {
+            freeHeartBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              // Disabled - no functionality
+              console.log("Favorite button clicked (disabled)");
+            });
+          }
+          if (freeShareBtn) {
+            freeShareBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              // Disabled - no functionality
+              console.log("Share button clicked (disabled)");
+            });
+          }
+          if (signupForm) {
+            signupForm.addEventListener("submit", handleEventSignup);
+          }
 
           // Close modal with Escape key
           document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-              closeModal();
+            if (e.key === "Escape") {
+              if (paidModal.style.display !== "none") {
+                closeModal("paid");
+              } else if (freeModal.style.display !== "none") {
+                closeModal("free");
+              }
             }
           });
 
-          // Favorite button functionality
-          favoriteBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            toggleFavorite();
-          });
-
-          // Share button functionality
-          shareBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            shareEvent();
-          });
-
-          // Ticket button functionality
-          ticketBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            // Add ticket functionality here
-            console.log("Go to ticket page");
+          // Additional fallback: Add event listeners to all close buttons
+          document.addEventListener("click", (e) => {
+            if (e.target.closest(".event-details-close-x")) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (paidModal.style.display !== "none") {
+                closeModal("paid");
+              } else if (freeModal.style.display !== "none") {
+                closeModal("free");
+              }
+            }
           });
         }
 
         function showEventModal(event) {
-          const modal = document.getElementById("event-modal");
-          const title = document.getElementById("modal-title");
-          const image = document.getElementById("modal-image");
-          const location = document.getElementById("modal-location");
-          const date = document.getElementById("modal-date");
-          const price = document.getElementById("modal-price");
-          const description = document.getElementById("modal-description-text");
+          // Determine if event is free or paid
+          const isFreeEvent =
+            !event.price ||
+            event.price === 0 ||
+            event.price === "0" ||
+            event.price === "Free";
+
+          let modal, title, image, location, date, description;
+
+          if (isFreeEvent) {
+            // Use free event modal
+            modal = document.getElementById("free-event-modal");
+            title = document.getElementById("free-event-modal-title");
+            image = document.getElementById("free-ev-cover");
+            location = document.getElementById("free-ev-location");
+            date = document.getElementById("free-ev-dates");
+            description = document.getElementById("free-ev-desc");
+          } else {
+            // Use paid event modal
+            modal = document.getElementById("event-modal");
+            title = document.getElementById("event-modal-title");
+            image = document.getElementById("ev-cover");
+            location = document.getElementById("ev-location");
+            date = document.getElementById("ev-dates");
+            description = document.getElementById("ev-desc");
+
+            // Set price for paid events
+            const priceElement = document.getElementById("ev-price");
+            if (priceElement) {
+              priceElement.textContent = event.price || "Contact for details";
+            }
+          }
 
           // Populate modal with event data
           title.textContent = event.title || event.title_en || "Untitled";
 
-          // Set image
+          // Set image - use the same logic as event cards
+          let imageSrc;
           if (event.event_image && event.event_image.startsWith("/media/")) {
-            image.src = `https://api.venuu.is${event.event_image}`;
+            // Use the actual event image from the API
+            imageSrc = `https://api.venuu.is${event.event_image}`;
           } else if (
             event.event_thumbnail &&
             event.event_thumbnail.startsWith("/media/")
           ) {
-            image.src = `https://api.venuu.is${event.event_thumbnail}`;
+            // Fallback to thumbnail
+            imageSrc = `https://api.venuu.is${event.event_thumbnail}`;
           } else {
+            // Randomly select a poster image as fallback
             const randomPoster =
               posterImages[Math.floor(Math.random() * posterImages.length)];
-            image.src = `./Images/posters/${randomPoster}`;
+            imageSrc = `./Images/posters/${randomPoster}`;
           }
+
+          image.src = imageSrc;
+          image.alt = event.title || event.title_en || "Event image";
+
+          // Add error handling for image loading
+          image.onerror = function () {
+            console.log("Modal image failed to load, using fallback");
+            const fallbackPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            this.src = `./Images/posters/${fallbackPoster}`;
+          };
 
           // Set location
           location.textContent =
@@ -851,9 +1212,6 @@
             date.textContent = "Date not specified";
           }
 
-          // Set price (placeholder for now)
-          price.textContent = "Price: Contact for details";
-
           // Set description
           const eventDescription =
             (event.language && event.language.en && event.language.en.text) ||
@@ -861,38 +1219,73 @@
             event.detailed_description ||
             "No description available for this event.";
 
-          description.textContent = eventDescription;
+          if (isFreeEvent) {
+            description.innerHTML = `<p class="font-inter text-[13px] font-normal leading-normal text-[#333] m-0">${eventDescription}</p>`;
+          } else {
+            description.innerHTML = `<p class="text-[15px] leading-8 text-gray-800 space-y-4 break-words overflow-wrap-anywhere">${eventDescription}</p>`;
+          }
 
           // Show modal
-          modal.classList.remove("hidden");
+          modal.style.display = "flex";
           document.body.style.overflow = "hidden"; // Prevent background scrolling
         }
 
-        function closeModal() {
-          const modal = document.getElementById("event-modal");
-          modal.classList.add("hidden");
-          document.body.style.overflow = ""; // Restore scrolling
-        }
-
-        function toggleFavorite() {
-          const favoriteBtn = document.getElementById("modal-favorite");
-          const isFavorited = favoriteBtn.classList.contains("favorited");
-
-          if (isFavorited) {
-            favoriteBtn.classList.remove("favorited");
-            favoriteBtn.style.color = "#6b7280";
+        function closeModal(type) {
+          let modal;
+          if (type === "paid") {
+            modal = document.getElementById("event-modal");
           } else {
-            favoriteBtn.classList.add("favorited");
-            favoriteBtn.style.color = "#ef4444";
+            modal = document.getElementById("free-event-modal");
+          }
+
+          if (modal) {
+            modal.style.display = "none";
+            document.body.style.overflow = ""; // Restore scrolling
           }
         }
 
-        function shareEvent() {
+        function toggleFavorite(type) {
+          let modal;
+          if (type === "paid") {
+            modal = document.getElementById("event-modal");
+          } else {
+            modal = document.getElementById("free-event-modal");
+          }
+
+          const heartBtn = modal.querySelector(".heart-icon");
+
+          if (heartBtn) {
+            const isFavorited =
+              heartBtn.style.fill === "#ef4444" ||
+              heartBtn.style.color === "#ef4444";
+
+            if (isFavorited) {
+              heartBtn.style.fill = "#333333";
+              heartBtn.style.color = "#333333";
+            } else {
+              heartBtn.style.fill = "#ef4444";
+              heartBtn.style.color = "#ef4444";
+            }
+          }
+        }
+
+        function shareEvent(type) {
+          let title, description;
+
+          if (type === "paid") {
+            title = document.getElementById("event-modal-title").textContent;
+            description = document.getElementById("ev-desc").textContent;
+          } else {
+            title = document.getElementById(
+              "free-event-modal-title"
+            ).textContent;
+            description = document.getElementById("free-ev-desc").textContent;
+          }
+
           if (navigator.share) {
             navigator.share({
-              title: document.getElementById("modal-title").textContent,
-              text: document.getElementById("modal-description-text")
-                .textContent,
+              title: title,
+              text: description,
               url: window.location.href,
             });
           } else {
@@ -902,6 +1295,31 @@
               alert("Event link copied to clipboard!");
             });
           }
+        }
+
+        function handleEventSignup(e) {
+          e.preventDefault();
+
+          const formData = new FormData(e.target);
+          const email = formData.get("email");
+
+          // Log the signup (in a real app, you'd send this to a server)
+          console.log("Event signup:", {
+            email: email,
+            event: document.getElementById("free-event-modal-title")
+              .textContent,
+          });
+
+          // Show success message
+          alert(
+            "Thank you for registering! You will receive a confirmation email shortly."
+          );
+
+          // Reset form
+          e.target.reset();
+
+          // Close modal
+          closeModal();
         }
 
         function addEventCardListeners() {
@@ -915,31 +1333,201 @@
           });
         }
 
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-        if (mobileMenuBtn) {
-          mobileMenuBtn.addEventListener("click", () => {
-            const navLinks = document.querySelector(".nav-links");
-            if (navLinks) {
-              navLinks.classList.toggle("hidden");
-              navLinks.classList.toggle("flex");
-              navLinks.classList.toggle("flex-col");
-              navLinks.classList.toggle("absolute");
-              navLinks.classList.toggle("top-full");
-              navLinks.classList.toggle("left-0");
-              navLinks.classList.toggle("right-0");
-              navLinks.classList.toggle("bg-white");
-              navLinks.classList.toggle("shadow-lg");
-              navLinks.classList.toggle("p-4");
-              navLinks.classList.toggle("z-50");
+        /**
+         * Search Functionality
+         */
+        function initSearch() {
+          const searchInput = document.getElementById("search-input");
+          const searchResults = document.getElementById("search-results");
+
+          if (!searchInput || !searchResults) {
+            console.error("Search elements not found!");
+            return;
+          }
+
+          // Add focus event to show loading state
+          searchInput.addEventListener("focus", () => {
+            if (allEvents.length === 0) {
+              searchResults.innerHTML =
+                '<div class="search-no-results">Loading events...</div>';
+              searchResults.classList.remove("hidden");
+              searchResults.style.display = "block";
+            }
+          });
+
+          // Handle input changes
+          searchInput.addEventListener("input", (e) => {
+            const query = e.target.value.trim().toLowerCase();
+
+            if (query.length === 0) {
+              searchResults.classList.add("hidden");
+              searchResults.style.display = "none";
+              searchResults.innerHTML = "";
+              return;
+            }
+
+            // Filter events based on query
+            const filteredEvents = allEvents.filter((event) => {
+              const title = (
+                (event.language &&
+                  event.language.en &&
+                  event.language.en.title) ||
+                event.title ||
+                event.title_en ||
+                ""
+              ).toLowerCase();
+
+              const location = (
+                (event.language &&
+                  event.language.en &&
+                  event.language.en.place) ||
+                event.formatted_address ||
+                event.city ||
+                ""
+              ).toLowerCase();
+
+              const description = (
+                (event.language &&
+                  event.language.en &&
+                  event.language.en.text) ||
+                event.detailed_description_en ||
+                event.detailed_description ||
+                ""
+              ).toLowerCase();
+
+              const tags = (event.tags || []).join(" ").toLowerCase();
+
+              return (
+                title.includes(query) ||
+                location.includes(query) ||
+                description.includes(query) ||
+                tags.includes(query)
+              );
+            });
+
+            // Display search results
+            if (filteredEvents.length > 0) {
+              searchResults.innerHTML = filteredEvents
+                .slice(0, 10) // Limit to 10 results
+                .map((event) => createSearchResultItem(event))
+                .join("");
+              searchResults.classList.remove("hidden");
+              searchResults.style.display = "block";
+
+              // Add click listeners to search results
+              addSearchResultListeners();
+            } else {
+              searchResults.innerHTML =
+                '<div class="search-no-results">No events found</div>';
+              searchResults.classList.remove("hidden");
+              searchResults.style.display = "block";
+            }
+          });
+
+          // Close search results when clicking outside
+          document.addEventListener("click", (e) => {
+            if (
+              !searchInput.contains(e.target) &&
+              !searchResults.contains(e.target)
+            ) {
+              searchResults.classList.add("hidden");
+              searchResults.style.display = "none";
+            }
+          });
+
+          // Close search results on Escape key
+          searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              searchResults.classList.add("hidden");
+              searchResults.style.display = "none";
+              searchInput.blur();
             }
           });
         }
 
-        // Close mobile menu on Escape key
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") {
-            const navLinks = document.querySelector(".nav-links");
+        /**
+         * Create a search result item
+         */
+        function createSearchResultItem(event) {
+          const title =
+            (event.language && event.language.en && event.language.en.title) ||
+            event.title ||
+            event.title_en ||
+            "Untitled";
+          const date = event.start
+            ? new Date(event.start).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+          const location =
+            (event.language && event.language.en && event.language.en.place) ||
+            event.formatted_address ||
+            event.city ||
+            "";
+
+          // Get image
+          let image;
+          if (event.event_image && event.event_image.startsWith("/media/")) {
+            image = `https://api.venuu.is${event.event_image}`;
+          } else if (
+            event.event_thumbnail &&
+            event.event_thumbnail.startsWith("/media/")
+          ) {
+            image = `https://api.venuu.is${event.event_thumbnail}`;
+          } else {
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image = `./Images/posters/${randomPoster}`;
+          }
+
+          return `
+            <div class="search-result-item" data-event='${JSON.stringify(
+              event
+            ).replace(/'/g, "&#39;")}'>
+              <img src="${image}" alt="${title}" onerror="this.src='./Images/posters/${posterImages[0]}'" />
+              <div class="search-result-info">
+                <div class="search-result-title">${title}</div>
+                <div class="search-result-meta">
+                  ${date ? `<span>${date}</span>` : ""}
+                  ${location ? `<span>${location}</span>` : ""}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        /**
+         * Add click listeners to search results
+         */
+        function addSearchResultListeners() {
+          const resultItems = document.querySelectorAll(".search-result-item");
+          const searchInput = document.getElementById("search-input");
+          const searchResults = document.getElementById("search-results");
+
+          resultItems.forEach((item) => {
+            item.addEventListener("click", (e) => {
+              e.preventDefault();
+              const eventData = JSON.parse(item.getAttribute("data-event"));
+              showEventModal(eventData);
+
+              // Clear search and hide results
+              if (searchInput) searchInput.value = "";
+              if (searchResults) {
+                searchResults.classList.add("hidden");
+                searchResults.style.display = "none";
+              }
+            });
+          });
+        }
+
+        // Mobile menu toggle
+        document.addEventListener("DOMContentLoaded", function () {
+          const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+          const navLinks = document.querySelector(".nav-links");
+
+          function closeMobileMenu() {
             if (navLinks && !navLinks.classList.contains("hidden")) {
               navLinks.classList.add("hidden");
               navLinks.classList.remove(
@@ -956,13 +1544,77 @@
               );
             }
           }
-        });
 
-        // Initialize carousel navigation
-        initCarouselNavigation();
+          function toggleMobileMenu() {
+            if (navLinks) {
+              navLinks.classList.toggle("hidden");
+              navLinks.classList.toggle("flex");
+              navLinks.classList.toggle("flex-col");
+              navLinks.classList.toggle("absolute");
+              navLinks.classList.toggle("top-full");
+              navLinks.classList.toggle("left-0");
+              navLinks.classList.toggle("right-0");
+              navLinks.classList.toggle("bg-white");
+              navLinks.classList.toggle("shadow-lg");
+              navLinks.classList.toggle("p-4");
+              navLinks.classList.toggle("z-50");
+            }
+          }
+
+          if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleMobileMenu();
+            });
+
+            // Also handle touch events for better mobile support
+            mobileMenuBtn.addEventListener("touchstart", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleMobileMenu();
+            });
+          }
+
+          // Close mobile menu when clicking outside
+          document.addEventListener("click", (e) => {
+            if (
+              navLinks &&
+              mobileMenuBtn &&
+              !navLinks.contains(e.target) &&
+              !mobileMenuBtn.contains(e.target)
+            ) {
+              closeMobileMenu();
+            }
+          });
+
+          // Close mobile menu when clicking on navigation links
+          if (navLinks) {
+            navLinks.addEventListener("click", (e) => {
+              if (e.target.closest(".nav-link")) {
+                closeMobileMenu();
+              }
+            });
+          }
+
+          // Close mobile menu on Escape key
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              closeMobileMenu();
+            }
+          });
+
+          // Initialize carousel navigation
+          initCarouselNavigation();
+        }); // End of DOMContentLoaded
 
         // Initialize modal functionality
         initEventModal();
+
+        // Initialize create event modal functionality
+        initCreateEventModal();
+
+        // Note: initSearch() is called after events are loaded in fillEventRows()
       }); // End of DOMContentLoaded event listener
     </script>
 
@@ -970,7 +1622,7 @@
     <footer class="footer" id="contact" role="contentinfo">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>Contact</h3>
+          <h3 class="tit">Contact</h3>
           <address class="mb-2 not-italic">
             <p>Reykjavik, Iceland</p>
             <p>
@@ -1028,7 +1680,7 @@
           </address>
         </div>
         <div class="footer-section">
-          <h3>About</h3>
+          <h3 class="tit">About</h3>
           <p>
             Venuu connects people through Iceland's vibrant cultural events.
           </p>
@@ -1037,173 +1689,743 @@
       </div>
     </footer>
 
-    <!-- Event Modal -->
-    <div id="event-modal" class="modal-overlay hidden">
-      <div class="modal-container">
-        <div class="modal-header">
-          <h2 id="modal-title" class="modal-title">Event Title</h2>
-          <div class="modal-actions">
-            <button
-              id="modal-close"
-              class="modal-close-btn"
-              aria-label="Close modal"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18 6L6 18M6 6L18 18"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+    <!-- Paid Event Details Modal -->
+    <div
+      id="event-modal"
+      class="fixed inset-0 z-50"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="absolute inset-0 bg-black/50" data-close></div>
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="event-modal-title"
+        class="absolute inset-0 grid place-items-center p-4"
+      >
+        <div class="event-details-modal-content" tabindex="-1" data-panel>
+          <!-- Modal header - fixed -->
+          <div class="border-b border-gray-100 p-6">
+            <div class="event-details-meta">
+              <!-- Image -->
+              <div class="event-details-image-container">
+                <img
+                  id="ev-cover"
+                  src="/images/placeholder.jpg"
+                  alt=""
+                  class="event-details-image"
                 />
-              </svg>
-            </button>
-            <button
-              id="modal-favorite"
-              class="modal-favorite-btn"
-              aria-label="Add to favorites"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              </div>
+
+              <!-- Event Details -->
+              <div class="event-details-info">
+                <div class="event-details-header">
+                  <h2 id="event-modal-title" class="event-details-name">
+                    Iceland Airwaves
+                  </h2>
+                </div>
+
+                <!-- Actions Column -->
+                <div class="event-details-actions-column">
+                  <button
+                    class="event-details-close-x"
+                    data-close
+                    aria-label="Close"
+                  >
+                    <img
+                      src="icons/x.svg"
+                      alt="Close"
+                      class="close-x-icon"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="close-x-icon"
+                      style="display: none"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 6l12 12M18 6L6 18"
+                      />
+                    </svg>
+                  </button>
+                  <div class="event-details-heart-icon">
+                    <img
+                      src="icons/Heart.svg"
+                      alt="Heart"
+                      class="heart-icon"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="heart-icon"
+                      style="display: none"
+                      viewBox="0 0 17 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M8.5 16L7.2675 14.8665C5.83667 13.5441 4.65375 12.4033 3.71875 11.4441C2.78375 10.485 2.04 9.62398 1.4875 8.86104C0.935 8.09809 0.548958 7.39691 0.329375 6.75749C0.109792 6.11807 0 5.46412 0 4.79564C0 3.42961 0.44625 2.28883 1.33875 1.3733C2.23125 0.457766 3.34333 0 4.675 0C5.41167 0 6.11292 0.159855 6.77875 0.479564C7.44458 0.799273 8.01833 1.24977 8.5 1.83106C8.98167 1.24977 9.55542 0.799273 10.2213 0.479564C10.8871 0.159855 11.5883 0 12.325 0C13.6567 0 14.7688 0.457766 15.6613 1.3733C16.5538 2.28883 17 3.42961 17 4.79564C17 5.46412 16.8902 6.11807 16.6706 6.75749C16.451 7.39691 16.065 8.09809 15.5125 8.86104C14.96 9.62398 14.2163 10.485 13.2813 11.4441C12.3463 12.4033 11.1633 13.5441 9.7325 14.8665L8.5 16ZM8.5 13.6458C9.86 12.396 10.9792 11.3243 11.8575 10.4305C12.7358 9.53679 13.43 8.75931 13.94 8.09809C14.45 7.43688 14.8042 6.84832 15.0025 6.33243C15.2008 5.81653 15.3 5.30427 15.3 4.79564C15.3 3.92371 15.0167 3.19709 14.45 2.6158C13.8833 2.03451 13.175 1.74387 12.325 1.74387C11.6592 1.74387 11.0429 1.93642 10.4763 2.32153C9.90958 2.70663 9.52 3.19709 9.3075 3.79292H7.6925C7.48 3.19709 7.09042 2.70663 6.52375 2.32153C5.95708 1.93642 5.34083 1.74387 4.675 1.74387C3.825 1.74387 3.11667 2.03451 2.55 2.6158C1.98333 3.19709 1.7 3.92371 1.7 4.79564C1.7 5.30427 1.79917 5.81653 1.9975 6.33243C2.19583 6.84832 2.55 7.43688 3.06 8.09809C3.57 8.75931 4.26417 9.53679 5.1425 10.4305C6.02083 11.3243 7.14 12.396 8.5 13.6458Z"
+                        fill="#333333"
+                      />
+                    </svg>
+                  </div>
+                  <div class="event-details-share-icon">
+                    <img
+                      src="Images/svg-icons/shareicon.svg"
+                      alt="Share"
+                      class="share-icon"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="share-icon"
+                      style="display: none"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v14"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Meta row -->
+                <div class="event-details-meta-info">
+                  <div class="event-details-location">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="event-details-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 21s-6-5.373-6-10a6 6 0 1112 0c0 4.627-6 10-6 10z"
+                      />
+                      <circle cx="12" cy="11" r="2" />
+                    </svg>
+                    <span id="ev-location">Downtown Reykjavík</span>
+                  </div>
+
+                  <div class="event-details-date">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="event-details-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span id="ev-dates">November 6 - 8, 2025</span>
+                  </div>
+
+                  <div class="event-details-price-line">
+                    <div class="event-details-price">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="event-details-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M7 7h6l7 7-6 6-7-7V7z"
+                        />
+                        <circle cx="7.5" cy="7.5" r="1.5" />
+                      </svg>
+                      <span>Price: <span id="ev-price">12.400 kr</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="event-details-actions">
+                  <a
+                    id="ev-cta"
+                    href="#"
+                    target="_blank"
+                    rel="noopener"
+                    class="event-details-ticket-btn"
+                  >
+                    Go to TIX
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scrollable content area -->
+          <div class="flex-1 overflow-y-auto">
+            <div class="p-6">
+              <!-- Description -->
+              <div
+                id="ev-desc"
+                class="text-[15px] leading-8 text-gray-800 space-y-4 break-words overflow-wrap-anywhere"
               >
-                <path
-                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-            <button
-              id="modal-share"
-              class="modal-share-btn"
-              aria-label="Share event"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
+                <p>
+                  Three days, countless bands [local and international], and a
+                  music industry conference.
+                </p>
+                <p>
+                  Iceland Airwaves is an annual music festival held in
+                  Reykjavík, Iceland.
+                </p>
+                <p>
+                  Known for an eclectic line up, vibrant atmosphere, and top
+                  conference days.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="modal-content">
-          <div class="modal-image-section">
-            <img
-              id="modal-image"
-              src=""
-              alt="Event image"
-              class="modal-image"
-            />
+    <!-- Free Event Signup Modal -->
+    <div
+      id="free-event-modal"
+      class="fixed inset-0 z-50"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="absolute inset-0 bg-black/50" data-close></div>
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="free-event-modal-title"
+        class="absolute inset-0 grid place-items-center p-4"
+      >
+        <div class="event-details-modal-content" tabindex="-1" data-panel>
+          <!-- Modal header - fixed -->
+          <div class="border-b border-gray-100 p-6">
+            <div class="event-details-meta">
+              <!-- Image -->
+              <div class="event-details-image-container">
+                <img
+                  id="free-ev-cover"
+                  src="/images/placeholder.jpg"
+                  alt=""
+                  class="event-details-image"
+                />
+              </div>
+
+              <!-- Event Details -->
+              <div class="event-details-info">
+                <div class="event-details-header">
+                  <h2 id="free-event-modal-title" class="event-details-name">
+                    Free Community Event
+                  </h2>
+                </div>
+
+                <!-- Actions Column -->
+                <div class="event-details-actions-column">
+                  <button
+                    class="event-details-close-x"
+                    data-close
+                    aria-label="Close"
+                  >
+                    <img
+                      src="icons/x.svg"
+                      alt="Close"
+                      class="close-x-icon"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="close-x-icon"
+                      style="display: none"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 6l12 12M18 6L6 18"
+                      />
+                    </svg>
+                  </button>
+                  <div class="event-details-heart-icon">
+                    <img
+                      src="icons/Heart.svg"
+                      alt="Heart"
+                      class="heart-icon"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="heart-icon"
+                      style="display: none"
+                      viewBox="0 0 17 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M8.5 16L7.2675 14.8665C5.83667 13.5441 4.65375 12.4033 3.71875 11.4441C2.78375 10.485 2.04 9.62398 1.4875 8.86104C0.935 8.09809 0.548958 7.39691 0.329375 6.75749C0.109792 6.11807 0 5.46412 0 4.79564C0 3.42961 0.44625 2.28883 1.33875 1.3733C2.23125 0.457766 3.34333 0 4.675 0C5.41167 0 6.11292 0.159855 6.77875 0.479564C7.44458 0.799273 8.01833 1.24977 8.5 1.83106C8.98167 1.24977 9.55542 0.799273 10.2213 0.479564C10.8871 0.159855 11.5883 0 12.325 0C13.6567 0 14.7688 0.457766 15.6613 1.3733C16.5538 2.28883 17 3.42961 17 4.79564C17 5.46412 16.8902 6.11807 16.6706 6.75749C16.451 7.39691 16.065 8.09809 15.5125 8.86104C14.96 9.62398 14.2163 10.485 13.2813 11.4441C12.3463 12.4033 11.1633 13.5441 9.7325 14.8665L8.5 16ZM8.5 13.6458C9.86 12.396 10.9792 11.3243 11.8575 10.4305C12.7358 9.53679 13.43 8.75931 13.94 8.09809C14.45 7.43688 14.8042 6.84832 15.0025 6.33243C15.2008 5.81653 15.3 5.30427 15.3 4.79564C15.3 3.92371 15.0167 3.19709 14.45 2.6158C13.8833 2.03451 13.175 1.74387 12.325 1.74387C11.6592 1.74387 11.0429 1.93642 10.4763 2.32153C9.90958 2.70663 9.52 3.19709 9.3075 3.79292H7.6925C7.48 3.19709 7.09042 2.70663 6.52375 2.32153C5.95708 1.93642 5.34083 1.74387 4.675 1.74387C3.825 1.74387 3.11667 2.03451 2.55 2.6158C1.98333 3.19709 1.7 3.92371 1.7 4.79564C1.7 5.30427 1.79917 5.81653 1.9975 6.33243C2.19583 6.84832 2.55 7.43688 3.06 8.09809C3.57 8.75931 4.26417 9.53679 5.1425 10.4305C6.02083 11.3243 7.14 12.396 8.5 13.6458Z"
+                        fill="#333333"
+                      />
+                    </svg>
+                  </div>
+                  <div class="event-details-share-icon">
+                    <img
+                      src="Images/svg-icons/shareicon.svg"
+                      alt="Share"
+                      class="share-icon"
+                      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="share-icon"
+                      style="display: none"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v14"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Meta row -->
+                <div class="event-details-meta-info">
+                  <div class="event-details-location">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="event-details-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 21s-6-5.373-6-10a6 6 0 1112 0c0 4.627-6 10-6 10z"
+                      />
+                      <circle cx="12" cy="11" r="2" />
+                    </svg>
+                    <span id="free-ev-location">Community Center</span>
+                  </div>
+
+                  <div class="event-details-date">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="event-details-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span id="free-ev-dates">December 15, 2025</span>
+                  </div>
+
+                  <div class="event-details-price-line">
+                    <div class="event-details-price">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="event-details-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>FREE EVENT</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email Signup Form -->
+                <div class="event-details-actions">
+                  <form id="free-event-signup" class="free-event-form">
+                    <div class="free-event-email-container">
+                      <label
+                        for="signup-email"
+                        class="block text-xs font-medium text-gray-700 mb-1"
+                      >
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="signup-email"
+                        name="email"
+                        required
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Enter your email address"
+                      />
+                    </div>
+                    <button type="submit" class="free-event-register-btn">
+                      Register
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="modal-details">
-            <div class="modal-info">
-              <div class="modal-info-item">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                  <circle
-                    cx="12"
-                    cy="10"
-                    r="3"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                </svg>
-                <span id="modal-location">Location</span>
+          <!-- Scrollable content area -->
+          <div class="flex-1 overflow-y-auto">
+            <div class="p-6">
+              <!-- Description -->
+              <div id="free-ev-desc" class="event-details-description">
+                <p>
+                  Join us for this free community event featuring local artists
+                  and musicians.
+                </p>
+                <p>
+                  This is a great opportunity to connect with your community and
+                  enjoy some amazing performances.
+                </p>
+                <p>Registration is required but completely free!</p>
               </div>
-              <div class="modal-info-item">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="3"
-                    y="4"
-                    width="18"
-                    height="18"
-                    rx="2"
-                    ry="2"
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div
+      id="create-event-modal"
+      class="create-event-modal-overlay"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="create-event-modal-container" data-panel>
+        <!-- Modal Header -->
+        <div class="create-event-modal-header">
+          <h2 id="create-event-modal-title" class="create-event-modal-title">
+            Create the Event
+          </h2>
+          <button
+            id="create-event-modal-close"
+            class="create-event-modal-close"
+            data-close
+            aria-label="Close"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 6l12 12M18 6L6 18"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="create-event-modal-content">
+          <form id="create-event-form" class="space-y-4">
+            <!-- Title of Event -->
+            <div>
+              <label
+                for="event-title"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Title of Event
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-title"
+                  name="title"
+                  required
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Title"
+                />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                  />
-                  <line
-                    x1="16"
-                    y1="2"
-                    x2="16"
-                    y2="6"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                  <line
-                    x1="8"
-                    y1="2"
-                    x2="8"
-                    y2="6"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                  <line
-                    x1="3"
-                    y1="10"
-                    x2="21"
-                    y2="10"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                </svg>
-                <span id="modal-date">Date</span>
-              </div>
-              <div class="modal-info-item">
-                <span id="modal-price">Price: Free</span>
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
 
-            <button id="modal-ticket-btn" class="modal-ticket-btn">
-              Go To TIX
-            </button>
-          </div>
-        </div>
+            <!-- Date -->
+            <div>
+              <label
+                for="event-date"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-date"
+                  name="date"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Date"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
 
-        <div class="modal-description">
-          <p id="modal-description-text">
-            Event description will appear here...
-          </p>
+            <!-- Time -->
+            <div>
+              <label
+                for="event-time"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Time
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-time"
+                  name="time"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Time"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+              <label
+                for="event-location"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Location
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-location"
+                  name="location"
+                  required
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Location"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 21s-6-5.373-6-10a6 6 0 1112 0c0 4.627-6 10-6 10z"
+                    />
+                    <circle cx="12" cy="11" r="2" />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Registration Fee -->
+            <div>
+              <label
+                for="event-fee"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Registration Fee
+              </label>
+              <input
+                type="number"
+                id="event-fee"
+                name="fee"
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Enter The Registration Fee"
+              />
+            </div>
+
+            <!-- Upload Image -->
+            <div>
+              <label
+                for="event-image"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Upload the Image
+              </label>
+              <div class="relative">
+                <input
+                  type="file"
+                  id="event-image"
+                  name="image"
+                  accept="image/*"
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="No file chosen"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label
+                for="event-description"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Description
+              </label>
+              <textarea
+                id="event-description"
+                name="description"
+                rows="4"
+                required
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                placeholder="Enter the Text"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full inline-flex items-center justify-center rounded-lg border-2 px-4 py-2 text-sm font-semibold focus:ring-2 focus:ring-offset-2"
+                style="border-color: #340aff; color: #340aff"
+                onmouseover="this.style.backgroundColor='#340AFF'; this.style.color='white';"
+                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#340AFF';"
+              >
+                Send
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
