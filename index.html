@@ -468,116 +468,34 @@
               return;
             }
 
-            // Get the current domain and protocol for absolute URLs
-            const protocol = window.location.protocol;
-            const hostname = window.location.hostname;
-            const pathname = window.location.pathname;
-            const basePath = pathname.includes("github.io")
-              ? "/hopaverkefni2"
-              : "";
+            // Use the direct path that we know works on GitHub Pages
+            const logoPath = "./Images/Images_and_lottie/Logo.json";
 
-            // Try multiple possible paths for the Logo.json file
-            const possiblePaths = [
-              // Relative paths
-              "./Images/Images_and_lottie/Logo.json",
-              "Images/Images_and_lottie/Logo.json",
-              "/Images/Images_and_lottie/Logo.json",
-              "./images/Images_and_lottie/Logo.json",
-              "images/Images_and_lottie/Logo.json",
-              // Absolute paths for GitHub Pages
-              `${protocol}//${hostname}${basePath}/Images/Images_and_lottie/Logo.json`,
-              `${protocol}//${hostname}${basePath}/images/Images_and_lottie/Logo.json`,
-              // CDN fallback (if you want to host the file externally)
-              "https://raw.githubusercontent.com/Eirikur1/hopaverkefni2/main/Images/Images_and_lottie/Logo.json",
-            ];
+            console.log(`Loading logo from: ${logoPath}`);
 
-            let animationLoaded = false;
-            let currentPathIndex = 0;
-            let currentAnimation = null;
+            try {
+              const animation = window.lottie.loadAnimation({
+                container: logoContainer,
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                path: logoPath,
+              });
 
-            function tryLoadAnimation() {
-              if (currentPathIndex >= possiblePaths.length) {
-                console.error("All logo paths failed to load");
+              // Add error handling
+              animation.addEventListener("data_failed", function () {
+                console.error(`Failed to load Lottie animation from: ${logoPath}`);
                 showFallbackLogo(logoContainer);
-                return;
-              }
+              });
 
-              const currentPath = possiblePaths[currentPathIndex];
-              console.log(`Trying to load logo from: ${currentPath}`);
+              animation.addEventListener("data_ready", function () {
+                console.log(`Successfully loaded logo from: ${logoPath}`);
+              });
 
-              // Test if the file exists first
-              fetch(currentPath, { method: "HEAD" })
-                .then((response) => {
-                  if (response.ok) {
-                    console.log(`Logo file found at: ${currentPath}`);
-                    loadLottieAnimation(currentPath);
-                  } else {
-                    console.log(
-                      `Logo file not found at: ${currentPath} (${response.status})`
-                    );
-                    currentPathIndex++;
-                    tryLoadAnimation();
-                  }
-                })
-                .catch((error) => {
-                  console.log(
-                    `Error checking logo file at: ${currentPath}`,
-                    error
-                  );
-                  currentPathIndex++;
-                  tryLoadAnimation();
-                });
+            } catch (error) {
+              console.error(`Error creating Lottie animation: ${error.message}`);
+              showFallbackLogo(logoContainer);
             }
-
-            function loadLottieAnimation(path) {
-              try {
-                currentAnimation = window.lottie.loadAnimation({
-                  container: logoContainer,
-                  renderer: "svg",
-                  loop: true,
-                  autoplay: true,
-                  path: path,
-                });
-
-                // Add comprehensive error handling
-                currentAnimation.addEventListener("data_failed", function () {
-                  console.error(
-                    `Failed to load Lottie animation from: ${path}`
-                  );
-                  if (currentAnimation) {
-                    currentAnimation.destroy();
-                    currentAnimation = null;
-                  }
-                  currentPathIndex++;
-                  tryLoadAnimation();
-                });
-
-                currentAnimation.addEventListener("data_ready", function () {
-                  console.log(`Successfully loaded logo from: ${path}`);
-                  animationLoaded = true;
-                });
-
-                // Set a timeout to try next path if no response
-                setTimeout(() => {
-                  if (!animationLoaded && currentAnimation) {
-                    console.error(`Timeout loading logo from: ${path}`);
-                    currentAnimation.destroy();
-                    currentAnimation = null;
-                    currentPathIndex++;
-                    tryLoadAnimation();
-                  }
-                }, 5000);
-              } catch (error) {
-                console.error(
-                  `Error creating Lottie animation for: ${path}`,
-                  error
-                );
-                currentPathIndex++;
-                tryLoadAnimation();
-              }
-            }
-
-            tryLoadAnimation();
           } catch (error) {
             console.error("Error loading logo animation:", error);
             const logoContainer = document.getElementById("lottie-logo");
