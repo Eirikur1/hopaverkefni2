@@ -2419,11 +2419,11 @@ body {
 
 /* CAROUSEL FIXES */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
-.scrollbar-hide::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 /* Ensure carousel items don't shrink */
@@ -2432,4 +2432,37 @@ body {
 #music-row .event-item,
 #family-row .event-item {
   flex-shrink: 0 !important;
+}
+
+/* Carousel drag functionality */
+#recommended-row,
+#popular-row,
+#music-row,
+#family-row {
+  cursor: grab !important;
+  user-select: none !important;
+}
+
+#recommended-row:active,
+#popular-row:active,
+#music-row:active,
+#family-row:active {
+  cursor: grabbing !important;
+}
+
+/* Prevent text selection during drag */
+#recommended-row *,
+#popular-row *,
+#music-row *,
+#family-row * {
+  user-select: none !important;
+  pointer-events: none !important;
+}
+
+/* Re-enable pointer events for interactive elements */
+#recommended-row .event-item,
+#popular-row .event-item,
+#music-row .event-item,
+#family-row .event-item {
+  pointer-events: auto !important;
 }

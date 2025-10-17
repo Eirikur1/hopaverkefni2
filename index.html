@@ -246,7 +246,7 @@
         <div
           id="recommended-row"
           class="flex flex-row gap-6 w-full overflow-x-auto scrollbar-hide"
-          style="scroll-behavior: smooth;"
+          style="scroll-behavior: smooth"
         ></div>
       </div>
       <!-- Popular Row -->
@@ -307,7 +307,7 @@
         <div
           id="popular-row"
           class="flex flex-row gap-6 w-full overflow-x-auto scrollbar-hide"
-          style="scroll-behavior: smooth;"
+          style="scroll-behavior: smooth"
         ></div>
       </div>
       <!-- Music Row -->
@@ -365,7 +365,11 @@
             </button>
           </div>
         </div>
-        <div id="music-row" class="flex flex-row gap-6 w-full overflow-x-auto scrollbar-hide" style="scroll-behavior: smooth;"></div>
+        <div
+          id="music-row"
+          class="flex flex-row gap-6 w-full overflow-x-auto scrollbar-hide"
+          style="scroll-behavior: smooth"
+        ></div>
       </div>
       <!-- Family Row -->
       <div
@@ -422,7 +426,11 @@
             </button>
           </div>
         </div>
-        <div id="family-row" class="flex flex-row gap-6 w-full overflow-x-auto scrollbar-hide" style="scroll-behavior: smooth;"></div>
+        <div
+          id="family-row"
+          class="flex flex-row gap-6 w-full overflow-x-auto scrollbar-hide"
+          style="scroll-behavior: smooth"
+        ></div>
       </div>
     </section>
 
@@ -944,11 +952,16 @@
             let startX;
             let scrollLeft;
 
+            // Mouse events
             carousel.addEventListener("mousedown", (e) => {
+              // Only start drag if clicking on the carousel container, not on event items
+              if (e.target.closest('.event-item')) return;
+              
               isDown = true;
               carousel.style.cursor = "grabbing";
               startX = e.pageX - carousel.offsetLeft;
               scrollLeft = carousel.scrollLeft;
+              e.preventDefault();
             });
 
             carousel.addEventListener("mouseleave", () => {
@@ -971,10 +984,13 @@
 
             // Touch support for mobile
             carousel.addEventListener("touchstart", (e) => {
+              // Only start drag if touching the carousel container, not on event items
+              if (e.target.closest('.event-item')) return;
+              
               isDown = true;
               startX = e.touches[0].pageX - carousel.offsetLeft;
               scrollLeft = carousel.scrollLeft;
-            });
+            }, { passive: false });
 
             carousel.addEventListener("touchend", () => {
               isDown = false;
@@ -986,7 +1002,7 @@
               const x = e.touches[0].pageX - carousel.offsetLeft;
               const walk = (x - startX) * 2;
               carousel.scrollLeft = scrollLeft - walk;
-            });
+            }, { passive: false });
 
             // Set initial cursor style
             carousel.style.cursor = "grab";
