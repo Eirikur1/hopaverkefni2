@@ -453,7 +453,6 @@
     <script>
       // Wait for DOM to be fully loaded
       document.addEventListener("DOMContentLoaded", function () {
-        console.log("Inline script DOMContentLoaded called");
 
         /**
          * Initialize VENUU logo animation using Lottie Web
@@ -469,7 +468,6 @@
                 autoplay: true,
                 path: "./Images/Images_and_lottie/Logo.json",
               });
-              console.log("✅ Logo animation initialized with Lottie Web");
             }
           } catch (error) {
             console.error("Error loading logo animation:", error);
@@ -564,8 +562,7 @@
                 description: formData.get("description"),
               };
 
-              // Log the event data (in a real app, you'd send this to a server)
-              console.log("Event created:", eventData);
+              // In a real app, you'd send this to a server
 
               // Show success message (you could replace this with a toast notification)
               alert("Event created successfully!");
@@ -762,7 +759,6 @@
           try {
             const response = await fetch("./api-data.json");
             const events = await response.json();
-            console.log(`Loaded ${events.length} events from API`);
 
             // Store all events globally for search functionality
             allEvents = events;
@@ -864,10 +860,6 @@
               }
             }
 
-            // Log final counts for debugging
-            console.log(
-              `Final counts - Recommended: ${recommended.length}, Popular: ${popular.length}, Music: ${music.length}, Family: ${family.length}`
-            );
 
             // Render cards into rows
             document.getElementById("recommended-row").innerHTML = recommended
@@ -1059,21 +1051,18 @@
             paidHeartBtn.addEventListener("click", (e) => {
               e.stopPropagation();
               // Disabled - no functionality
-              console.log("Favorite button clicked (disabled)");
             });
           }
           if (paidShareBtn) {
             paidShareBtn.addEventListener("click", (e) => {
               e.stopPropagation();
               // Disabled - no functionality
-              console.log("Share button clicked (disabled)");
             });
           }
           if (paidTicketBtn) {
             paidTicketBtn.addEventListener("click", (e) => {
               e.stopPropagation();
               // Add ticket functionality here
-              console.log("Go to ticket page");
             });
           }
 
@@ -1097,14 +1086,12 @@
             freeHeartBtn.addEventListener("click", (e) => {
               e.stopPropagation();
               // Disabled - no functionality
-              console.log("Favorite button clicked (disabled)");
             });
           }
           if (freeShareBtn) {
             freeShareBtn.addEventListener("click", (e) => {
               e.stopPropagation();
               // Disabled - no functionality
-              console.log("Share button clicked (disabled)");
             });
           }
           if (signupForm) {
@@ -1196,7 +1183,6 @@
 
           // Add error handling for image loading
           image.onerror = function () {
-            console.log("Modal image failed to load, using fallback");
             const fallbackPoster =
               posterImages[Math.floor(Math.random() * posterImages.length)];
             this.src = `./Images/posters/${fallbackPoster}`;
@@ -1329,12 +1315,7 @@
           const formData = new FormData(e.target);
           const email = formData.get("email");
 
-          // Log the signup (in a real app, you'd send this to a server)
-          console.log("Event signup:", {
-            email: email,
-            event: document.getElementById("free-event-modal-title")
-              .textContent,
-          });
+          // In a real app, you'd send this to a server
 
           // Show success message
           alert(
