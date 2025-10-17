@@ -123,11 +123,12 @@ body {
     @apply flex flex-col justify-center items-center text-center;
     color: #ff3409;
     font-family: "Rubik Mono One";
-    font-size: 1.5rem;
+    font-size: 40px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    max-width: 100%;
+    width: 415px;
+    flex-shrink: 0;
     box-sizing: border-box;
     overflow: hidden;
     height: auto;
@@ -165,14 +166,17 @@ body {
 
   .nav-section-text .text-draw__p {
     font-family: "Rubik Mono One";
-    font-size: 1.5rem;
+    font-size: 40px;
     font-weight: 400;
-    line-height: 1;
+    line-height: normal;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 415px;
+    flex-shrink: 0;
+    text-align: center;
   }
 
   .nav-search-bar {
@@ -271,11 +275,12 @@ body {
       @apply flex flex-col justify-center items-center text-center;
       color: #ff3409;
       font-family: "Rubik Mono One";
-      font-size: 1rem;
+      font-size: 32px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      max-width: 100%;
+      width: 100%;
+      max-width: 415px;
       box-sizing: border-box;
       overflow: hidden;
       height: auto;
@@ -285,14 +290,17 @@ body {
 
     .nav-section-text .text-draw__p {
       font-family: "Rubik Mono One";
-      font-size: 1rem;
+      font-size: 32px;
       font-weight: 400;
-      line-height: 1;
+      line-height: normal;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      max-width: 415px;
+      text-align: center;
     }
 
     .nav-section-text span {
@@ -437,11 +445,12 @@ body {
       @apply flex flex-col justify-center items-center text-center;
       color: #ff3409;
       font-family: "Rubik Mono One";
-      font-size: 0.875rem;
+      font-size: 28px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      max-width: 100%;
+      width: 100%;
+      max-width: 415px;
       box-sizing: border-box;
       overflow: hidden;
       height: auto;
@@ -451,14 +460,17 @@ body {
 
     .nav-section-text .text-draw__p {
       font-family: "Rubik Mono One";
-      font-size: 0.875rem;
+      font-size: 28px;
       font-weight: 400;
-      line-height: 1;
+      line-height: normal;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      max-width: 415px;
+      text-align: center;
     }
 
     .nav-section-text span {
@@ -540,11 +552,12 @@ body {
       @apply flex flex-col justify-center items-center text-center;
       color: #ff3409;
       font-family: "Rubik Mono One";
-      font-size: 0.75rem;
+      font-size: 24px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      max-width: 100%;
+      width: 100%;
+      max-width: 415px;
       box-sizing: border-box;
       overflow: hidden;
       height: auto;
@@ -554,14 +567,17 @@ body {
 
     .nav-section-text .text-draw__p {
       font-family: "Rubik Mono One";
-      font-size: 0.75rem;
+      font-size: 24px;
       font-weight: 400;
-      line-height: 1;
+      line-height: normal;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      max-width: 415px;
+      text-align: center;
     }
 
     .nav-section-text span {
@@ -708,7 +724,13 @@ body {
     }
 
     .nav-section-text {
-      font-size: 5rem;
+      font-size: 40px;
+      width: 415px;
+    }
+
+    .nav-section-text .text-draw__p {
+      font-size: 40px;
+      width: 415px;
     }
 
     .category-title {
@@ -718,7 +740,13 @@ body {
 
   @media (min-width: 1600px) {
     .nav-section-text {
-      font-size: 6rem;
+      font-size: 40px;
+      width: 415px;
+    }
+
+    .nav-section-text .text-draw__p {
+      font-size: 40px;
+      width: 415px;
     }
   }
 
