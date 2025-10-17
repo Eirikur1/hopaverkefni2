@@ -435,7 +435,7 @@
     </section>
 
     <!-- Lottie Web Library -->
-    <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 
     <!-- GSAP Library -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
@@ -453,7 +453,6 @@
     <script>
       // Wait for DOM to be fully loaded
       document.addEventListener("DOMContentLoaded", function () {
-
         /**
          * Initialize VENUU logo animation using Lottie Web
          */
@@ -468,14 +467,30 @@
                 autoplay: true,
                 path: "./Images/Images_and_lottie/Logo.json",
               });
+              
+              // Add error handling for animation loading
+              animation.addEventListener('data_failed', function() {
+                console.error("Failed to load Lottie animation data");
+                // Fallback: show a simple text logo
+                logoContainer.innerHTML = '<div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #340aff;">VENUU</div>';
+              });
+            } else if (logoContainer && !window.lottie) {
+              console.error("Lottie library not loaded");
+              // Fallback: show a simple text logo
+              logoContainer.innerHTML = '<div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #340aff;">VENUU</div>';
             }
           } catch (error) {
             console.error("Error loading logo animation:", error);
+            // Fallback: show a simple text logo
+            const logoContainer = document.getElementById("lottie-logo");
+            if (logoContainer) {
+              logoContainer.innerHTML = '<div style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: #340aff;">VENUU</div>';
+            }
           }
         }
 
-        // Initialize logo
-        initializeLogoAnimation();
+        // Initialize logo with a small delay to ensure Lottie library is loaded
+        setTimeout(initializeLogoAnimation, 100);
 
         /**
          * Initialize Create Event Modal functionality
@@ -859,7 +874,6 @@
                 if (family.length >= 8) break;
               }
             }
-
 
             // Render cards into rows
             document.getElementById("recommended-row").innerHTML = recommended
