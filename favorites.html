@@ -466,17 +466,12 @@
           const location =
             event.formatted_address || `${event.postal} ${event.city}` || "";
 
-          // Use actual event image if available, otherwise use random poster
+          // Use local poster images since API is not accessible
           let image;
-          if (event.event_image && event.event_image.startsWith("/media/")) {
-            // Use the actual event image from the API
-            image = `https://api.venuu.is${event.event_image}`;
-          } else {
-            // Randomly select a poster image as fallback
-            const randomPoster =
-              posterImages[Math.floor(Math.random() * posterImages.length)];
-            image = `./Images/posters/${randomPoster}`;
-          }
+          // Randomly select a poster image as fallback
+          const randomPoster =
+            posterImages[Math.floor(Math.random() * posterImages.length)];
+          image = `./Images/posters/${randomPoster}`;
 
           // Card markup with filled heart icon to show it's favorited
           return `
@@ -602,15 +597,11 @@
           const location =
             event.formatted_address || `${event.postal} ${event.city}` || "";
 
-          // Get image
+          // Get image - use local poster images since API is not accessible
           let image;
-          if (event.event_image && event.event_image.startsWith("/media/")) {
-            image = `https://api.venuu.is${event.event_image}`;
-          } else {
-            const randomPoster =
-              posterImages[Math.floor(Math.random() * posterImages.length)];
-            image = `./Images/posters/${randomPoster}`;
-          }
+          const randomPoster =
+            posterImages[Math.floor(Math.random() * posterImages.length)];
+          image = `./Images/posters/${randomPoster}`;
 
           return `
             <div class="search-result-item" data-event='${JSON.stringify(

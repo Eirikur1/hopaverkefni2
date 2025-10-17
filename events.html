@@ -611,23 +611,12 @@
             event.city ||
             "";
 
-          // Use actual event image if available, otherwise use random poster
+          // Use local poster images since API is not accessible
           let image;
-          if (event.event_image && event.event_image.startsWith("/media/")) {
-            // Use the actual event image from the API
-            image = `https://api.venuu.is${event.event_image}`;
-          } else if (
-            event.event_thumbnail &&
-            event.event_thumbnail.startsWith("/media/")
-          ) {
-            // Fallback to thumbnail
-            image = `https://api.venuu.is${event.event_thumbnail}`;
-          } else {
-            // Randomly select a poster image as fallback
-            const randomPoster =
-              posterImages[Math.floor(Math.random() * posterImages.length)];
-            image = `./Images/posters/${randomPoster}`;
-          }
+          // Randomly select a poster image as fallback
+          const randomPoster =
+            posterImages[Math.floor(Math.random() * posterImages.length)];
+          image = `./Images/posters/${randomPoster}`;
 
           // Card markup
           return `
