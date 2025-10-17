@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Venuu - My Favorites</title>
+
+    <!-- External Libraries -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="css/output.css" />
+
+    <!-- Custom styles for favorites page -->
+    <style>
+      :root {
+        --Bright-Blue: #340aff;
+      }
+
+      .favorites-title {
+        color: var(--Bright-Blue);
+        font-family: Inter;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+      .event-title {
+        color: var(--Bright-Blue);
+        font-family: Inter;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    </style>
+  </head>
+
+  <body class="bg-background text-gray-900 font-sans">
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="flex justify-between items-center w-full">
+        <a
+          href="index.html"
+          class="flex items-center"
+          aria-label="Venuu - Go to homepage"
+        >
+          <div id="lottie-logo" class="nav-logo"></div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="nav-links hidden md:flex">
+          <a data-draw-line href="events.html" class="text-draw nav-link">
+            <p class="text-draw__p">Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a
+            data-draw-line
+            href="favorites.html"
+            class="text-draw nav-link active"
+          >
+            <p class="text-draw__p">Favorites</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a
+            data-draw-line
+            data-open-create-modal
+            href="#"
+            class="text-draw nav-link"
+          >
+            <p class="text-draw__p">Create Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="login.html" class="text-draw nav-link">
+            <p class="text-draw__p">Login</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="mobile-menu-btn md:hidden"
+          aria-label="Toggle mobile menu"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Navigation Section -->
+    <div
+      class="nav-section"
+      style="
+        padding-top: 56px;
+        border-bottom: none;
+        height: auto;
+        padding-bottom: 0;
+      "
+    >
+      <div style="position: relative; width: 25.4375rem; max-width: 100%">
+        <div class="nav-search-bar">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search for events..."
+            class="w-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm pl-4"
+            autocomplete="off"
+          />
+          <img
+            src="./Images/Images_and_lottie/svg/Search_icon.svg"
+            alt="Search"
+            class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4"
+          />
+        </div>
+        <!-- Search Results Dropdown -->
+        <div
+          id="search-results"
+          class="search-dropdown hidden"
+          style="display: none"
+        ></div>
+      </div>
+      <div class="text-center" style="margin-top: 56px">
+        <h1 class="favorites-title mb-2">My Favorites</h1>
+      </div>
+    </div>
+
+    <!-- Favorites Section -->
+    <section
+      id="favorites-section"
+      class="events-container"
+      style="margin-top: 56px"
+    >
+      <div class="events-grid" id="favorites-grid">
+        <!-- Favorite event cards will be loaded here -->
+      </div>
+
+      <!-- Results Count -->
+      <div class="mt-6 text-center">
+        <p id="results-count" class="text-gray-600 text-sm font-medium"></p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact" role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">Contact</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <address class="mb-2 not-italic">
+            <p>Reykjavik, Iceland</p>
+            <p>
+              <a href="mailto:info@venuu.is">info@venuu.is</a>
+            </p>
+            <p>
+              <a href="tel:+3541234567">+354 123 4567</a>
+            </p>
+            <div class="social-media-icons">
+              <a href="#" aria-label="Facebook">
+                <svg
+                  width="10"
+                  height="20"
+                  viewBox="0 0 10 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 6.5V4.5C6.5 3.7 7.2 3 8 3H9.5V0H6.5C4.6 0 3 1.6 3 3.5V6.5H0V10H3V20H6.5V10H9.5L10 6.5H6.5Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+              <a href="#" aria-label="Instagram">
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.5 0C4.3 0 0 4.3 0 9.5S4.3 19 9.5 19 19 14.7 19 9.5 14.7 0 9.5 0ZM9.5 16.2C6.1 16.2 3.3 13.4 3.3 9.5S6.1 2.8 9.5 2.8 15.7 5.6 15.7 9.5 12.9 16.2 9.5 16.2Z"
+                    fill="#333333"
+                  />
+                  <circle cx="9.5" cy="9.5" r="2.8" fill="#333333" />
+                  <circle cx="14.6" cy="4.4" r="0.7" fill="#333333" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Twitter">
+                <svg
+                  width="23"
+                  height="19"
+                  viewBox="0 0 23 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M23 2.3C22.1 2.7 21.2 2.9 20.2 3C21.2 2.4 22 1.5 22.4 0.4C21.5 1 20.4 1.3 19.3 1.5C18.5 0.6 17.3 0 16 0C13.4 0 11.3 2.1 11.3 4.7C11.3 5.1 11.3 5.4 11.4 5.8C7.5 5.6 4 3.7 1.6 0.9C1.2 1.5 1 2.3 1 3.1C1 4.6 1.8 5.9 3 6.6C2.3 6.6 1.6 6.4 1 6.1V6.2C1 8.4 2.6 10.2 4.7 10.6C4.3 10.7 3.9 10.8 3.4 10.8C3.1 10.8 2.8 10.7 2.5 10.7C3.1 12.4 4.7 13.6 6.6 13.6C5.1 14.7 3.2 15.3 1.2 15.3C0.8 15.3 0.4 15.3 0 15.2C2 16.4 4.4 17.1 6.9 17.1C16 17.1 20.8 10.9 20.8 5.2C20.8 5 20.8 4.8 20.8 4.6C21.8 4 22.7 3.2 23.4 2.3L23 2.3Z"
+                    fill="#333333"
+                  />
+                </svg>
+              </a>
+            </div>
+          </address>
+        </div>
+        <div class="footer-section">
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">About</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <p>
+            Venuu connects people through Iceland's vibrant cultural events.
+          </p>
+          <p>2025 Venuu. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Lottie Web Library -->
+    <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
+
+    <!-- GSAP Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+
+    <!-- Draw Underline Effect -->
+    <script type="module">
+      import { initDrawRandomUnderline } from "./js/draw-underline.js";
+      window.initDrawRandomUnderline = initDrawRandomUnderline;
+    </script>
+
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        /**
+         * Initialize VENUU logo animation using Lottie Web
+         */
+        function initializeLogoAnimation() {
+          try {
+            const logoContainer = document.getElementById("lottie-logo");
+            if (logoContainer && window.lottie) {
+              const animation = window.lottie.loadAnimation({
+                container: logoContainer,
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                path: "./Images/Images_and_lottie/Logo.json",
+              });
+              // Logo animation initialized successfully
+            }
+          } catch (error) {
+            console.error("Error loading logo animation:", error);
+          }
+        }
+
+        // Initialize logo
+        initializeLogoAnimation();
+
+        /**
+         * Array of available poster images
+         */
+        const posterImages = [
+          "068e9d4bef717cd1000843dc38c603ec.jpg",
+          "1d595e6dc1b6a3d963b932eb94de79d1.jpg",
+          "233986128f46951bf66a727cca1b3a18.jpg",
+          "24de6470d3365d85550c2c65ce8ddfca.jpg",
+          "3bd777f8c2760cbf585251808e738698.jpg",
+          "3f117cff666f231104f270edda727dab.jpg",
+          "53fe06b8e5fe6593f0f2a5de835609d2.jpg",
+          "542dfd6b879d676a823e611028e40984.jpg",
+          "783d478fde50b0f1d23ed5db8e9e2dee.jpg",
+          "90f82bfbdb111074fdfe5c1a6d813f5e.jpg",
+          "9303687a932a721b3a360633ade52260.jpg",
+          "96ec819f4ad7e5237c653c05baf5cd8c.jpg",
+          "b365df6222f9cce1e0ec0bf2ee881fb9.jpg",
+          "b3a1e66d241d956c3de527627d3c0a8a.jpg",
+          "d7ecf3fce251c523f3bb43ee6620e902.jpg",
+          "istockphoto-1478375497-612x612.jpg",
+          "istockphoto-494896581-612x612.jpg",
+          "pexels-jibarofoto-2774556.jpg",
+          "Poster.jpg",
+        ];
+
+        // Sample favorite events data
+        const favoriteEvents = [
+          {
+            id: 1,
+            title: "Reykjavik Jazz Festival",
+            title_en: "Reykjavik Jazz Festival",
+            start: "2025-02-15T19:00:00Z",
+            city: "Reykjavik",
+            postal: "101",
+            formatted_address: "Harpa Concert Hall, Reykjavik",
+            categories: [{ name: "Music" }],
+            event_image: "/media/jazz-festival.jpg",
+            tags: ["jazz", "music", "concert"],
+          },
+          {
+            id: 2,
+            title: "Northern Lights Photography Workshop",
+            title_en: "Northern Lights Photography Workshop",
+            start: "2025-02-20T20:00:00Z",
+            city: "Akureyri",
+            postal: "600",
+            formatted_address: "Akureyri Photography Center, Akureyri",
+            categories: [{ name: "Workshop" }],
+            event_image: "/media/aurora-workshop.jpg",
+            tags: ["photography", "northern lights", "workshop"],
+          },
+          {
+            id: 3,
+            title: "Icelandic Food & Culture Tour",
+            title_en: "Icelandic Food & Culture Tour",
+            start: "2025-02-25T14:00:00Z",
+            city: "Reykjavik",
+            postal: "101",
+            formatted_address: "Downtown Reykjavik, Reykjavik",
+            categories: [{ name: "Food & Drink" }],
+            event_image: "/media/food-tour.jpg",
+            tags: ["food", "culture", "tour"],
+          },
+          {
+            id: 4,
+            title: "Blue Lagoon Wellness Retreat",
+            title_en: "Blue Lagoon Wellness Retreat",
+            start: "2025-03-01T10:00:00Z",
+            city: "Grindavik",
+            postal: "240",
+            formatted_address: "Blue Lagoon, Grindavik",
+            categories: [{ name: "Wellness" }],
+            event_image: "/media/blue-lagoon.jpg",
+            tags: ["wellness", "spa", "relaxation"],
+          },
+          {
+            id: 5,
+            title: "Viking History Museum Exhibition",
+            title_en: "Viking History Museum Exhibition",
+            start: "2025-03-05T11:00:00Z",
+            city: "Reykjavik",
+            postal: "101",
+            formatted_address: "National Museum of Iceland, Reykjavik",
+            categories: [{ name: "Culture" }],
+            event_image: "/media/viking-exhibition.jpg",
+            tags: ["history", "viking", "museum"],
+          },
+          {
+            id: 6,
+            title: "Glacier Hiking Adventure",
+            title_en: "Glacier Hiking Adventure",
+            start: "2025-03-10T08:00:00Z",
+            city: "Vatnajökull",
+            postal: "785",
+            formatted_address: "Vatnajökull National Park, Vatnajökull",
+            categories: [{ name: "Adventure" }],
+            event_image: "/media/glacier-hiking.jpg",
+            tags: ["hiking", "glacier", "adventure"],
+          },
+        ];
+
+        /**
+         * Create HTML for a favorite event card
+         */
+        function createFavoriteEventCard(event) {
+          const title = event.title_en || event.title || "Untitled";
+          const date = event.start
+            ? new Date(event.start).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+          const location =
+            event.formatted_address || `${event.postal} ${event.city}` || "";
+
+          // Use actual event image if available, otherwise use random poster
+          let image;
+          if (event.event_image && event.event_image.startsWith("/media/")) {
+            // Use the actual event image from the API
+            image = `https://api.venuu.is${event.event_image}`;
+          } else {
+            // Randomly select a poster image as fallback
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image = `./Images/posters/${randomPoster}`;
+          }
+
+          // Card markup with filled heart icon to show it's favorited
+          return `
+        <div class="event-item" data-event='${JSON.stringify(event).replace(
+          /'/g,
+          "&#39;"
+        )}'>
+          <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
+          <div class="event-content flex flex-col p-4 gap-1.5">
+            <div class="event-title">${title}</div>
+            <div class="event-date-row">
+              <div class="date-section">
+                <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <div class="event-date">${date}</div>
+              </div>
+              <svg class="heart-icon" viewBox="0 0 24 24" fill="#ef4444" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="event-location">${location}</div>
+          </div>
+        </div>
+        `;
+        }
+
+        /**
+         * Search Functionality
+         */
+        function initSearch() {
+          const searchInput = document.getElementById("search-input");
+          const searchResults = document.getElementById("search-results");
+
+          if (!searchInput || !searchResults) {
+            console.error("Search elements not found!");
+            return;
+          }
+
+          // Handle input changes
+          searchInput.addEventListener("input", (e) => {
+            const query = e.target.value.trim().toLowerCase();
+
+            if (query.length === 0) {
+              searchResults.classList.add("hidden");
+              searchResults.style.display = "none";
+              searchResults.innerHTML = "";
+              return;
+            }
+
+            // Filter favorite events based on query
+            const filteredEvents = favoriteEvents.filter((event) => {
+              const title = (event.title_en || event.title || "").toLowerCase();
+              const location = (
+                event.formatted_address ||
+                `${event.postal} ${event.city}` ||
+                ""
+              ).toLowerCase();
+              const tags = (event.tags || []).join(" ").toLowerCase();
+
+              return (
+                title.includes(query) ||
+                location.includes(query) ||
+                tags.includes(query)
+              );
+            });
+
+            // Display search results
+            if (filteredEvents.length > 0) {
+              searchResults.innerHTML = filteredEvents
+                .slice(0, 10) // Limit to 10 results
+                .map((event) => createSearchResultItem(event))
+                .join("");
+              searchResults.classList.remove("hidden");
+              searchResults.style.display = "block";
+
+              // Add click listeners to search results
+              addSearchResultListeners();
+            } else {
+              searchResults.innerHTML =
+                '<div class="search-no-results">No events found</div>';
+              searchResults.classList.remove("hidden");
+              searchResults.style.display = "block";
+            }
+          });
+
+          // Close search results when clicking outside
+          document.addEventListener("click", (e) => {
+            if (
+              !searchInput.contains(e.target) &&
+              !searchResults.contains(e.target)
+            ) {
+              searchResults.classList.add("hidden");
+              searchResults.style.display = "none";
+            }
+          });
+
+          // Close search results on Escape key
+          searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              searchResults.classList.add("hidden");
+              searchResults.style.display = "none";
+              searchInput.blur();
+            }
+          });
+        }
+
+        /**
+         * Create a search result item
+         */
+        function createSearchResultItem(event) {
+          const title = event.title_en || event.title || "Untitled";
+          const date = event.start
+            ? new Date(event.start).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+          const location =
+            event.formatted_address || `${event.postal} ${event.city}` || "";
+
+          // Get image
+          let image;
+          if (event.event_image && event.event_image.startsWith("/media/")) {
+            image = `https://api.venuu.is${event.event_image}`;
+          } else {
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image = `./Images/posters/${randomPoster}`;
+          }
+
+          return `
+            <div class="search-result-item" data-event='${JSON.stringify(
+              event
+            ).replace(/'/g, "&#39;")}'>
+              <img src="${image}" alt="${title}" onerror="this.src='./Images/posters/${posterImages[0]}'" />
+              <div class="search-result-info">
+                <div class="search-result-title">${title}</div>
+                <div class="search-result-meta">
+                  ${date ? `<span>${date}</span>` : ""}
+                  ${location ? `<span>${location}</span>` : ""}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        /**
+         * Add click listeners to search results
+         */
+        function addSearchResultListeners() {
+          const resultItems = document.querySelectorAll(".search-result-item");
+          const searchInput = document.getElementById("search-input");
+          const searchResults = document.getElementById("search-results");
+
+          resultItems.forEach((item) => {
+            item.addEventListener("click", (e) => {
+              e.preventDefault();
+              const eventData = JSON.parse(item.getAttribute("data-event"));
+              console.log("Search result clicked:", eventData);
+
+              // Clear search and hide results
+              if (searchInput) searchInput.value = "";
+              if (searchResults) {
+                searchResults.classList.add("hidden");
+                searchResults.style.display = "none";
+              }
+            });
+          });
+        }
+
+        /**
+         * Display favorite events
+         */
+        function displayFavoriteEvents() {
+          const favoritesGrid = document.getElementById("favorites-grid");
+          const resultsCount = document.getElementById("results-count");
+
+          if (!favoritesGrid) {
+            console.error("Favorites grid not found");
+            return;
+          }
+
+          if (favoriteEvents.length === 0) {
+            favoritesGrid.innerHTML = `
+              <div class="col-span-full text-center py-12">
+                <div class="mb-4">
+                  <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <p class="text-gray-500 text-lg">No favorite events yet</p>
+                <p class="text-gray-400 text-sm mt-2">Start exploring events and add them to your favorites!</p>
+                <a href="events.html" class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  Browse Events
+                </a>
+              </div>
+            `;
+            if (resultsCount) {
+              resultsCount.textContent = "No favorite events";
+            }
+          } else {
+            favoritesGrid.innerHTML = favoriteEvents
+              .map((event) => createFavoriteEventCard(event))
+              .join("");
+
+            if (resultsCount) {
+              resultsCount.textContent = `Showing ${favoriteEvents.length} favorite events`;
+            }
+          }
+
+          // Add click event listeners to event cards
+          addEventCardListeners();
+        }
+
+        /**
+         * Add click event listeners to event cards
+         */
+        function addEventCardListeners() {
+          const eventCards = document.querySelectorAll(".event-item");
+          eventCards.forEach((card) => {
+            card.addEventListener("click", (e) => {
+              e.preventDefault();
+              const eventData = JSON.parse(card.getAttribute("data-event"));
+              console.log("Favorite event clicked:", eventData);
+              // You can add navigation to event details page here
+            });
+          });
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener("click", () => {
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks) {
+              navLinks.classList.toggle("hidden");
+              navLinks.classList.toggle("flex");
+              navLinks.classList.toggle("flex-col");
+              navLinks.classList.toggle("absolute");
+              navLinks.classList.toggle("top-full");
+              navLinks.classList.toggle("left-0");
+              navLinks.classList.toggle("right-0");
+              navLinks.classList.toggle("bg-white");
+              navLinks.classList.toggle("shadow-lg");
+              navLinks.classList.toggle("p-4");
+              navLinks.classList.toggle("z-50");
+            }
+          });
+        }
+
+        // Keyboard navigation support
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            // Close mobile menu on Escape
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks && !navLinks.classList.contains("hidden")) {
+              navLinks.classList.add("hidden");
+              navLinks.classList.remove(
+                "flex",
+                "flex-col",
+                "absolute",
+                "top-full",
+                "left-0",
+                "right-0",
+                "bg-white",
+                "shadow-lg",
+                "p-4",
+                "z-50"
+              );
+            }
+          }
+        });
+
+        // Display favorite events when page loads
+        displayFavoriteEvents();
+
+        // Initialize search functionality
+        initSearch();
+
+        // Initialize draw random underline effect
+        if (typeof initDrawRandomUnderline === "function") {
+          // Add a small delay to ensure DOM is fully ready
+          setTimeout(() => {
+            initDrawRandomUnderline();
+          }, 100);
+        }
+      });
+    </script>
+  </body>
+</html>

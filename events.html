@@ -6,12 +6,6 @@
     <title>Venuu - Discover Amazing Events</title>
 
     <!-- External Libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
-    <script src="https://unpkg.com/in-view@0.6.1/dist/in-view.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
@@ -43,10 +37,31 @@
 
         <!-- Desktop Navigation -->
         <div class="nav-links hidden md:flex">
-          <a href="events.html" class="nav-link active">Events</a>
-          <a href="favorites.html" class="nav-link">Favorites</a>
-          <a href="create-events.html" class="nav-link">Create Events</a>
-          <a href="login.html" class="nav-link">Login</a>
+          <a
+            data-draw-line
+            href="events.html"
+            class="text-draw nav-link active"
+          >
+            <p class="text-draw__p">Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="favorites.html" class="text-draw nav-link">
+            <p class="text-draw__p">Favorites</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a
+            data-draw-line
+            data-open-create-modal
+            href="#"
+            class="text-draw nav-link"
+          >
+            <p class="text-draw__p">Create Events</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
+          <a data-draw-line href="login.html" class="text-draw nav-link">
+            <p class="text-draw__p">Login</p>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -64,26 +79,66 @@
     <div class="search-section">
       <div class="search-filter-container">
         <!-- Search Bar with Autocomplete -->
-        <div class="relative mb-6">
-          <div class="relative">
+        <div style="width: 407px; margin-bottom: 1.5rem; position: relative">
+          <div
+            style="
+              display: flex;
+              width: 100%;
+              height: 30px;
+              padding: 0 32px;
+              flex-direction: row;
+              justify-content: flex-start;
+              align-items: center;
+              flex-shrink: 0;
+              border-radius: 25px;
+              border: 0.5px solid #6b6666;
+              background: #fff;
+              box-sizing: border-box;
+              overflow: hidden;
+            "
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="margin-right: 8px; flex-shrink: 0; display: block"
+            >
+              <path
+                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                stroke="#6B6666"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
             <input
               type="text"
               id="search-input"
               placeholder="Search for events..."
-              class="w-full px-4 py-3 pl-12 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+              style="
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                flex: 1;
+                min-width: 0;
+                border: none;
+                outline: none;
+                background: transparent;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                box-shadow: none;
+              "
               autocomplete="off"
               aria-label="Search for events"
-            />
-            <img
-              src="./Images/Images_and_lottie/svg/Search_icon.svg"
-              alt="Search"
-              class="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
             />
           </div>
           <!-- Autocomplete Dropdown -->
           <div
             id="search-suggestions"
-            class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden"
+            class="absolute z-10 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden"
+            style="width: 407px"
           >
             <div class="py-2">
               <div class="px-4 py-2 text-sm text-gray-500">Recent searches</div>
@@ -93,65 +148,33 @@
         </div>
 
         <!-- Filter Controls -->
-        <div class="flex flex-wrap gap-4 items-center justify-center">
+        <div class="filter-buttons-container">
           <!-- Category Filter -->
-          <div class="flex flex-col">
-            <label
-              for="category-filter"
-              class="text-sm font-medium text-gray-700 mb-1"
-              >Category</label
-            >
+          <div>
             <select
               id="category-filter"
               class="filter-button"
               aria-label="Filter by category"
             >
               <option value="">All Categories</option>
-              <option value="Tónlist">Tónlist (Music)</option>
-              <option value="Myndlist">Myndlist (Art)</option>
-              <option value="Sýning">Sýning (Exhibition)</option>
-              <option value="Dans">Dans (Dance)</option>
-              <option value="Bókmenntir">Bókmenntir (Literature)</option>
-              <option value="Saga">Saga (History)</option>
-              <option value="Fræðsla">Fræðsla (Education)</option>
-              <option value="Smiðja">Smiðja (Workshop)</option>
-              <option value="Náttúra">Náttúra (Nature)</option>
-              <option value="Hönnun">Hönnun (Design)</option>
-              <option value="Sýningarspjall">
-                Sýningarspjall (Exhibition Talk)
-              </option>
-              <option value="Annað">Annað (Other)</option>
+              <!-- Options will be populated dynamically from API data -->
             </select>
           </div>
 
           <!-- Location Filter -->
-          <div class="flex flex-col">
-            <label
-              for="location-filter"
-              class="text-sm font-medium text-gray-700 mb-1"
-              >Location</label
-            >
+          <div>
             <select
               id="location-filter"
               class="filter-button"
               aria-label="Filter by location"
             >
               <option value="">All Locations</option>
-              <option value="101">101 Reykjavík</option>
-              <option value="102">102 Reykjavík</option>
-              <option value="105">105 Reykjavík</option>
-              <option value="107">107 Reykjavík</option>
-              <option value="225">225 Garðabær</option>
+              <!-- Options will be populated dynamically from API data -->
             </select>
           </div>
 
           <!-- Sort Filter -->
-          <div class="flex flex-col">
-            <label
-              for="sort-filter"
-              class="text-sm font-medium text-gray-700 mb-1"
-              >Sort by</label
-            >
+          <div>
             <select
               id="sort-filter"
               class="filter-button"
@@ -165,38 +188,31 @@
             </select>
           </div>
 
-          <!-- Date Order Toggle -->
-          <div class="flex flex-col">
-            <label class="text-sm font-medium text-gray-700 mb-1"
-              >Date Order</label
-            >
-            <button
-              id="date-order-toggle"
-              class="filter-button"
-              aria-label="Toggle date order"
-            >
-              <span id="date-order-text">Latest First</span>
-            </button>
-          </div>
-
           <!-- Clear Filters -->
-          <div class="flex flex-col">
-            <label class="text-sm font-medium text-gray-700 mb-1"
-              >Actions</label
-            >
+          <div>
             <button
               id="clear-filters"
-              class="filter-button"
+              class="filter-button bg-white hover:bg-red-50 hover:border-red-400 hover:text-red-600 cursor-pointer transition-all"
               aria-label="Clear all filters"
             >
               Clear All
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="ml-1"
+              >
+                <path
+                  d="M10.5 3.5L3.5 10.5M3.5 3.5L10.5 10.5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
             </button>
           </div>
-        </div>
-
-        <!-- Active Filters Display -->
-        <div id="active-filters" class="mt-4 flex flex-wrap gap-2 hidden">
-          <span class="text-sm text-gray-600">Active filters:</span>
         </div>
       </div>
     </div>
@@ -210,8 +226,24 @@
       <!-- Load More Button -->
       <div class="load-more-container mt-8">
         <button id="load-more-btn" class="load-more-btn">
-          Load More Events
+          <img
+            src="./Images/Images_and_lottie/svg/LOADMOREICON.svg"
+            alt="Load more"
+            width="32"
+            height="32"
+          />
+          <img
+            src="./Images/Images_and_lottie/svg/LOADMOREICON.svg"
+            alt="Load more"
+            width="32"
+            height="32"
+          />
         </button>
+      </div>
+
+      <!-- Results Count -->
+      <div class="mt-6 text-center">
+        <p id="results-count" class="text-gray-600 text-sm font-medium"></p>
       </div>
     </section>
 
@@ -219,7 +251,10 @@
     <footer class="footer" id="contact" role="contentinfo">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>Contact</h3>
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">Contact</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <address class="mb-2 not-italic">
             <p>Reykjavik, Iceland</p>
             <p>
@@ -277,7 +312,10 @@
           </address>
         </div>
         <div class="footer-section">
-          <h3>About</h3>
+          <a data-draw-line href="#" class="text-draw">
+            <h3 class="tit text-draw__p">About</h3>
+            <div data-draw-line-box class="text-draw__box"></div>
+          </a>
           <p>
             Venuu connects people through Iceland's vibrant cultural events.
           </p>
@@ -286,13 +324,143 @@
       </div>
     </footer>
 
-    <!-- Shared JavaScript -->
-    <script src="js/shared.js"></script>
+    <!-- Lottie Web Library -->
+    <script src="node_modules/lottie-web/build/player/lottie.min.js"></script>
+
+    <!-- GSAP Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+
+    <!-- Draw Underline Effect -->
+    <script type="module">
+      import { initDrawRandomUnderline } from "./js/draw-underline.js";
+      window.initDrawRandomUnderline = initDrawRandomUnderline;
+    </script>
+
+    <!-- Events page uses inline JavaScript for filtering -->
+    <!-- Shared TypeScript is not needed here -->
 
     <script>
+      /**
+       * Initialize Create Event Modal functionality
+       */
+      function initCreateEventModal() {
+        const modal = document.getElementById("create-event-modal");
+        const openButtons = document.querySelectorAll(
+          "a[data-open-create-modal]"
+        );
+        const closeButton = document.getElementById("create-event-modal-close");
+        const form = document.getElementById("create-event-form");
+
+        // Open modal
+        function openModal() {
+          modal.style.display = "flex";
+          document.body.style.overflow = "hidden";
+          // Focus on first input
+          const firstInput = modal.querySelector("input");
+          if (firstInput) {
+            setTimeout(() => firstInput.focus(), 100);
+          }
+        }
+
+        // Close modal
+        function closeModal() {
+          modal.style.display = "none";
+          document.body.style.overflow = "";
+          // Reset form
+          if (form) {
+            form.reset();
+          }
+        }
+
+        // Event listeners for opening modal
+        openButtons.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            // Double check that this is the Create Events button
+            const buttonText = button.textContent.trim();
+            if (buttonText.includes("Create Events")) {
+              e.preventDefault();
+              openModal();
+            }
+          });
+        });
+
+        // Event listener for closing modal
+        if (closeButton) {
+          closeButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeModal();
+          });
+        }
+
+        // Close modal when clicking outside
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.style.display !== "none") {
+            closeModal();
+          }
+        });
+
+        // Handle form submission
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(form);
+            const eventData = {
+              title: formData.get("title"),
+              date: formData.get("date"),
+              time: formData.get("time"),
+              location: formData.get("location"),
+              fee: formData.get("fee"),
+              image: formData.get("image"),
+              description: formData.get("description"),
+            };
+
+            // Log the event data (in a real app, you'd send this to a server)
+            console.log("Event created:", eventData);
+
+            // Show success message (you could replace this with a toast notification)
+            alert("Event created successfully!");
+
+            // Close modal
+            closeModal();
+          });
+        }
+      }
+
       // Wait for DOM to be fully loaded
       document.addEventListener("DOMContentLoaded", function () {
-        console.log("Events page DOMContentLoaded called");
+        /**
+         * Initialize VENUU logo animation using Lottie Web
+         */
+        function initializeLogoAnimation() {
+          try {
+            const logoContainer = document.getElementById("lottie-logo");
+            if (logoContainer && window.lottie) {
+              const animation = window.lottie.loadAnimation({
+                container: logoContainer,
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                path: "./Images/Images_and_lottie/Logo.json",
+              });
+              // Logo animation initialized successfully
+            }
+          } catch (error) {
+            console.error("Error loading logo animation:", error);
+          }
+        }
+
+        // Initialize logo
+        initializeLogoAnimation();
 
         /**
          * Array of available poster images
@@ -323,9 +491,8 @@
         let allEvents = [];
         let filteredEvents = [];
         let displayedEvents = 0;
-        const eventsPerLoad = 12;
+        const eventsPerLoad = 12; // 4 rows × 3 columns = 12 events per load
         let searchTimeout = null;
-        let dateOrderAscending = false;
         let recentSearches = JSON.parse(
           localStorage.getItem("recentSearches") || "[]"
         );
@@ -336,25 +503,11 @@
           category: "",
           location: "",
           sort: "",
-          dateOrder: "desc",
         };
 
-        /**
-         * Get consistent image for an event based on its ID
-         */
-        function getEventImage(event) {
-          const eventId =
-            event.id || event.title || event.title_en || "default";
-          const hash = eventId
-            .toString()
-            .split("")
-            .reduce((a, b) => {
-              a = (a << 5) - a + b.charCodeAt(0);
-              return a & a;
-            }, 0);
-          const imageIndex = Math.abs(hash) % posterImages.length;
-          return posterImages[imageIndex];
-        }
+        // Store available filter options
+        let availableCategories = new Set();
+        let availableLocations = new Set();
 
         /**
          * Create HTML for an event card matching the main page style
@@ -365,7 +518,6 @@
             event.title ||
             event.title_en ||
             "Untitled";
-
           const date = event.start
             ? new Date(event.start).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -373,29 +525,11 @@
                 day: "numeric",
               })
             : "";
-
-          // Extract location information - prioritize postal code and city
-          let location = "";
-          if (event.postal && event.city) {
-            location = `${event.postal} ${event.city}`;
-          } else if (
-            event.language &&
-            event.language.en &&
-            event.language.en.place
-          ) {
-            location = event.language.en.place;
-          } else if (event.formatted_address) {
-            // Extract postal code and city from formatted address
-            const addressParts = event.formatted_address.split(", ");
-            if (addressParts.length >= 2) {
-              const postalAndCity = addressParts[addressParts.length - 1];
-              location = postalAndCity;
-            } else {
-              location = event.formatted_address;
-            }
-          } else if (event.city) {
-            location = event.city;
-          }
+          const location =
+            (event.language && event.language.en && event.language.en.place) ||
+            event.formatted_address ||
+            event.city ||
+            "";
 
           // Use actual event image if available, otherwise use random poster
           let image;
@@ -409,77 +543,39 @@
             // Fallback to thumbnail
             image = `https://api.venuu.is${event.event_thumbnail}`;
           } else {
-            // Use consistent poster image based on event ID
-            const posterImage = getEventImage(event);
-            image = `./Images/posters/${posterImage}`;
+            // Randomly select a poster image as fallback
+            const randomPoster =
+              posterImages[Math.floor(Math.random() * posterImages.length)];
+            image = `./Images/posters/${randomPoster}`;
           }
 
-          // Card markup matching main page structure
+          // Card markup
           return `
-            <div class="event-item" data-event='${JSON.stringify(event).replace(
-              /'/g,
-              "&#39;"
-            )}'>
-              <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
-              <div class="event-content flex flex-col p-4 gap-1.5">
-                <div class="event-title">${title}</div>
-                <div class="event-date-row">
-                  <div class="date-section">
-                    <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                      <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                      <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                      <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                    </svg>
-                    <div class="event-date">${date}</div>
-                  </div>
-                  <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+        <div class="event-item" data-event='${JSON.stringify(event).replace(
+          /'/g,
+          "&#39;"
+        )}'>
+          <img src="${image}" alt="${title}" loading="lazy" onerror="this.src='./Images/posters/${posterImages[Math.floor(Math.random() * posterImages.length)]}'" />
+          <div class="event-content flex flex-col p-4 gap-1.5">
+            <div class="event-title">${title}</div>
+                            <div class="event-date-row">
+              <div class="date-section">
+                <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                  <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                <div class="event-date">${date}</div>
+                                </div>
+              <svg class="heart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+            <div class="event-location">${location}</div>
+                    </div>
                 </div>
-                <div class="event-location">${location}</div>
-              </div>
-            </div>
-          `;
-        }
-
-        /**
-         * Update active filters display
-         */
-        function updateActiveFiltersDisplay() {
-          const activeFiltersContainer =
-            document.getElementById("active-filters");
-          const activeFilters = [];
-
-          if (currentFilters.search) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Search: "${currentFilters.search}"</span>`
-            );
-          }
-          if (currentFilters.category) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Category: ${currentFilters.category}</span>`
-            );
-          }
-          if (currentFilters.location) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Location: ${currentFilters.location}</span>`
-            );
-          }
-          if (currentFilters.sort) {
-            activeFilters.push(
-              `<span class="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Sort: ${currentFilters.sort}</span>`
-            );
-          }
-
-          if (activeFilters.length > 0) {
-            activeFiltersContainer.innerHTML =
-              '<span class="text-sm text-gray-600">Active filters:</span>' +
-              activeFilters.join("");
-            activeFiltersContainer.classList.remove("hidden");
-          } else {
-            activeFiltersContainer.classList.add("hidden");
-          }
+        `;
         }
 
         /**
@@ -490,7 +586,6 @@
           searchTimeout = setTimeout(() => {
             currentFilters.search = searchTerm;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           }, 300);
         }
 
@@ -498,13 +593,15 @@
          * Apply all filters and sorting
          */
         function applyAllFilters() {
-          console.log("Applying filters:", currentFilters);
-          console.log("Total events:", allEvents.length);
+          console.log("=== Applying filters ===");
+          console.log("Current filters:", currentFilters);
+          console.log("Total events before filtering:", allEvents.length);
           let filtered = [...allEvents];
 
           // Search filter
-          if (currentFilters.search) {
-            const term = currentFilters.search.toLowerCase();
+          if (currentFilters.search && currentFilters.search.trim() !== "") {
+            const beforeCount = filtered.length;
+            const term = currentFilters.search.toLowerCase().trim();
             filtered = filtered.filter((event) => {
               const title =
                 (event.language &&
@@ -534,36 +631,58 @@
                 tags.includes(term)
               );
             });
+            console.log(
+              `Search filter "${term}": ${beforeCount} -> ${filtered.length} events`
+            );
           }
 
           // Category filter
-          if (currentFilters.category) {
+          if (
+            currentFilters.category &&
+            currentFilters.category.trim() !== ""
+          ) {
             const beforeCount = filtered.length;
             filtered = filtered.filter((event) => {
               const eventCategories = event.categories || [];
-              return eventCategories.some(
-                (category) => category.name === currentFilters.category
+              const hasCategory = eventCategories.some(
+                (category) =>
+                  category && category.name === currentFilters.category
               );
+              return hasCategory;
             });
             console.log(
-              `Category filter "${currentFilters.category}": ${beforeCount} -> ${filtered.length} events`
+              `🔍 Category filter "${currentFilters.category}": ${beforeCount} -> ${filtered.length} events`
             );
+            if (filtered.length === 0 && beforeCount > 0) {
+              console.warn(
+                "⚠️ No events match category filter. Check if category names match exactly."
+              );
+            }
           }
 
           // Location filter
-          if (currentFilters.location) {
+          if (
+            currentFilters.location &&
+            currentFilters.location.trim() !== ""
+          ) {
             const beforeCount = filtered.length;
             filtered = filtered.filter((event) => {
               const postalCode = event.postal || "";
-              return postalCode === currentFilters.location;
+              const matches = postalCode === currentFilters.location;
+              return matches;
             });
             console.log(
-              `Location filter "${currentFilters.location}": ${beforeCount} -> ${filtered.length} events`
+              `📍 Location filter "${currentFilters.location}": ${beforeCount} -> ${filtered.length} events`
             );
+            if (filtered.length === 0 && beforeCount > 0) {
+              console.warn(
+                "⚠️ No events match location filter. Check if postal codes match exactly."
+              );
+            }
           }
 
-          // Sort filter
-          if (currentFilters.sort) {
+          // Apply sorting
+          if (currentFilters.sort && currentFilters.sort !== "") {
             filtered.sort((a, b) => {
               switch (currentFilters.sort) {
                 case "date-asc":
@@ -571,34 +690,121 @@
                 case "date-desc":
                   return new Date(b.start || 0) - new Date(a.start || 0);
                 case "title-asc":
-                  const titleA = (a.title || a.title_en || "").toLowerCase();
-                  const titleB = (b.title || b.title_en || "").toLowerCase();
+                  const titleA = (
+                    a.language?.en?.title ||
+                    a.title ||
+                    a.title_en ||
+                    ""
+                  ).toLowerCase();
+                  const titleB = (
+                    b.language?.en?.title ||
+                    b.title ||
+                    b.title_en ||
+                    ""
+                  ).toLowerCase();
                   return titleA.localeCompare(titleB);
                 case "title-desc":
-                  const titleA2 = (a.title || a.title_en || "").toLowerCase();
-                  const titleB2 = (b.title || b.title_en || "").toLowerCase();
+                  const titleA2 = (
+                    a.language?.en?.title ||
+                    a.title ||
+                    a.title_en ||
+                    ""
+                  ).toLowerCase();
+                  const titleB2 = (
+                    b.language?.en?.title ||
+                    b.title ||
+                    b.title_en ||
+                    ""
+                  ).toLowerCase();
                   return titleB2.localeCompare(titleA2);
                 default:
                   return 0;
               }
             });
-          }
-
-          // Apply date order toggle
-          if (currentFilters.dateOrder === "asc") {
-            filtered.sort(
-              (a, b) => new Date(a.start || 0) - new Date(b.start || 0)
-            );
-          } else {
-            filtered.sort(
-              (a, b) => new Date(b.start || 0) - new Date(a.start || 0)
-            );
+            console.log(`Applied sort: ${currentFilters.sort}`);
           }
 
           filteredEvents = filtered;
-          displayedEvents = filteredEvents.length; // Show all filtered events
-          console.log(`Final result: ${filteredEvents.length} events`);
+          displayedEvents = Math.min(eventsPerLoad, filteredEvents.length); // Reset to first batch when filters change
+          console.log(`=== Final result: ${filteredEvents.length} events ===`);
           displayEvents();
+        }
+
+        /**
+         * Populate filter dropdowns with actual data
+         */
+        function populateFilterOptions() {
+          console.log("Populating filter options...");
+
+          // Extract unique categories and locations from events
+          allEvents.forEach((event) => {
+            // Extract categories
+            if (event.categories && Array.isArray(event.categories)) {
+              event.categories.forEach((cat) => {
+                if (cat.name) {
+                  availableCategories.add(cat.name);
+                }
+              });
+            }
+
+            // Extract locations (postal codes)
+            if (event.postal) {
+              const locationLabel = event.city
+                ? `${event.postal} ${event.city}`
+                : event.postal;
+              availableLocations.add(
+                JSON.stringify({ postal: event.postal, label: locationLabel })
+              );
+            }
+          });
+
+          // Populate category filter
+          const categoryFilter = document.getElementById("category-filter");
+          if (categoryFilter) {
+            // Keep the "All Categories" option
+            categoryFilter.innerHTML =
+              '<option value="">All Categories</option>';
+
+            // Add actual categories from data
+            const sortedCategories = Array.from(availableCategories).sort();
+            console.log("Available categories:", sortedCategories);
+            sortedCategories.forEach((category) => {
+              const option = document.createElement("option");
+              option.value = category;
+              option.textContent = category;
+              categoryFilter.appendChild(option);
+            });
+            console.log(
+              `✅ Added ${sortedCategories.length} categories to filter dropdown`
+            );
+          }
+
+          // Populate location filter
+          const locationFilter = document.getElementById("location-filter");
+          if (locationFilter) {
+            // Keep the "All Locations" option
+            locationFilter.innerHTML =
+              '<option value="">All Locations</option>';
+
+            // Add actual locations from data
+            const locations = Array.from(availableLocations)
+              .map((loc) => JSON.parse(loc))
+              .sort((a, b) => a.postal.localeCompare(b.postal));
+
+            console.log(
+              "Available locations (first 10):",
+              locations.slice(0, 10)
+            );
+            locations.forEach((location) => {
+              const option = document.createElement("option");
+              option.value = location.postal;
+              option.textContent = location.label;
+              locationFilter.appendChild(option);
+            });
+            console.log(
+              `✅ Added ${locations.length} postal code locations to filter dropdown`
+            );
+          }
         }
 
         /**
@@ -606,31 +812,26 @@
          */
         async function loadEvents() {
           try {
-            console.log("Loading events from API...");
             const response = await fetch("./api-data.json");
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("API response received:", data);
 
             if (data && Array.isArray(data)) {
               allEvents = data;
               console.log(`Loaded ${allEvents.length} events from API`);
-              // Debug: Check first few events
-              if (allEvents.length > 0) {
-                console.log("First event sample:", allEvents[0]);
-                console.log("First event categories:", allEvents[0].categories);
-                console.log("First event postal:", allEvents[0].postal);
-              }
             } else {
               console.error("Invalid API data structure:", data);
               allEvents = [];
             }
 
-            // Initialize with all events
+            // Populate filter dropdowns with actual data
+            populateFilterOptions();
+
+            // Initialize with limited events (first load)
             filteredEvents = [...allEvents];
-            displayedEvents = allEvents.length; // Show all events initially
+            displayedEvents = Math.min(eventsPerLoad, allEvents.length); // Show only first batch
             displayEvents();
           } catch (error) {
             console.error("Error loading events:", error);
@@ -657,18 +858,24 @@
           eventsGrid.style.opacity = "0.7";
 
           requestAnimationFrame(() => {
-            eventsGrid.innerHTML = eventsToShow
-              .map((event) => createEventCard(event))
-              .join("");
+            if (eventsToShow.length === 0) {
+              eventsGrid.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                  <p class="text-gray-500 text-lg">No events found matching your filters.</p>
+                  <p class="text-gray-400 text-sm mt-2">Try adjusting your filters to see more results.</p>
+                </div>
+              `;
+            } else {
+              eventsGrid.innerHTML = eventsToShow
+                .map((event) => createEventCard(event))
+                .join("");
+            }
 
             eventsGrid.style.opacity = "1";
           });
 
-          // Show/hide load more button (hide it since we show all events initially)
-          const loadMoreBtn = document.getElementById("load-more-btn");
-          if (loadMoreBtn) {
-            loadMoreBtn.style.display = "none"; // Hide load more since we show all events
-          }
+          // Show/hide load more button based on remaining events
+          updateLoadMoreButton();
 
           // Update results count
           updateResultsCount();
@@ -697,7 +904,19 @@
         function updateResultsCount() {
           const resultsCount = document.getElementById("results-count");
           if (resultsCount) {
-            resultsCount.textContent = `Showing ${displayedEvents} of ${filteredEvents.length} events`;
+            if (filteredEvents.length === 0) {
+              resultsCount.textContent = "No events found";
+            } else if (displayedEvents >= filteredEvents.length) {
+              // Showing all available events
+              if (filteredEvents.length === allEvents.length) {
+                resultsCount.textContent = `Showing all ${filteredEvents.length} events`;
+              } else {
+                resultsCount.textContent = `Showing all ${filteredEvents.length} of ${allEvents.length} events`;
+              }
+            } else {
+              // Showing partial results
+              resultsCount.textContent = `Showing ${displayedEvents} of ${filteredEvents.length} events`;
+            }
           }
         }
 
@@ -705,29 +924,15 @@
          * Load more events
          */
         function loadMoreEvents() {
+          console.log(
+            `Loading more events. Current: ${displayedEvents}, Total: ${filteredEvents.length}`
+          );
           displayedEvents = Math.min(
             displayedEvents + eventsPerLoad,
             filteredEvents.length
           );
+          console.log(`Now displaying: ${displayedEvents} events`);
           displayEvents();
-        }
-
-        /**
-         * Toggle date order
-         */
-        function toggleDateOrder() {
-          dateOrderAscending = !dateOrderAscending;
-          currentFilters.dateOrder = dateOrderAscending ? "asc" : "desc";
-
-          const dateOrderText = document.getElementById("date-order-text");
-          if (dateOrderText) {
-            dateOrderText.textContent = dateOrderAscending
-              ? "Earliest First"
-              : "Latest First";
-          }
-
-          applyAllFilters();
-          updateActiveFiltersDisplay();
         }
 
         /**
@@ -755,10 +960,12 @@
             ".load-more-container"
           );
 
+          if (!loadMoreContainer) return;
+
           if (displayedEvents >= filteredEvents.length) {
             loadMoreContainer.style.display = "none";
           } else {
-            loadMoreContainer.style.display = "block";
+            loadMoreContainer.style.display = "flex";
           }
         }
 
@@ -832,7 +1039,7 @@
 
           // Update filtered events and reset display
           filteredEvents = results;
-          displayedEvents = 0;
+          displayedEvents = Math.min(eventsPerLoad, filteredEvents.length);
           displayEvents();
         }
 
@@ -855,29 +1062,35 @@
          * Clear all filters
          */
         function clearAllFilters() {
+          console.log("Clearing all filters...");
+
+          // Reset filter state
           currentFilters = {
             search: "",
             category: "",
             location: "",
             sort: "",
-            dateOrder: "desc",
           };
 
-          document.getElementById("category-filter").value = "";
-          document.getElementById("location-filter").value = "";
-          document.getElementById("sort-filter").value = "";
-          document.getElementById("search-input").value = "";
+          // Reset form elements
+          const categoryFilter = document.getElementById("category-filter");
+          const locationFilter = document.getElementById("location-filter");
+          const sortFilter = document.getElementById("sort-filter");
+          const searchInput = document.getElementById("search-input");
 
-          dateOrderAscending = false;
-          const dateOrderText = document.getElementById("date-order-text");
-          if (dateOrderText) {
-            dateOrderText.textContent = "Latest First";
-          }
+          if (categoryFilter) categoryFilter.value = "";
+          if (locationFilter) locationFilter.value = "";
+          if (sortFilter) sortFilter.value = "";
+          if (searchInput) searchInput.value = "";
 
+          // Reset filtered events
           filteredEvents = [...allEvents];
-          displayedEvents = allEvents.length; // Show all events
+          displayedEvents = Math.min(eventsPerLoad, allEvents.length); // Reset to first batch
+
+          // Update display
           displayEvents();
-          updateActiveFiltersDisplay();
+
+          console.log("Filters cleared, showing first batch of events");
         }
 
         /**
@@ -916,7 +1129,6 @@
           document.getElementById("search-input").value = searchTerm;
           currentFilters.search = searchTerm;
           applyAllFilters();
-          updateActiveFiltersDisplay();
           hideSearchSuggestions();
         }
 
@@ -968,7 +1180,6 @@
             console.log("Category filter changed to:", e.target.value);
             currentFilters.category = e.target.value;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           });
 
         document
@@ -977,7 +1188,6 @@
             console.log("Location filter changed to:", e.target.value);
             currentFilters.location = e.target.value;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           });
 
         document
@@ -985,12 +1195,7 @@
           .addEventListener("change", (e) => {
             currentFilters.sort = e.target.value;
             applyAllFilters();
-            updateActiveFiltersDisplay();
           });
-
-        document
-          .getElementById("date-order-toggle")
-          .addEventListener("click", toggleDateOrder);
 
         document
           .getElementById("clear-filters")
@@ -1000,16 +1205,371 @@
           .getElementById("load-more-btn")
           .addEventListener("click", loadMoreEvents);
 
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        if (mobileMenuBtn) {
+          mobileMenuBtn.addEventListener("click", () => {
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks) {
+              navLinks.classList.toggle("hidden");
+              navLinks.classList.toggle("flex");
+              navLinks.classList.toggle("flex-col");
+              navLinks.classList.toggle("absolute");
+              navLinks.classList.toggle("top-full");
+              navLinks.classList.toggle("left-0");
+              navLinks.classList.toggle("right-0");
+              navLinks.classList.toggle("bg-white");
+              navLinks.classList.toggle("shadow-lg");
+              navLinks.classList.toggle("p-4");
+              navLinks.classList.toggle("z-50");
+            }
+          });
+        }
+
         // Keyboard navigation support
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape") {
             hideSearchSuggestions();
+            // Close mobile menu on Escape
+            const navLinks = document.querySelector(".nav-links");
+            if (navLinks && !navLinks.classList.contains("hidden")) {
+              navLinks.classList.add("hidden");
+              navLinks.classList.remove(
+                "flex",
+                "flex-col",
+                "absolute",
+                "top-full",
+                "left-0",
+                "right-0",
+                "bg-white",
+                "shadow-lg",
+                "p-4",
+                "z-50"
+              );
+            }
           }
         });
 
         // Load events when page loads
         loadEvents();
+
+        // Initialize draw random underline effect
+        if (typeof initDrawRandomUnderline === "function") {
+          // Add a small delay to ensure DOM is fully ready
+          setTimeout(() => {
+            initDrawRandomUnderline();
+          }, 100);
+        }
+
+        // Initialize create event modal functionality
+        initCreateEventModal();
       });
     </script>
+
+    <!-- Create Event Modal -->
+    <div
+      id="create-event-modal"
+      class="create-event-modal-overlay"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="create-event-modal-container" data-panel>
+        <!-- Modal Header -->
+        <div class="create-event-modal-header">
+          <h2 id="create-event-modal-title" class="create-event-modal-title">
+            Create the Event
+          </h2>
+          <button
+            id="create-event-modal-close"
+            class="create-event-modal-close"
+            data-close
+            aria-label="Close"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 6l12 12M18 6L6 18"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="create-event-modal-content">
+          <form id="create-event-form" class="space-y-4">
+            <!-- Title of Event -->
+            <div>
+              <label
+                for="event-title"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Title of Event
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-title"
+                  name="title"
+                  required
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Title"
+                />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Date -->
+            <div>
+              <label
+                for="event-date"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-date"
+                  name="date"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Date"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Time -->
+            <div>
+              <label
+                for="event-time"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Time
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-time"
+                  name="time"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Time"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+              <label
+                for="event-location"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Location
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-location"
+                  name="location"
+                  required
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Location"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 21s-6-5.373-6-10a6 6 0 1112 0c0 4.627-6 10-6 10z"
+                    />
+                    <circle cx="12" cy="11" r="2" />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Registration Fee -->
+            <div>
+              <label
+                for="event-fee"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Registration Fee
+              </label>
+              <input
+                type="number"
+                id="event-fee"
+                name="fee"
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Enter The Registration Fee"
+              />
+            </div>
+
+            <!-- Upload Image -->
+            <div>
+              <label
+                for="event-image"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Upload the Image
+              </label>
+              <div class="relative">
+                <input
+                  type="file"
+                  id="event-image"
+                  name="image"
+                  accept="image/*"
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="No file chosen"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label
+                for="event-description"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Description
+              </label>
+              <textarea
+                id="event-description"
+                name="description"
+                rows="4"
+                required
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                placeholder="Enter the Text"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full inline-flex items-center justify-center rounded-lg border-2 px-4 py-2 text-sm font-semibold focus:ring-2 focus:ring-offset-2"
+                style="border-color: #340aff; color: #340aff"
+                onmouseover="this.style.backgroundColor='#340AFF'; this.style.color='white';"
+                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#340AFF';"
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
