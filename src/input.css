@@ -776,10 +776,11 @@ body {
   }
 
   #lottie-logo {
-    width: 100%;
-    height: 100%;
-    max-width: 5.3125rem;
-    max-height: 5.3125rem;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 5.3125rem !important;
+    max-height: 5.3125rem !important;
+    display: block !important;
   }
 
   .nav-links {
@@ -2414,4 +2415,21 @@ body {
 .nav-section {
   height: 328px !important;
   overflow: visible !important;
+}
+
+/* CAROUSEL FIXES */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+/* Ensure carousel items don't shrink */
+#recommended-row .event-item,
+#popular-row .event-item,
+#music-row .event-item,
+#family-row .event-item {
+  flex-shrink: 0 !important;
 }
