@@ -484,16 +484,19 @@
 
               // Add error handling
               animation.addEventListener("data_failed", function () {
-                console.error(`Failed to load Lottie animation from: ${logoPath}`);
+                console.error(
+                  `Failed to load Lottie animation from: ${logoPath}`
+                );
                 showFallbackLogo(logoContainer);
               });
 
               animation.addEventListener("data_ready", function () {
                 console.log(`Successfully loaded logo from: ${logoPath}`);
               });
-
             } catch (error) {
-              console.error(`Error creating Lottie animation: ${error.message}`);
+              console.error(
+                `Error creating Lottie animation: ${error.message}`
+              );
               showFallbackLogo(logoContainer);
             }
           } catch (error) {

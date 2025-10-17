@@ -759,7 +759,412 @@
             initDrawRandomUnderline();
           }, 100);
         }
+
+        /**
+         * Initialize Create Event Modal functionality
+         */
+        function initCreateEventModal() {
+          const modal = document.getElementById("create-event-modal");
+          const openButtons = document.querySelectorAll(
+            "a[data-open-create-modal]"
+          );
+          const closeButton = document.getElementById(
+            "create-event-modal-close"
+          );
+          const form = document.getElementById("create-event-form");
+
+          // Open modal
+          function openModal() {
+            modal.style.display = "flex";
+            document.body.style.overflow = "hidden";
+            // Focus on first input
+            const firstInput = modal.querySelector("input");
+            if (firstInput) {
+              setTimeout(() => firstInput.focus(), 100);
+            }
+          }
+
+          // Close modal
+          function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = "";
+            // Reset form
+            if (form) {
+              form.reset();
+            }
+          }
+
+          // Event listeners for opening modal
+          openButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+              // Double check that this is the Create Events button
+              const buttonText = button.textContent.trim();
+              if (buttonText.includes("Create Events")) {
+                e.preventDefault();
+                openModal();
+              }
+            });
+          });
+
+          // Event listener for closing modal
+          if (closeButton) {
+            closeButton.addEventListener("click", (e) => {
+              e.preventDefault();
+              closeModal();
+            });
+          }
+
+          // Close modal when clicking outside
+          modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+
+          // Close modal with Escape key
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.style.display !== "none") {
+              closeModal();
+            }
+          });
+
+          // Handle form submission
+          if (form) {
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
+
+              // Get form data
+              const formData = new FormData(form);
+              const eventData = {
+                title: formData.get("title"),
+                date: formData.get("date"),
+                time: formData.get("time"),
+                location: formData.get("location"),
+                fee: formData.get("fee"),
+                image: formData.get("image"),
+                description: formData.get("description"),
+              };
+
+              // In a real app, you'd send this to a server
+
+              // Show success message (you could replace this with a toast notification)
+              alert("Event created successfully!");
+
+              // Close modal
+              closeModal();
+            });
+          }
+        }
+
+        // Initialize create event modal functionality
+        initCreateEventModal();
       });
     </script>
+
+    <!-- Create Event Modal -->
+    <div
+      id="create-event-modal"
+      class="create-event-modal-overlay"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div class="create-event-modal-container" data-panel>
+        <!-- Modal Header -->
+        <div class="create-event-modal-header">
+          <h2 id="create-event-modal-title" class="create-event-modal-title">
+            Create the Event
+          </h2>
+          <button
+            id="create-event-modal-close"
+            class="create-event-modal-close"
+            data-close
+            aria-label="Close"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 6l12 12M18 6L6 18"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="create-event-modal-content">
+          <form id="create-event-form" class="space-y-4">
+            <!-- Title of Event -->
+            <div>
+              <label
+                for="event-title"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Title of Event
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-title"
+                  name="title"
+                  required
+                  class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Title"
+                />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Date -->
+            <div>
+              <label
+                for="event-date"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Date
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-date"
+                  name="date"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Date"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Time -->
+            <div>
+              <label
+                for="event-time"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Time
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-time"
+                  name="time"
+                  required
+                  class="w-full px-3 py-2 pl-8 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Time"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div>
+              <label
+                for="event-location"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Location
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  id="event-location"
+                  name="location"
+                  required
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="Select the Location"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 21s-6-5.373-6-10a6 6 0 1112 0c0 4.627-6 10-6 10z"
+                    />
+                    <circle cx="12" cy="11" r="2" />
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Registration Fee -->
+            <div>
+              <label
+                for="event-fee"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Registration Fee
+              </label>
+              <input
+                type="number"
+                id="event-fee"
+                name="fee"
+                min="0"
+                step="100"
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                placeholder="Enter The Registration Fee"
+              />
+            </div>
+
+            <!-- Upload Image -->
+            <div>
+              <label
+                for="event-image"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Upload the Image
+              </label>
+              <div class="relative">
+                <input
+                  type="file"
+                  id="event-image"
+                  name="image"
+                  accept="image/*"
+                  class="w-full px-3 py-2 pl-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  placeholder="No file chosen"
+                />
+                <div class="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-gray-400"
+                    viewBox="0 -960 960 960"
+                    fill="#e3e3e3"
+                  >
+                    <path
+                      d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label
+                for="event-description"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Description
+              </label>
+              <textarea
+                id="event-description"
+                name="description"
+                rows="4"
+                required
+                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none"
+                placeholder="Enter the Text"
+              ></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full inline-flex items-center justify-center rounded-lg border-2 px-4 py-2 text-sm font-semibold focus:ring-2 focus:ring-offset-2"
+                style="border-color: #340aff; color: #340aff"
+                onmouseover="this.style.backgroundColor='#340AFF'; this.style.color='white';"
+                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#340AFF';"
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
