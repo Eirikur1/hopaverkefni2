@@ -109,36 +109,57 @@ body {
   .nav-section {
     @apply flex flex-col justify-center items-center mt-[5.3125rem];
     width: 430px;
-    height: 259.5px;
+    height: 328px;
     padding: 0;
     margin-left: auto;
     margin-right: auto;
-    overflow: hidden;
-    gap: 36px;
+    overflow: visible;
+    gap: 54.5px;
     box-sizing: border-box;
     position: relative;
   }
 
   .nav-section-text {
-    @apply flex flex-col justify-center items-center text-center;
+    width: 415px;
+    flex-shrink: 0;
     color: #ff3409;
+    text-align: center;
     font-family: "Rubik Mono One";
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    width: 415px;
-    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
-    height: auto;
-    min-height: auto;
     padding: 0.5rem;
   }
 
-  .nav-section-text span {
-    display: block;
-    line-height: 1;
+  .nav-section-text .text-draw__p {
+    width: 415px;
+    flex-shrink: 0;
+    color: #ff3409;
+    text-align: center;
+    font-family: "Rubik Mono One";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-section-text .text-draw__p span {
+    display: inline;
+    margin-right: 0.2em;
+  }
+
+  .nav-section-text .text-draw__p span:last-child {
+    margin-right: 0;
   }
 
   .nav-section-text h1 {
@@ -188,7 +209,7 @@ body {
 
   .search-dropdown {
     @apply absolute top-full left-0 right-0 mt-2 bg-white border-2 border-[#6B6666] rounded-lg shadow-2xl max-h-[28rem] overflow-y-auto;
-    z-index: 9999;
+    z-index: 99999 !important;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   }
 
@@ -2338,4 +2359,59 @@ body {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
+}
+
+/* FINAL FIXES - EXACT SPECIFICATIONS */
+.nav-section-text,
+.nav-section-text .text-draw__p {
+  width: 415px !important;
+  flex-shrink: 0 !important;
+  color: #ff3409 !important;
+  text-align: center !important;
+  font-family: "Rubik Mono One" !important;
+  font-size: 40px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.nav-section-text .text-draw__p span {
+  display: inline !important;
+  margin-right: 0.2em !important;
+}
+
+.nav-section-text .text-draw__p span:last-child {
+  margin-right: 0 !important;
+}
+
+/* SEARCH BAR FIXES */
+#search-input {
+  pointer-events: auto !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+.nav-search-bar {
+  pointer-events: auto !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+#search-results {
+  pointer-events: auto !important;
+  z-index: 99999 !important;
+}
+
+/* EVENTS SECTION SPACING */
+#events-section {
+  margin-top: 54.5px !important;
+}
+
+/* NAV SECTION HEIGHT */
+.nav-section {
+  height: 328px !important;
+  overflow: visible !important;
 }
