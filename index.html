@@ -472,8 +472,10 @@
             const protocol = window.location.protocol;
             const hostname = window.location.hostname;
             const pathname = window.location.pathname;
-            const basePath = pathname.includes('github.io') ? '/hopaverkefni2' : '';
-            
+            const basePath = pathname.includes("github.io")
+              ? "/hopaverkefni2"
+              : "";
+
             // Try multiple possible paths for the Logo.json file
             const possiblePaths = [
               // Relative paths
@@ -486,7 +488,7 @@
               `${protocol}//${hostname}${basePath}/Images/Images_and_lottie/Logo.json`,
               `${protocol}//${hostname}${basePath}/images/Images_and_lottie/Logo.json`,
               // CDN fallback (if you want to host the file externally)
-              "https://raw.githubusercontent.com/Eirikur1/hopaverkefni2/main/Images/Images_and_lottie/Logo.json"
+              "https://raw.githubusercontent.com/Eirikur1/hopaverkefni2/main/Images/Images_and_lottie/Logo.json",
             ];
 
             let animationLoaded = false;
@@ -504,19 +506,24 @@
               console.log(`Trying to load logo from: ${currentPath}`);
 
               // Test if the file exists first
-              fetch(currentPath, { method: 'HEAD' })
-                .then(response => {
+              fetch(currentPath, { method: "HEAD" })
+                .then((response) => {
                   if (response.ok) {
                     console.log(`Logo file found at: ${currentPath}`);
                     loadLottieAnimation(currentPath);
                   } else {
-                    console.log(`Logo file not found at: ${currentPath} (${response.status})`);
+                    console.log(
+                      `Logo file not found at: ${currentPath} (${response.status})`
+                    );
                     currentPathIndex++;
                     tryLoadAnimation();
                   }
                 })
-                .catch(error => {
-                  console.log(`Error checking logo file at: ${currentPath}`, error);
+                .catch((error) => {
+                  console.log(
+                    `Error checking logo file at: ${currentPath}`,
+                    error
+                  );
                   currentPathIndex++;
                   tryLoadAnimation();
                 });
@@ -534,7 +541,9 @@
 
                 // Add comprehensive error handling
                 currentAnimation.addEventListener("data_failed", function () {
-                  console.error(`Failed to load Lottie animation from: ${path}`);
+                  console.error(
+                    `Failed to load Lottie animation from: ${path}`
+                  );
                   if (currentAnimation) {
                     currentAnimation.destroy();
                     currentAnimation = null;
@@ -559,7 +568,10 @@
                   }
                 }, 5000);
               } catch (error) {
-                console.error(`Error creating Lottie animation for: ${path}`, error);
+                console.error(
+                  `Error creating Lottie animation for: ${path}`,
+                  error
+                );
                 currentPathIndex++;
                 tryLoadAnimation();
               }

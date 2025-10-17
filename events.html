@@ -462,7 +462,7 @@
               "Images/Images_and_lottie/Logo.json",
               "/Images/Images_and_lottie/Logo.json",
               "./images/Images_and_lottie/Logo.json",
-              "images/Images_and_lottie/Logo.json"
+              "images/Images_and_lottie/Logo.json",
             ];
 
             let animationLoaded = false;
@@ -488,7 +488,9 @@
 
               // Add comprehensive error handling
               animation.addEventListener("data_failed", function () {
-                console.error(`Failed to load Lottie animation from: ${currentPath}`);
+                console.error(
+                  `Failed to load Lottie animation from: ${currentPath}`
+                );
                 currentPathIndex++;
                 tryLoadAnimation();
               });
@@ -509,7 +511,6 @@
             }
 
             tryLoadAnimation();
-
           } catch (error) {
             console.error("Error loading logo animation:", error);
             const logoContainer = document.getElementById("lottie-logo");
