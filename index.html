@@ -955,8 +955,8 @@
             // Mouse events
             carousel.addEventListener("mousedown", (e) => {
               // Only start drag if clicking on the carousel container, not on event items
-              if (e.target.closest('.event-item')) return;
-              
+              if (e.target.closest(".event-item")) return;
+
               isDown = true;
               carousel.style.cursor = "grabbing";
               startX = e.pageX - carousel.offsetLeft;
@@ -983,26 +983,34 @@
             });
 
             // Touch support for mobile
-            carousel.addEventListener("touchstart", (e) => {
-              // Only start drag if touching the carousel container, not on event items
-              if (e.target.closest('.event-item')) return;
-              
-              isDown = true;
-              startX = e.touches[0].pageX - carousel.offsetLeft;
-              scrollLeft = carousel.scrollLeft;
-            }, { passive: false });
+            carousel.addEventListener(
+              "touchstart",
+              (e) => {
+                // Only start drag if touching the carousel container, not on event items
+                if (e.target.closest(".event-item")) return;
+
+                isDown = true;
+                startX = e.touches[0].pageX - carousel.offsetLeft;
+                scrollLeft = carousel.scrollLeft;
+              },
+              { passive: false }
+            );
 
             carousel.addEventListener("touchend", () => {
               isDown = false;
             });
 
-            carousel.addEventListener("touchmove", (e) => {
-              if (!isDown) return;
-              e.preventDefault();
-              const x = e.touches[0].pageX - carousel.offsetLeft;
-              const walk = (x - startX) * 2;
-              carousel.scrollLeft = scrollLeft - walk;
-            }, { passive: false });
+            carousel.addEventListener(
+              "touchmove",
+              (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - carousel.offsetLeft;
+                const walk = (x - startX) * 2;
+                carousel.scrollLeft = scrollLeft - walk;
+              },
+              { passive: false }
+            );
 
             // Set initial cursor style
             carousel.style.cursor = "grab";
