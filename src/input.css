@@ -113,32 +113,53 @@ body {
     padding: 0;
     margin-left: auto;
     margin-right: auto;
-    overflow: hidden;
-    gap: 36px;
+    overflow: visible;
+    gap: 54.5px;
     box-sizing: border-box;
     position: relative;
   }
 
   .nav-section-text {
-    @apply flex flex-col justify-center items-center text-center;
+    width: 415px;
+    flex-shrink: 0;
     color: #ff3409;
+    text-align: center;
     font-family: "Rubik Mono One";
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    width: 415px;
-    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
-    height: auto;
-    min-height: auto;
     padding: 0.5rem;
   }
 
-  .nav-section-text span {
-    display: block;
-    line-height: 1;
+  .nav-section-text .text-draw__p {
+    width: 415px;
+    flex-shrink: 0;
+    color: #ff3409;
+    text-align: center;
+    font-family: "Rubik Mono One";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-section-text .text-draw__p span {
+    display: inline;
+    margin-right: 0.2em;
+  }
+
+  .nav-section-text .text-draw__p span:last-child {
+    margin-right: 0;
   }
 
   .nav-section-text h1 {
@@ -188,7 +209,7 @@ body {
 
   .search-dropdown {
     @apply absolute top-full left-0 right-0 mt-2 bg-white border-2 border-[#6B6666] rounded-lg shadow-2xl max-h-[28rem] overflow-y-auto;
-    z-index: 9999;
+    z-index: 99999 !important;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   }
 
@@ -265,7 +286,7 @@ body {
       padding: 1rem;
       margin-left: auto;
       margin-right: auto;
-      overflow: hidden;
+      overflow: visible;
       gap: 1rem;
       box-sizing: border-box;
       position: relative;
@@ -275,12 +296,12 @@ body {
       @apply flex flex-col justify-center items-center text-center;
       color: #ff3409;
       font-family: "Rubik Mono One";
-      font-size: 32px;
+      font-size: 40px !important;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      width: 100%;
-      max-width: 415px;
+      width: 100% !important;
+      max-width: 415px !important;
       box-sizing: border-box;
       overflow: hidden;
       height: auto;
@@ -290,7 +311,7 @@ body {
 
     .nav-section-text .text-draw__p {
       font-family: "Rubik Mono One";
-      font-size: 32px;
+      font-size: 40px !important;
       font-weight: 400;
       line-height: normal;
       margin: 0;
@@ -298,8 +319,8 @@ body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      max-width: 415px;
+      width: 100% !important;
+      max-width: 415px !important;
       text-align: center;
     }
 
@@ -435,7 +456,7 @@ body {
       padding: 0.75rem;
       margin-left: auto;
       margin-right: auto;
-      overflow: hidden;
+      overflow: visible;
       gap: 0.75rem;
       box-sizing: border-box;
       position: relative;
@@ -445,12 +466,12 @@ body {
       @apply flex flex-col justify-center items-center text-center;
       color: #ff3409;
       font-family: "Rubik Mono One";
-      font-size: 28px;
+      font-size: 40px !important;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      width: 100%;
-      max-width: 415px;
+      width: 100% !important;
+      max-width: 415px !important;
       box-sizing: border-box;
       overflow: hidden;
       height: auto;
@@ -460,7 +481,7 @@ body {
 
     .nav-section-text .text-draw__p {
       font-family: "Rubik Mono One";
-      font-size: 28px;
+      font-size: 40px !important;
       font-weight: 400;
       line-height: normal;
       margin: 0;
@@ -468,8 +489,8 @@ body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      max-width: 415px;
+      width: 100% !important;
+      max-width: 415px !important;
       text-align: center;
     }
 
@@ -542,7 +563,7 @@ body {
       padding: 0.5rem;
       margin-left: auto;
       margin-right: auto;
-      overflow: hidden;
+      overflow: visible;
       gap: 0.5rem;
       box-sizing: border-box;
       position: relative;
@@ -552,12 +573,12 @@ body {
       @apply flex flex-col justify-center items-center text-center;
       color: #ff3409;
       font-family: "Rubik Mono One";
-      font-size: 24px;
+      font-size: 40px !important;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
-      width: 100%;
-      max-width: 415px;
+      width: 100% !important;
+      max-width: 415px !important;
       box-sizing: border-box;
       overflow: hidden;
       height: auto;
@@ -567,7 +588,7 @@ body {
 
     .nav-section-text .text-draw__p {
       font-family: "Rubik Mono One";
-      font-size: 24px;
+      font-size: 40px !important;
       font-weight: 400;
       line-height: normal;
       margin: 0;
@@ -575,8 +596,8 @@ body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      max-width: 415px;
+      width: 100% !important;
+      max-width: 415px !important;
       text-align: center;
     }
 
@@ -724,13 +745,27 @@ body {
     }
 
     .nav-section-text {
-      font-size: 40px;
       width: 415px;
+      flex-shrink: 0;
+      color: #ff3409;
+      text-align: center;
+      font-family: "Rubik Mono One";
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
 
     .nav-section-text .text-draw__p {
-      font-size: 40px;
       width: 415px;
+      flex-shrink: 0;
+      color: #ff3409;
+      text-align: center;
+      font-family: "Rubik Mono One";
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
 
     .category-title {
@@ -740,13 +775,27 @@ body {
 
   @media (min-width: 1600px) {
     .nav-section-text {
-      font-size: 40px;
       width: 415px;
+      flex-shrink: 0;
+      color: #ff3409;
+      text-align: center;
+      font-family: "Rubik Mono One";
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
 
     .nav-section-text .text-draw__p {
-      font-size: 40px;
       width: 415px;
+      flex-shrink: 0;
+      color: #ff3409;
+      text-align: center;
+      font-family: "Rubik Mono One";
+      font-size: 40px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
   }
 
@@ -936,7 +985,8 @@ body {
   }
 
   .search-dropdown {
-    @apply absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden;
+    @apply absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg hidden;
+    z-index: 99999 !important;
   }
 
   .filter-select {
@@ -2338,4 +2388,58 @@ body {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
+}
+
+/* HERO TITLE - EXACT SPECIFICATIONS */
+.nav-section-text,
+.nav-section-text .text-draw__p {
+  width: 415px !important;
+  flex-shrink: 0 !important;
+  color: #ff3409 !important;
+  text-align: center !important;
+  font-family: "Rubik Mono One" !important;
+  font-size: 40px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.nav-section-text .text-draw__p span {
+  display: inline !important;
+  margin-right: 0.2em !important;
+}
+
+.nav-section-text .text-draw__p span:last-child {
+  margin-right: 0 !important;
+}
+
+/* ENSURE SEARCH BAR WORKS */
+#search-input {
+  pointer-events: auto !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+.nav-search-bar {
+  pointer-events: auto !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+#search-results {
+  pointer-events: auto !important;
+  z-index: 99999 !important;
+}
+
+/* MOVE EVENTS SECTION LOWER */
+#events-section {
+  margin-top: 54.5px !important;
+}
+
+/* SET DISCOVER/SEARCH SECTION HEIGHT */
+.nav-section {
+  height: 328px !important;
 }
